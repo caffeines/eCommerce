@@ -22,7 +22,6 @@
     &-white {
       background-color: $white;
       color: $primary;
-      animation: moveInBottom 1s ease-out 0.1s;
       animation-fill-mode: backwards;
       &:hover {
         transform: translateY(-0.3rem) scaleX(1) scaleY(1);
@@ -53,7 +52,6 @@
     width: 65%;
     font-size: 1rem;
     word-spacing: 2px;
-    animation: moveInBottom 1s ease-out 0.1s;
     animation-fill-mode: backwards;
 
     &::after {

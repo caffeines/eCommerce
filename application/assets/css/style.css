@@ -24,6 +24,33 @@ html {
     transform: skewY(2deg) skewX(15deg) scale(1.2);
     text-shadow: 0.5rem 1rem 2rem rgba(83, 82, 237, 0.3); }
 
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-1000px); }
+  80% {
+    transform: translateX(100px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px); }
+  80% {
+    transform: translateX(-10px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(50px); }
+  80% {
+    transform: translateY(-10px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
 /* components*/
 .cbtn, .cbtn:link, .cbtn:visited {
   text-decoration: none;
@@ -42,7 +69,6 @@ html {
 .cbtn__icon-white {
   background-color: #fff;
   color: #f84f11;
-  animation: moveInBottom 1s ease-out 0.1s;
   animation-fill-mode: backwards; }
   .cbtn__icon-white:hover {
     transform: translateY(-0.3rem) scaleX(1) scaleY(1); }
@@ -61,7 +87,6 @@ html {
   width: 65%;
   font-size: 1rem;
   word-spacing: 2px;
-  animation: moveInBottom 1s ease-out 0.1s;
   animation-fill-mode: backwards; }
   .cbtn-primary::after {
     background-image: linear-gradient(to right bottom, #5352ed, #f84f11); }
@@ -111,11 +136,10 @@ html {
 .ccard {
   perspective: 150rem;
   -moz-perspective: 150rem;
-  position: relative;
   height: 32rem;
-  display: block;
-  margin: 0 auto;
-  text-align: center; }
+  display: flex;
+  text-align: center;
+  animation: moveInLeft 0.5s; }
   .ccard__side {
     background-color: #fff;
     color: #eeeff0;
@@ -123,7 +147,6 @@ html {
     height: 32rem;
     margin: 4rem auto;
     transition: all 0.8s ease-out;
-    position: absolute;
     top: 0;
     left: 0;
     width: 90%;
@@ -134,8 +157,9 @@ html {
     box-shadow: 0 1.5rem 4rem rgba(248, 79, 17, 0.3); }
 
 .forgot {
-  display: bock;
-  margin: 0 auto; }
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.2rem; }
 
 .form__group:not(:last-child) {
   margin-bottom: 0.7rem; }

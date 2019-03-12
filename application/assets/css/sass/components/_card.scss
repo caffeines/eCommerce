@@ -1,11 +1,10 @@
 .ccard {
   perspective: 150rem;
   -moz-perspective: 150rem;
-  position: relative;
   height: 32rem;
-  display: block;
-  margin: 0 auto;
+  display: flex;
   text-align: center;
+  animation: moveInLeft 0.5s;
 
   &__side {
     background-color: $white;
@@ -14,7 +13,6 @@
     height: 32rem;
     margin: 4rem auto;
     transition: all 0.8s ease-out;
-    position: absolute;
     top: 0;
     left: 0;
     width: 90%;
@@ -26,6 +24,7 @@
   }
 }
 .forgot {
-  display: bock;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.2rem;
 }
