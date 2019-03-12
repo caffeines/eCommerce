@@ -1,0 +1,31 @@
+.ccard {
+  perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  height: 32rem;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+
+  &__side {
+    background-color: $white;
+    color: rgb(238, 239, 240);
+    font-size: 2.5rem;
+    height: 32rem;
+    margin: 4rem auto;
+    transition: all 0.8s ease-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 1.5rem 4rem rgba($primary, 0.3);
+  }
+}
+.forgot {
+  display: bock;
+  margin: 0 auto;
+}
