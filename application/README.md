@@ -1,6 +1,6 @@
 # application
 
-> My bee&#39;s knees Nuxt.js project
+> My cat&#39;s meow Nuxt.js project
 
 ## Build Setup
 

@@ -30,21 +30,23 @@
 
     &::-webkit-input-placeholder {
       color: $primary;
+      font-weight: 400;
+      font-size: 700;
     }
   }
 
   &__lebel {
     margin: 0 auto;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    margin-right: 52%;
+    margin-right: 46%;
     padding-left: 3px;
     margin-top: 0.6rem;
     display: block;
     transition: all 0.3s;
     color: $pico;
     &-mail {
-      padding-left: 7%;
+      padding-left: 8%;
     }
   }
 

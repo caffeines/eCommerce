@@ -82,6 +82,3 @@ dist
 
 # Service worker
 sw.*
-
-# Node module
-.node_modules

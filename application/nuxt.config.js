@@ -1,5 +1,7 @@
 const pkg = require("./package");
 
+const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+
 module.exports = {
   mode: "universal",
 
@@ -18,10 +20,9 @@ module.exports = {
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700"
+          "https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700|Material+Icons"
       }
-    ],
-    script: []
+    ]
   },
 
   /*
@@ -33,15 +34,16 @@ module.exports = {
    ** Global CSS
    */
   css: [
+    "@/assets/style/app.styl",
     "@/assets/css/style.css",
-    "@/assets/bootstrap/bootstrap.css",
-    "@/assets/css/ionicons.min.css"
+    "@/assets/css/ionicons.min.css",
+    "@/assets/bootstrap/bootstrap.css"
   ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ["@/plugins/vuetify"],
 
   /*
    ** Nuxt.js modules
@@ -62,6 +64,14 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    transpile: ["vuetify/lib"],
+    plugins: [new VuetifyLoaderPlugin()],
+    loaders: {
+      stylus: {
+        import: ["~assets/style/variables.styl"]
+      }
+    },
+
     /*
      ** You can extend webpack config here
      */
