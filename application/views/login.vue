@@ -31,7 +31,7 @@
 							<i class="cbtn cbtn__icon-white ion-logo-google ion-logo"></i>
 						</div>
 						<div class="text-center">
-							<a href="#" class="cbtn-text">Sign up &rarr;</a>
+							<a href="#" class="signup cbtn-text">Sign up &rarr;</a>
 						</div>
 					</div>
 				</div>

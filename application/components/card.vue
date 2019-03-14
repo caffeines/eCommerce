@@ -1,6 +1,6 @@
 <template>
 	<div class="flex-con">
-		<v-hover class="product-card" v-for="i in 15">
+		<v-hover class="product-card" v-for="i in 35">
 			<v-card class="mx-auto" width="210" height="300">
 				<v-img :aspect-ratio="16/12" v-bind:src="description.imageSrc" class="card-img" @click="fun">
 					<v-img src="./new.ico" class="new"></v-img>

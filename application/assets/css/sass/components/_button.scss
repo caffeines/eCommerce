@@ -4,7 +4,6 @@
   &:visited {
     text-decoration: none;
     text-transform: uppercase;
-    padding: 0.3rem 1.8rem;
     display: inline-block;
     border-radius: 8rem;
     transition: all 0.2s;
@@ -20,6 +19,7 @@
   }
   &__icon {
     &-white {
+      padding: 0rem 1.8rem;
       background-color: $white;
       color: $primary;
       animation-fill-mode: backwards;
@@ -43,6 +43,7 @@
     }
   }
   &-primary {
+    padding: 0.35rem 1.8rem;
     background-image: linear-gradient(
       to right bottom,
       rgba($primary-light, 0.3),
@@ -62,8 +63,35 @@
       );
     }
   }
+  &-secondary {
+    padding: 0.35rem 1.8rem;
+    background-image: linear-gradient(
+      to right bottom,
+      rgba($primary-light, 0.3),
+      $primary
+    );
+    color: $white;
+    width: 40%;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    word-spacing: 2px;
+    animation-fill-mode: backwards;
+    backface-visibility: hidden;
+    outline: none;
+    border: none;
+
+    &::after {
+      background-image: linear-gradient(
+        to right bottom,
+        $primary-light,
+        $primary
+      );
+    }
+  }
 
   &--green {
+    padding: 0.35rem 1.8rem;
     background-image: linear-gradient(to right bottom, green, red, yellow);
     color: $white;
     font-size: 1.4rem;
@@ -97,11 +125,11 @@
   &-text {
     &:link,
     &:visited {
+      padding: 0.3rem 1.8rem;
       color: $primary;
       background-color: $white;
       display: inline-block;
       text-decoration: none;
-      border-bottom: 1px solid $primary;
       font-size: 1rem;
     }
 
@@ -118,7 +146,12 @@
   }
 }
 .ion-logo {
-  font-size: 1.4rem;
+  font-size: 2rem;
   color: $primary;
   text-align: center;
+}
+.signup {
+  border-bottom: 1px solid $primary;
+  font-weight: 700;
+  width: 40%;
 }

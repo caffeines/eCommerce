@@ -1,11 +1,16 @@
 <template>
-	<card/>
+	<div>
+		<carousel/>
+		<card></card>
+	</div>
 </template>
 <script>
 	import card from "~/views/card";
+	import carousel from "~/views/carousel";
 	export default {
 		components: {
-			card
+			card,
+			carousel
 		}
 	};
 </script>
