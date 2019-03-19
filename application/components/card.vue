@@ -5,11 +5,11 @@
 		</div>
 		<div class="flex-con">
 			<v-hover class="product-card" v-for="i in 35" :key="i">
-				<v-card class="mx-auto" width="210" height="300">
+				<v-card class="mx-auto" width="210" height="350">
 					<v-img
-						:aspect-ratio="16/12"
-						v-bind:src="description.imageSrc"
-						:lazy-src="description.imageSrc"
+						:aspect-ratio="16/16"
+						v-bind:src="description.imageSrc[0]"
+						:lazy-src="description.imageSrc[0]"
 						class="card-img"
 						@click="modal_f = !modal_f"
 					>
@@ -102,19 +102,18 @@
 		margin-top: 0.2rem;
 	}
 	.product-card:hover {
-		transform: scale(1.3, 1.2);
-		transition: 0.5s ease-in;
+		transform: scale(1.1, 1.1);
+		transition: 0.3s ease-in;
 		z-index: 1;
 	}
 
 	.card-img {
 		background-size: cover;
-		transform: scale(0.9, 0.9);
+		transform: scale(0.8, 0.8);
 	}
 	.card-img:hover {
-		margin-top: 1rem;
-		transition: 0.5s ease-in;
-		transform: scale(1.3, 1.3);
+		transition: 0.3s ease-in;
+		transform: scale(0.9, 0.9);
 		border-radius: 1rem;
 		overflow: hidden;
 		background-size: cover;

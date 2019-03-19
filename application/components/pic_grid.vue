@@ -4,8 +4,10 @@
 			<v-layout wrap>
 				<v-flex v-for="n in 5" :key="n" xs2 d-flex>
 					<v-img
-						:src="`./vue2.jpg`"
-						:lazy-src="`./vue2.jpg`"
+						v-for="i in slider.imageSrc"
+						:key="i"
+						:src="i"
+						:lazy-src="i"
 						aspect-ratio="1"
 						class="grey lighten-2 _img-margin"
 					></v-img>
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+	import Modal from "./Modal.vue";
 	export default {};
 </script>
 

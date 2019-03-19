@@ -13,8 +13,8 @@
 								<v-img
 									:aspect-ratio="16/16"
 									class="img"
-									:src="description.imageSrc"
-									:lazy-src="description.imageSrc"
+									:src="flag==true ? pic : description.imageSrc[0]"
+									:lazy-src="flag==true ? pic : description.imageSrc[0]"
 								></v-img>
 								<template v-slot:placeholder>
 									<v-layout fill-height align-center justify-center ma-0>
@@ -34,8 +34,8 @@
 								</div>
 								<div class="size">
 									<v-flex xs12 sm12 d-flex small-chips>
-										<v-select :items="items" label="Size" outline></v-select>
-										<v-select :items="colors" class="flex_items" label="Color" outline></v-select>
+										<v-select :items="description.size" label="Size" outline></v-select>
+										<v-select :items="description.colors" class="flex_items" label="Color" outline></v-select>
 										<div class="box flex_items">
 											<div>
 												<button class="plus" @click="decrement">-</button>
@@ -49,7 +49,29 @@
 										</div>
 									</v-flex>
 								</div>
-								<pic_grid/>
+								<v-layout>
+									<v-flex xs12 sm12>
+										<v-layout wrap>
+											<v-flex xs4 d-flex>
+												<v-img
+													v-for="i in description.imageSrc"
+													:key="i"
+													:src="i"
+													:lazy-src="i"
+													aspect-ratio="1"
+													class="grey lighten-2 _img-margin"
+													@click="setPic(i)"
+													@mouseover="setPic(i)"
+												></v-img>
+												<template v-slot:placeholder>
+													<v-layout fill-height align-center justify-center ma-0>
+														<v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+													</v-layout>
+												</template>
+											</v-flex>
+										</v-layout>
+									</v-flex>
+								</v-layout>
 								<button class="cbtn cbtn-secondary mt-5" @click="dialog = false">Add to cart</button>
 							</div>
 						</div>
@@ -65,11 +87,11 @@
 		components: {
 			pic_grid
 		},
-		props: ["description"],
+		props: ["description", "slider"],
 		data: () => ({
 			dialog: true,
-			items: ["S", "M", "L", "XL", "XXL"],
-			colors: ["Red", "Blue", "Ash"],
+			pic: "",
+			flag: false,
 			number_of_product: 0
 		}),
 		methods: {
@@ -80,9 +102,11 @@
 				if (this.number_of_product > 0) {
 					return (this.number_of_product -= 1);
 				}
+			},
+			setPic: function(i) {
+				this.pic = i;
+				this.flag = true;
 			}
 		}
 	};
 </script>
-<style scoped>
-</style>

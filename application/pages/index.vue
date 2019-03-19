@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<carousel/>
-		<card></card>
+		<card/>
 	</div>
 </template>
 <script>
