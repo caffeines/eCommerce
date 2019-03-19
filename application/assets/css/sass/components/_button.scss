@@ -2,6 +2,7 @@
   &,
   &:link,
   &:visited {
+    outline: none !important;
     text-decoration: none;
     text-transform: uppercase;
     display: inline-block;

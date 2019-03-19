@@ -1,16 +1,18 @@
 <template>
-	<div col-sm-12>
-		<v-carousel touch height="600" hide-delimiters class="carousel">
-			<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
-				<div class="head">
-					<div class="sub_title">{{item.sub_title}}</div>
-					<div class="title mt-2">{{item.title}}</div>
-					<div class="button">
-						<button class="cbtn cbtn-secondary mt-5">Shop now</button>
+	<div>
+		<div col-sm-12>
+			<v-carousel touch height="600" hide-delimiters class="carousel">
+				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
+					<div class="head">
+						<div class="sub_title">{{item.sub_title}}</div>
+						<div class="title mt-2">{{item.title}}</div>
+						<div class="button">
+							<button class="cbtn cbtn-secondary mt-5">Shop now</button>
+						</div>
 					</div>
-				</div>
-			</v-carousel-item>
-		</v-carousel>
+				</v-carousel-item>
+			</v-carousel>
+		</div>
 	</div>
 </template>
 
