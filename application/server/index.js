@@ -1,34 +1,43 @@
-const express = require("express");
-const consola = require("consola");
-const { Nuxt, Builder } = require("nuxt");
+const express = require( "express" );
+const consola = require( "consola" );
+const {
+  ApolloServer
+} = require( "apollo-server" );
+const mongoose = require( 'mongoose' );
+const {
+  conn
+} = require( './config/mongoDB' );
 const app = express();
 
-// Import and Set Nuxt.js options
-let config = require("../nuxt.config.js");
-config.dev = !(process.env.NODE_ENV === "production");
+const fs = require( 'fs' );
+const path = require( 'path' );
+const filePath = path.join( __dirname, 'typeDefs.gql' );
+const typeDefs = fs.readFileSync( filePath, "utf-8" );
+const resolvers = require( './resolvers' );
 
-async function start() {
-  // Init Nuxt.js
-  const nuxt = new Nuxt(config);
+/* Model import here */
+const User = require( './models/User' );
+const Product = require( './models/Product' );
+const Shop = require( './models/Shop' );
 
-  const { host, port } = nuxt.options.server;
 
-  // Build only in dev mode
-  if (config.dev) {
-    const builder = new Builder(nuxt);
-    await builder.build();
-  } else {
-    await nuxt.ready();
+const server = new ApolloServer( {
+  // @ts-ignore
+  typeDefs,
+  resolvers,
+  context: {
+    User,
+    Product,
+    Shop
   }
+} );
 
-  // Give nuxt middleware to express
-  app.use(nuxt.render);
-
-  // Listen the server
-  app.listen(port, host);
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+server.listen().then( ( {
+  url
+} ) => {
+  // @ts-ignore
+  consola.ready( {
+    message: `Server listening on ${url}`,
     badge: true
-  });
-}
-start();
+  } );
+} );

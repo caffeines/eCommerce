@@ -1,16 +1,32 @@
 <template>
 	<div>
-		<carousel/>
-		<card/>
+		<div v-if="getAllProducts">
+			{{pp}}
+			<carousel :items="getProducts"/>
+		</div>
 	</div>
 </template>
+
 <script>
-	import card from "~/views/card";
-	import carousel from "~/views/carousel";
+	import carousel from "~/components/Carousel";
+	import gql from "graphql-tag";
 	export default {
 		components: {
-			card,
 			carousel
+		},
+		data: () => {
+			return {
+				pp: 0
+			};
+		},
+		created() {
+			this.$store.dispatch("setProducts", 1256463214);
+			this.pp = this.$store.getters.getProducts;
+		},
+		methods: {
+			getAllProducts() {
+				this.pp = this.$store.getters.getProducts;
+			}
 		}
 	};
 </script>
