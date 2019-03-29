@@ -69,6 +69,10 @@ type Kudos {
   year: String
 }
 
+type Token {
+  token: String!
+}
+
 type Query {
   getProducts: [Product]
   getUser(userName: String!): User
@@ -83,9 +87,9 @@ type Mutation {
     password: String!
     userName: String
     dateOfBirth: String
-  ): User!
+  ): Token
 
-  signin(userName: String, password: String!): User!
+  signin(userName: String, password: String!): Token
 
   addProduct(
     productName: String!
