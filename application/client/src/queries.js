@@ -2,8 +2,8 @@ import { gql } from "apollo-boost";
 
 //Todo Signin user
 export const SIGNIN_USER = gql`
-  mutation($username: String!, $password: String!) {
-    signin(userName: $username, password: $password) {
+  mutation($userName: String, $password: String!) {
+    signin(userName: $userName, password: $password) {
       token
     }
   }
