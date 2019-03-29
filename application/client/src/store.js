@@ -5,7 +5,7 @@ Vue.use(Vuex);
 import { gql } from "apollo-boost";
 
 //Todo Queries import here
-import { SIGNIN_USER } from "./queries";
+import { SIGNIN_USER, GET_PRODUCTS } from "./queries";
 
 export default new Vuex.Store({
   state: {
@@ -25,16 +25,7 @@ export default new Vuex.Store({
       commit("setLoading", true);
       apolloClient
         .query({
-          query: gql`
-            query {
-              getProducts {
-                _id
-                productName
-                price
-                picture
-              }
-            }
-          `
+          query: GET_PRODUCTS
         })
         .then(({ data }) => {
           commit("setProducts", data.getProducts);

@@ -2,14 +2,14 @@
 	<div>
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
-				<v-flex xs12 sm5 offset-sm3 mb-5>
+				<v-flex xs12 sm4 offset-sm4 mb-5>
 					<h2>Welcome back!</h2>
 				</v-flex>
 			</v-layout>
 
 			<!-- signin form -->
 			<v-layout row wrap>
-				<v-flex xs12 sm5 offset-sm3>
+				<v-flex xs12 sm4 offset-sm4>
 					<v-card color="#fff" class="form_card">
 						<v-container>
 							<v-form @submit.prevent="handleSignin">
