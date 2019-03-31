@@ -76,6 +76,7 @@ type Token {
 type Query {
   getProducts: [Product]
   getUser(userName: String!): User
+  getCurrentUser: User
 }
 
 type Mutation {

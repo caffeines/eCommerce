@@ -34,6 +34,19 @@ module.exports = {
       } else {
         throw new Error("User dosen't exists");
       }
+    },
+    /*
+     ** Current User fetching
+     */
+    getCurrentUser: async (_, args, { User, currentUser }) => {
+      if (!currentUser) {
+        return null;
+      }
+      const user = User.findOne({ userName: currentUser.userName }).populate({
+        path: "love",
+        model: "Product"
+      });
+      return user;
     }
   },
 
@@ -87,6 +100,8 @@ module.exports = {
       if (!isValidPassword) {
         throw new Error("Invalid password");
       }
+
+      //TODO need hide secret: "sadasas"
       return { token: createToken(user, "sadasas") };
     },
 

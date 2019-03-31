@@ -7,8 +7,8 @@
 			<v-carousel aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.picture[i]">
 					<div class="head">
-						<div class="sub_title">{{"T-shirt"}}</div>
-						<div class="title mt-2">&#2547;{{50}}</div>
+						<div class="sub_title" :style="{color: color}">{{"T-shirt"}}</div>
+						<div class="title mt-2" style>&#2547;{{50}}</div>
 						<div class="button">
 							<button class="cbtn cbtn-secondary mt-5">Shop now</button>
 						</div>
@@ -26,6 +26,11 @@
 		props: ["items"],
 		components: {
 			appLoading
+		},
+		data: () => {
+			return {
+				color: "red"
+			};
 		},
 		computed: {
 			...mapGetters(["loading"])

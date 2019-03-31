@@ -1,6 +1,7 @@
 import { gql } from "apollo-boost";
+import { Query } from "mongoose";
 
-//Todo Signin user
+//* Signin user
 export const SIGNIN_USER = gql`
   mutation($userName: String, $password: String!) {
     signin(userName: $userName, password: $password) {
@@ -9,7 +10,7 @@ export const SIGNIN_USER = gql`
   }
 `;
 
-//Todo get products
+//* get products
 export const GET_PRODUCTS = gql`
   query {
     getProducts {
@@ -21,7 +22,7 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
-//Todo Signup user
+//* Signup user
 
 export const SIGNUP_USER = gql`
   mutation(
@@ -43,6 +44,32 @@ export const SIGNUP_USER = gql`
       dateOfBirth: $dateOfBirth
     ) {
       token
+    }
+  }
+`;
+
+//* Get current user
+export const GET_CURRENT_USER = gql`
+  query {
+    getCurrentUser {
+      _id
+      firstName
+      lastName
+      email
+      contactNo
+      password
+      userName
+      dateOfBirth
+      dateOfRegistration
+      profilePic
+      coverPic
+      role
+      love {
+        _id
+        productName
+        price
+        picture
+      }
     }
   }
 `;

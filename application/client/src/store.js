@@ -4,8 +4,8 @@ import { defaultClient as apolloClient } from "./main";
 Vue.use(Vuex);
 import { gql } from "apollo-boost";
 
-//Todo Queries import here
-import { SIGNIN_USER, GET_PRODUCTS } from "./queries";
+//* Queries import here
+import { SIGNIN_USER, GET_PRODUCTS, GET_CURRENT_USER } from "./queries";
 
 export default new Vuex.Store({
   state: {
@@ -21,6 +21,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    getCurrentUser: ({ commit }) => {
+      commit("setLoading", true);
+      apolloClient
+        .query({
+          query: GET_CURRENT_USER
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log(data.getCurrentUser);
+        })
+        .catch(err => {
+          console.error(err);
+          commit("setLoading", false);
+        });
+    },
     getAllProducts: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
@@ -43,7 +58,7 @@ export default new Vuex.Store({
           variables: payload
         })
         .then(({ data }) => {
-          //*console.log(data.signin);
+          //* console.log(data.signin);
           localStorage.setItem("token", data.signin.token);
         })
         .catch(err => {
