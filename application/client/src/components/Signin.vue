@@ -40,7 +40,19 @@
 
 								<v-layout row>
 									<v-flex xs-12>
-										<v-btn color="accent" type="submit">Signin</v-btn>
+										<v-btn :loading="loading" :disabled="loading" color="accent" type="submit">
+											Signin
+											<template v-slot:loader>
+												<span class="custom-loader">
+													<v-icon light>cached</v-icon>
+												</span>
+											</template>
+										</v-btn>
+										<!-- <v-btn :loading="loading" :disabled="loading" color="accent" type="submit">
+											<span class="custom-loader">
+												<v-icon light>cached</v-icon>
+											</span>
+										</v-btn>-->
 										<h3>
 											Don't have an account?
 											<router-link to="/signup">
@@ -75,7 +87,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["user"])
+			...mapGetters(["user", "loading"])
 		},
 		watch: {
 			user: function(value) {
@@ -95,7 +107,7 @@
 		}
 	};
 </script>
-
+  
 <style lang="scss" scoped>
 	.form_card {
 		border-radius: 2% !important;
@@ -116,6 +128,42 @@
 		cursor: pointer;
 		&:hover {
 			color: black;
+		}
+	}
+	.custom-loader {
+		animation: loader 1s infinite;
+		display: flex;
+	}
+	@-moz-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-o-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
 		}
 	}
 </style>

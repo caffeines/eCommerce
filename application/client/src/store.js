@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { defaultClient as apolloClient } from "./main";
 import router from "./router";
 Vue.use(Vuex);
+// @ts-ignore
 import { gql } from "apollo-boost";
 
 //* Queries import here
@@ -37,6 +38,7 @@ export default new Vuex.Store({
       await apolloClient.resetStore();
       // redirect to home
       router.push("/");
+      // @ts-ignore
       router.go();
     },
     getCurrentUser: ({ commit }) => {
@@ -71,19 +73,26 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
+    // @ts-ignore
     signinUser: ({ commit }, payload) => {
+      commit("setLoading", true);
+      //* clear token to prevent errors
+      localStorage.setItem("token", "");
       apolloClient
         .mutate({
           mutation: SIGNIN_USER,
           variables: payload
         })
         .then(({ data }) => {
+          commit("setLoading", false);
           //* console.log(data.signin);
           localStorage.setItem("token", data.signin.token);
           // to make sure created method is run in main.js  ( we ru getCurrentUser ), reload page
+          // @ts-ignore
           router.go();
         })
         .catch(err => {
+          commit("setLoading", false);
           console.error(err);
         });
     }
