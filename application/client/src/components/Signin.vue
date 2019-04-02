@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- {{user.firstName}} {{user.userName}} -->
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
 				<v-flex xs12 sm4 offset-sm4 mb-5>
@@ -65,12 +66,26 @@
 	</div>
 </template>
 <script>
+	import { mapGetters } from "vuex";
 	export default {
 		data: () => {
 			return {
 				userName: "",
 				password: ""
 			};
+		},
+		computed: {
+			...mapGetters(["user"])
+		},
+		watch: {
+			user: function(value) {
+				// if user value change from null
+				console.log(value);
+
+				if (value) {
+					this.$router.push("/");
+				}
+			}
 		},
 		methods: {
 			handleSignin() {
