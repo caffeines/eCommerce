@@ -17,6 +17,14 @@
 						<v-list-tile-title v-text="item.title"/>
 					</v-list-tile-content>
 				</v-list-tile>
+
+				<!-- Sign out button -->
+				<v-list-tile v-if="user" @click="signoutUser">
+					<v-list-tile-action>
+						<v-icon>exit_to_app</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>Signout</v-list-tile-content>
+				</v-list-tile>
 			</v-list>
 		</v-navigation-drawer>
 
@@ -43,14 +51,14 @@
 					<v-icon class="hidden-sm-only">{{item.icon}}</v-icon>
 					<div>{{item.title}}</div>
 				</v-btn>
+				<v-btn flat v-if="user" @click="signoutUser">
+					<v-icon class="hidden-sm-only">exit_to_app</v-icon>Signout
+				</v-btn>
 			</div>
 			<div>
-				<v-badge right color="red" dark>
-					<span slot="badge">1</span>.
-					<v-btn flat :to="'/cart'">
-						<i class="material-icons">shopping_cart</i>
-					</v-btn>
-				</v-badge>
+				<v-btn flat :to="'/cart'">
+					<i class="material-icons">shopping_cart</i>
+				</v-btn>
 			</div>
 		</v-toolbar>
 	</div>
@@ -72,7 +80,9 @@
 					{ icon: "create", title: "Sign up", link: "/signup" }
 				];
 				if (this.user) {
-					items = [{ icon: "account_circle", title: "Profile", link: "/cart" }];
+					items = [
+						{ icon: "account_circle", title: "Profile", link: "/profile" }
+					];
 				}
 				return items;
 			},
@@ -86,11 +96,15 @@
 					items = [
 						{ icon: "", title: "", link: "/" },
 						{ icon: "account_circle", title: "Profile", link: "/cart" },
-						{ icon: "chat", title: "Post", link: "/posts" },
-						{ icon: "create", title: "Sign out", link: "/signin" }
+						{ icon: "chat", title: "Post", link: "/posts" }
 					];
 				}
 				return items;
+			}
+		},
+		methods: {
+			signoutUser() {
+				this.$store.dispatch("signoutUser");
 			}
 		}
 	};
