@@ -38,17 +38,26 @@
 			<v-spacer></v-spacer>
 
 			<!-- Icon & Items -->
-			<v-toolbar-items class="hidden-xs-only">
+			<div class="hidden-xs-only">
 				<v-btn flat v-for="item in navItems" :key="item.title" :to="item.link">
 					<v-icon class="hidden-sm-only">{{item.icon}}</v-icon>
 					<div>{{item.title}}</div>
 				</v-btn>
-			</v-toolbar-items>
+			</div>
+			<div>
+				<v-badge right color="red" dark>
+					<span slot="badge">1</span>.
+					<v-btn flat :to="'/cart'">
+						<i class="material-icons">shopping_cart</i>
+					</v-btn>
+				</v-badge>
+			</div>
 		</v-toolbar>
 	</div>
 </template>
 
 <script>
+	import { mapGetters } from "vuex";
 	export default {
 		data() {
 			return {
@@ -56,21 +65,36 @@
 			};
 		},
 		computed: {
+			...mapGetters(["user"]),
 			navItems() {
-				return [
-					{ icon: "chat", title: "Post", link: "/posts" },
+				let items = [
 					{ icon: "lock_open", title: "Sign in", link: "/signin" },
 					{ icon: "create", title: "Sign up", link: "/signup" }
 				];
+				if (this.user) {
+					items = [{ icon: "account_circle", title: "Profile", link: "/cart" }];
+				}
+				return items;
 			},
 			sideNavItems() {
-				return [
+				let items = [
 					{ icon: "", title: "", link: "/" },
-					{ icon: "chat", title: "Post", link: "/posts" },
 					{ icon: "lock_open", title: "Sign in", link: "/signin" },
 					{ icon: "create", title: "Sign up", link: "/signup" }
 				];
+				if (this.user) {
+					items = [
+						{ icon: "", title: "", link: "/" },
+						{ icon: "account_circle", title: "Profile", link: "/cart" },
+						{ icon: "chat", title: "Post", link: "/posts" },
+						{ icon: "create", title: "Sign out", link: "/signin" }
+					];
+				}
+				return items;
 			}
 		}
 	};
 </script>
+
+<style lang="scss" scoped>
+</style>

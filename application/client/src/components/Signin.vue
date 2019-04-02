@@ -80,8 +80,6 @@
 		watch: {
 			user: function(value) {
 				// if user value change from null
-				console.log(value);
-
 				if (value) {
 					this.$router.push("/");
 				}
