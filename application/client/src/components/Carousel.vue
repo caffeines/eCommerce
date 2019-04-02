@@ -17,6 +17,19 @@
 				</v-carousel-item>
 			</v-carousel>
 		</div>
+
+		<!-- snackbar -->
+		<v-snackbar
+			v-if="!loading && user"
+			v-model="snackbar"
+			bottom
+			left
+			color="success"
+			:timeout="5000"
+		>
+			You are signed in now!
+			<v-btn color="fff" flat @click="snackbar = false">Close</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 
@@ -30,11 +43,20 @@
 		},
 		data: () => {
 			return {
-				color: "red"
+				color: "red",
+				snackbar: true
 			};
 		},
 		computed: {
 			...mapGetters(["loading", "user"])
+		},
+		watch: {
+			user: function(newValue, oldValue) {
+				// if user value change from null
+				if (oldValue === null) {
+					this.snackbar = false;
+				}
+			}
 		}
 	};
 </script>

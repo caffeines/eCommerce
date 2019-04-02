@@ -6,11 +6,14 @@
 
 <script>
 	import Home from "../components/Carousel";
-
+	import { mapGetters } from "vuex";
 	export default {
 		name: "home",
 		components: {
 			Home
+		},
+		computed: {
+			...mapGetters(["user"])
 		},
 		created() {
 			this.getProducts();

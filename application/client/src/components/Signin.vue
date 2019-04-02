@@ -13,10 +13,11 @@
 				<v-flex xs12 sm4 offset-sm4>
 					<v-card color="#fff" class="form_card">
 						<v-container>
-							<v-form @submit.prevent="handleSignin">
+							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
 								<v-layout row>
 									<v-flex xs-12>
 										<v-text-field
+											:rules="userNameRules"
 											v-model="userName"
 											prepend-icon="face"
 											label="Username"
@@ -29,6 +30,7 @@
 								<v-layout row>
 									<v-flex xs-12>
 										<v-text-field
+											:rules="passwordRules"
 											v-model="password"
 											prepend-icon="lock_open"
 											label="Password"
@@ -40,7 +42,7 @@
 
 								<v-layout row>
 									<v-flex xs-12>
-										<v-btn :loading="loading" :disabled="loading" color="accent" type="submit">
+										<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
 											Signin
 											<template v-slot:loader>
 												<span class="custom-loader">
@@ -48,11 +50,6 @@
 												</span>
 											</template>
 										</v-btn>
-										<!-- <v-btn :loading="loading" :disabled="loading" color="accent" type="submit">
-											<span class="custom-loader">
-												<v-icon light>cached</v-icon>
-											</span>
-										</v-btn>-->
 										<h3>
 											Don't have an account?
 											<router-link to="/signup">
@@ -82,8 +79,17 @@
 	export default {
 		data: () => {
 			return {
+				isFormValid: true,
 				userName: "",
-				password: ""
+				password: "",
+				userNameRules: [
+					// check if userName in input
+					userName => !!userName || "Username is required"
+				],
+				passwordRules: [
+					// check if userName in input
+					password => !!password || "Password is required"
+				]
 			};
 		},
 		computed: {
@@ -99,10 +105,12 @@
 		},
 		methods: {
 			handleSignin() {
-				this.$store.dispatch("signinUser", {
-					userName: this.userName,
-					password: this.password
-				});
+				if (this.$refs.form.validate()) {
+					this.$store.dispatch("signinUser", {
+						userName: this.userName,
+						password: this.password
+					});
+				}
 			}
 		}
 	};
