@@ -13,9 +13,13 @@ export default new Vuex.Store({
   state: {
     products: [],
     user: null,
+    authError: null,
     loading: false
   },
   mutations: {
+    setAuthError: (state, payload) => {
+      state.authError = payload;
+    },
     setUser: (state, payload) => {
       state.user = payload;
     },
@@ -100,6 +104,7 @@ export default new Vuex.Store({
   getters: {
     getProducts: state => state.products,
     loading: state => state.loading,
-    user: state => state.user
+    user: state => state.user,
+    authError: state => state.authError
   }
 });

@@ -27,8 +27,8 @@
 			color="success"
 			:timeout="5000"
 		>
-			You are signed in now!
-			<v-btn color="fff" flat @click="snackbar = false">Close</v-btn>
+			<v-icon class="mr-3">check_circle_outline</v-icon>You are signed in now!
+			<v-btn color="fff" dark flat @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
 	</div>
 </template>
@@ -44,7 +44,7 @@
 		data: () => {
 			return {
 				color: "red",
-				snackbar: true
+				snackbar: false
 			};
 		},
 		computed: {
@@ -54,6 +54,9 @@
 			user: function(newValue, oldValue) {
 				// if user value change from null
 				if (oldValue === null) {
+					this.snackbar = true;
+				}
+				if (newValue === null) {
 					this.snackbar = false;
 				}
 			}

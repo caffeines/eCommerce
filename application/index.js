@@ -35,6 +35,8 @@ const server = new ApolloServer({
   // @ts-ignore
   typeDefs,
   resolvers,
+  // @ts-ignore
+  formatError: error => ({ name: error.name, message: error.message }),
   context: async ({ req }) => {
     const token = req.headers["authorization"];
     return {

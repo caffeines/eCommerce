@@ -1,0 +1,228 @@
+<template>
+	<div>
+		<v-container text-xs-center mt-4 pt-5>
+			<v-layout row wrap>
+				<v-flex xs12 sm6 offset-sm3 mb-5>
+					<h2>Get started here</h2>
+				</v-flex>
+			</v-layout>
+			<!-- step-1 -->
+			<v-layout row wrap>
+				<v-flex xs12 sm6 offset-sm3>
+					<v-card color="#fff" class="form_card">
+						<v-container>
+							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignup">
+								<div v-if="step === 1">
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="userNameRules"
+												v-model="userName"
+												prepend-icon="face"
+												label="Username"
+												type="text"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="emailRules"
+												v-model="email"
+												prepend-icon="email"
+												label="Email"
+												type="text"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="firstNameRules"
+												v-model="firstName"
+												prepend-icon="person_outline"
+												label="First name"
+												type="text"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="lastNameRules"
+												v-model="lastName"
+												prepend-icon="person_outline"
+												label="Last name"
+												type="text"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-btn :disabled="!isFormValid" color="accent" @click="next">next</v-btn>
+										</v-flex>
+									</v-layout>
+								</div>
+
+								<!-- step-2 -->
+
+								<div v-if="step === 2">
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="contactNumberRules"
+												v-model="contactNumber"
+												prepend-icon="call"
+												label="Contact number"
+												type="text"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="passwordRules"
+												v-model="password"
+												prepend-icon="lock_open"
+												label="Password"
+												type="password"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="conPassRules"
+												v-model="conPass"
+												prepend-icon="lock_open"
+												label="Confirm password"
+												type="password"
+												required
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-dialog
+												ref="dialog"
+												v-model="modal"
+												:return-value.sync="date"
+												persistent
+												lazy
+												full-width
+												width="290px"
+											>
+												<template v-slot:activator="{ on }">
+													<v-text-field
+														v-model="date"
+														label="Picker in dialog"
+														prepend-icon="event"
+														readonly
+														v-on="on"
+													></v-text-field>
+												</template>
+												<v-date-picker v-model="date" scrollable>
+													<v-spacer></v-spacer>
+													<v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+													<v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+												</v-date-picker>
+											</v-dialog>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-btn color="accent" @click="prev">prev</v-btn>
+											<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
+												Signup
+												<template v-slot:loader>
+													<span class="custom-loader">
+														<v-icon light>cached</v-icon>
+													</span>
+												</template>
+											</v-btn>
+										</v-flex>
+									</v-layout>
+								</div>
+							</v-form>
+						</v-container>
+					</v-card>
+				</v-flex>
+			</v-layout>
+		</v-container>
+	</div>
+</template>
+<script>
+	export default {
+		data: () => {
+			return {
+				date: new Date().toISOString().substr(0, 10),
+				menu: false,
+				modal: false,
+				menu2: false,
+				step: 1,
+				isFormValid: true,
+				firstName: "",
+				lastName: "",
+				contactNumber: "",
+				dateOfBirth: "",
+				userName: "",
+				password: "",
+				conPass: "",
+				firstNameRules: [
+					firstName => !!firstName || "First name is required",
+					firstName => firstName.length > 1 || "Length must be greater than 1"
+				],
+				lastNameRules: [
+					lastName => !!lastName || "First name is required",
+					lastName => lastName.length > 1 || "Length must be greater than 1"
+				],
+				contactNumberRules: [
+					contactNumber =>
+						/\+8801[3-9]{1}[0-9]{8}$/g.test(contactNumber) ||
+						"Must be a valid contact number"
+				],
+				emailRules: [
+					email => !!email || "Email is required",
+					email =>
+						/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+							email
+						) || "Must be a valid email"
+				],
+				userNameRules: [
+					userName => !!userName || "Username is required",
+					userName => userName.length > 3 || "Length must be greater than 2"
+				],
+
+				passwordRules: [
+					password => !!password || "Password is required",
+					password => password.length > 5 || "Length must be greater than 5"
+				]
+			};
+		},
+		methods: {
+			handleSignup() {
+				console.log("sadast");
+			},
+			next() {
+				if (this.step < 2) {
+					this.step++;
+				}
+			},
+			prev() {
+				if (this.step > 1) {
+					this.step--;
+				}
+			}
+		}
+	};
+</script>
