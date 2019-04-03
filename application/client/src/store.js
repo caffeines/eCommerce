@@ -7,7 +7,12 @@ Vue.use(Vuex);
 import { gql } from "apollo-boost";
 
 //* Queries import here
-import { SIGNIN_USER, GET_PRODUCTS, GET_CURRENT_USER } from "./queries";
+import {
+  SIGNIN_USER,
+  GET_PRODUCTS,
+  GET_CURRENT_USER,
+  SIGNUP_USER
+} from "./queries";
 
 export default new Vuex.Store({
   state: {
@@ -55,7 +60,6 @@ export default new Vuex.Store({
           commit("setLoading", false);
           // add User data to state.user
           commit("setUser", data.getCurrentUser);
-          console.log(data.getCurrentUser);
         })
         .catch(err => {
           console.error(err);
@@ -99,8 +103,30 @@ export default new Vuex.Store({
           commit("setLoading", false);
           console.error(err);
         });
+    },
+    signupUser: ({ commit }, payload) => {
+      commit("setLoading", true);
+      //* clear token to prevent errors
+      localStorage.setItem("token", "");
+      apolloClient
+        .mutate({
+          mutation: SIGNUP_USER,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          //localStorage.setItem("token", data.signup.token);
+          // to make sure created method is run in main.js  ( we ru getCurrentUser ), reload page
+          // @ts-ignore
+          router.push("/signin");
+        })
+        .catch(err => {
+          commit("setLoading", false);
+          console.error(err);
+        });
     }
   },
+
   getters: {
     getProducts: state => state.products,
     loading: state => state.loading,

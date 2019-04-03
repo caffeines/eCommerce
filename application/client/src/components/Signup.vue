@@ -139,7 +139,7 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-btn color="accent" @click="prev">prev</v-btn>
-											<v-btn :disabled="!isFormValid" color="accent" type="submit">
+											<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
 												Signup
 												<template v-slot:loader>
 													<span class="custom-loader">
@@ -159,6 +159,7 @@
 	</div>
 </template>
 <script>
+	import { mapGetters } from "vuex";
 	export default {
 		data: () => {
 			return {
@@ -171,10 +172,8 @@
 				firstName: "",
 				lastName: "",
 				contact: "",
-				dateOfBirth: "",
 				userName: "",
 				password: "",
-				emailConfirmation: "",
 				email: "",
 				passwordConfirmation: "",
 				firstNameRules: [
@@ -207,10 +206,17 @@
 				]
 			};
 		},
+		computed: {
+			...mapGetters(["user", "loading"])
+		},
+		watch: {
+			// whenever question changes, this function will run
+			user: function(newValue, oldValue) {
+				console.log(`oldValue ${oldValue}, newValue ${newValue} `);
+				console.log("*******************Wacthed*****************");
+			}
+		},
 		methods: {
-			handleSignup() {
-				console.log("sadast");
-			},
 			next() {
 				if (this.step < 2) {
 					this.step++;
@@ -225,6 +231,20 @@
 				return this.password === this.passwordConfirmation
 					? ""
 					: "Password must be match";
+			},
+			handleSignup() {
+				console.log("Date of birth: ", this.date);
+				if (this.$refs.form.validate()) {
+					this.$store.dispatch("signupUser", {
+						userName: this.userName,
+						email: this.email,
+						password: this.password,
+						contactNo: this.contact,
+						firstName: this.firstName,
+						lastName: this.lastName,
+						dateOfBirth: this.date
+					});
+				}
 			}
 		}
 	};

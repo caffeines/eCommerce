@@ -1,16 +1,15 @@
 <template>
 	<div>
-		<!-- {{user.firstName}} {{user.userName}} -->
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
-				<v-flex xs12 sm4 offset-sm4 mb-5>
+				<v-flex xs12 sm6 offset-sm3 mb-5>
 					<h2>Welcome back!</h2>
 				</v-flex>
 			</v-layout>
 
 			<!-- signin form -->
 			<v-layout row wrap>
-				<v-flex xs12 sm4 offset-sm4>
+				<v-flex xs12 sm6 offset-sm3>
 					<v-card color="#fff" class="form_card">
 						<v-container>
 							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
@@ -82,6 +81,7 @@
 				isFormValid: true,
 				userName: "",
 				password: "",
+				USER: null,
 				userNameRules: [
 					// check if userName in input
 					userName => !!userName || "Username is required"
@@ -116,7 +116,7 @@
 	};
 </script>
   
-<style lang="scss" scoped>
+<style lang="scss">
 	.form_card {
 		border-radius: 2% !important;
 		box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
