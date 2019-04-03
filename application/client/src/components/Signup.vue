@@ -25,7 +25,6 @@
 											></v-text-field>
 										</v-flex>
 									</v-layout>
-
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
@@ -38,13 +37,12 @@
 											></v-text-field>
 										</v-flex>
 									</v-layout>
-
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
 												:rules="firstNameRules"
 												v-model="firstName"
-												prepend-icon="person_outline"
+												prepend-icon="person"
 												label="First name"
 												type="text"
 												required
@@ -56,7 +54,7 @@
 											<v-text-field
 												:rules="lastNameRules"
 												v-model="lastName"
-												prepend-icon="person_outline"
+												prepend-icon="person"
 												label="Last name"
 												type="text"
 												required
@@ -76,9 +74,10 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
-												:rules="contactNumberRules"
-												v-model="contactNumber"
+												:rules="contactRules"
+												v-model="contact"
 												prepend-icon="call"
+												prefix="+88"
 												label="Contact number"
 												type="text"
 												required
@@ -90,8 +89,9 @@
 										<v-flex xs-12>
 											<v-text-field
 												:rules="passwordRules"
+												:error-messages="passwordMatchError()"
 												v-model="password"
-												prepend-icon="lock_open"
+												prepend-icon="lock"
 												label="Password"
 												type="password"
 												required
@@ -102,15 +102,17 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
-												:rules="conPassRules"
-												v-model="conPass"
-												prepend-icon="lock_open"
+												:rules="passwordRules"
+												v-model="passwordConfirmation"
+												:error-messages="passwordMatchError()"
+												prepend-icon="lock"
 												label="Confirm password"
 												type="password"
 												required
 											></v-text-field>
 										</v-flex>
 									</v-layout>
+
 									<v-layout row>
 										<v-flex xs-12>
 											<v-dialog
@@ -123,13 +125,7 @@
 												width="290px"
 											>
 												<template v-slot:activator="{ on }">
-													<v-text-field
-														v-model="date"
-														label="Picker in dialog"
-														prepend-icon="event"
-														readonly
-														v-on="on"
-													></v-text-field>
+													<v-text-field v-model="date" label="Date of birth" prepend-icon="event" v-on="on"></v-text-field>
 												</template>
 												<v-date-picker v-model="date" scrollable>
 													<v-spacer></v-spacer>
@@ -139,10 +135,11 @@
 											</v-dialog>
 										</v-flex>
 									</v-layout>
+
 									<v-layout row>
 										<v-flex xs-12>
 											<v-btn color="accent" @click="prev">prev</v-btn>
-											<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
+											<v-btn :disabled="!isFormValid" color="accent" type="submit">
 												Signup
 												<template v-slot:loader>
 													<span class="custom-loader">
@@ -173,22 +170,24 @@
 				isFormValid: true,
 				firstName: "",
 				lastName: "",
-				contactNumber: "",
+				contact: "",
 				dateOfBirth: "",
 				userName: "",
 				password: "",
-				conPass: "",
+				emailConfirmation: "",
+				email: "",
+				passwordConfirmation: "",
 				firstNameRules: [
 					firstName => !!firstName || "First name is required",
 					firstName => firstName.length > 1 || "Length must be greater than 1"
 				],
 				lastNameRules: [
-					lastName => !!lastName || "First name is required",
+					lastName => !!lastName || "Last name is required",
 					lastName => lastName.length > 1 || "Length must be greater than 1"
 				],
-				contactNumberRules: [
-					contactNumber =>
-						/\+8801[3-9]{1}[0-9]{8}$/g.test(contactNumber) ||
+				contactRules: [
+					contact =>
+						/\+?(88)?(01)[3-9][0-9]{8}\b/g.test(contact) ||
 						"Must be a valid contact number"
 				],
 				emailRules: [
@@ -202,10 +201,9 @@
 					userName => !!userName || "Username is required",
 					userName => userName.length > 3 || "Length must be greater than 2"
 				],
-
 				passwordRules: [
 					password => !!password || "Password is required",
-					password => password.length > 5 || "Length must be greater than 5"
+					password => password.length > 4 || "Length must be greater than 4"
 				]
 			};
 		},
@@ -222,6 +220,11 @@
 				if (this.step > 1) {
 					this.step--;
 				}
+			},
+			passwordMatchError() {
+				return this.password === this.passwordConfirmation
+					? ""
+					: "Password must be match";
 			}
 		}
 	};
