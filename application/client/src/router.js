@@ -39,6 +39,17 @@ export default new Router({
       beforeEnter: userGuard
     },
     {
+      path: "/shop/",
+      name: "shop",
+      component: () => import("./views/Shop.vue")
+    },
+    {
+      path: "/shop/:id",
+      name: "shopView",
+      component: () => import("./views/ShopView.vue")
+    },
+
+    {
       path: "/about",
       name: "about",
       // route level code-splitting

@@ -74,6 +74,7 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
+//* create shop
 export const CREATE_SHOP = gql`
   mutation(
     $shopName: String!
@@ -100,6 +101,42 @@ export const CREATE_SHOP = gql`
       dateOfCreation
       owner {
         _id
+      }
+    }
+  }
+`;
+
+//* Get shop (single)
+export const GET_SHOP = gql`
+  query($id: String!) {
+    getShop(id: $id) {
+      _id
+      shopName
+      address
+      owner {
+        _id
+        firstName
+        lastName
+        userName
+        profilePic
+      }
+      contactNo
+      address
+      shopId
+      logo
+      coverPic {
+        _id
+        src
+        head
+        shortDescription
+      }
+      dateOfCreation
+      rating
+      kudos {
+        _id
+        name
+        description
+        year
       }
     }
   }

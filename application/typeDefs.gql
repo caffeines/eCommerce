@@ -65,7 +65,7 @@ type Carousel {
 
 type Kudos {
   _id: ID
-  name: String!
+  name: String
   description: String
   year: String
 }
@@ -78,6 +78,7 @@ type Query {
   getProducts: [Product]
   getUser(userName: String!): User
   getCurrentUser: User
+  getShop(id: String!): Shop
 }
 
 type Mutation {

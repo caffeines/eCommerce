@@ -12,17 +12,26 @@ import {
   GET_PRODUCTS,
   GET_CURRENT_USER,
   SIGNUP_USER,
-  CREATE_SHOP
+  CREATE_SHOP,
+  GET_SHOP
 } from "./queries";
 
 export default new Vuex.Store({
+  //! Sate
   state: {
+    shop: null,
     products: [],
     user: null,
     authError: null,
     loading: false
   },
+
+  //! Mutations
+
   mutations: {
+    setShop: (state, payload) => {
+      state.shop = payload;
+    },
     setAuthError: (state, payload) => {
       state.authError = payload;
     },
@@ -39,6 +48,9 @@ export default new Vuex.Store({
       state.user = null;
     }
   },
+
+  //! Action
+
   actions: {
     signoutUser: async ({ commit }) => {
       commit("clearUser");
@@ -51,7 +63,22 @@ export default new Vuex.Store({
       // @ts-ignore
       router.go();
     },
-
+    getShop: ({ commit }, payload) => {
+      commit("setLoading", true);
+      apolloClient
+        .query({
+          query: GET_SHOP,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          commit("setShop", data.getShop);
+        })
+        .catch(err => {
+          console.error(err);
+          commit("setLoading", false);
+        });
+    },
     getCurrentUser: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
@@ -150,10 +177,12 @@ export default new Vuex.Store({
     }
   },
 
+  //! Getters
   getters: {
     getProducts: state => state.products,
     loading: state => state.loading,
     user: state => state.user,
-    authError: state => state.authError
+    authError: state => state.authError,
+    shop: state => state.shop
   }
 });

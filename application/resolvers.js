@@ -36,6 +36,22 @@ module.exports = {
       }
     },
     /*
+     ** Get Shop
+     */
+
+    getShop: async (_, { id }, { Shop }) => {
+      const shop = await Shop.findOne({ _id: id }).populate({
+        path: "owner",
+        model: "User"
+      });
+      if (shop) {
+        return shop;
+      } else {
+        throw new Error("Shop dosent found");
+      }
+    },
+
+    /*
      ** Current User fetching
      */
     getCurrentUser: async (_, args, { User, currentUser }) => {

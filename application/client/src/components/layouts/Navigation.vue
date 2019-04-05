@@ -33,7 +33,10 @@
 		<v-toolbar fixed app>
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
-				<router-link to="/" tag="span" style="cursor: pointer">Gogonjo</router-link>
+				<router-link to="/" tag="span" style="cursor: pointer">
+					<div v-if="shop">{{shop.shopName}}</div>
+					<div v-else>Gogonjo</div>
+				</router-link>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 
@@ -77,7 +80,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["user"]),
+			...mapGetters(["user", "shop"]),
 			navItems() {
 				let items = [
 					{ icon: "lock_open", title: "Sign in", link: "/signin" },

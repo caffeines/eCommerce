@@ -1,5 +1,5 @@
 <template>
-	<div class="mt-4">
+	<div class="mt-2">
 		<Home :items="Products"/>
 	</div>
 </template>
@@ -25,7 +25,6 @@
 		},
 		methods: {
 			getProducts() {
-				console.log("Hited");
 				this.$store.dispatch("getAllProducts");
 			}
 		}
