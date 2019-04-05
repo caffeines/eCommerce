@@ -146,13 +146,6 @@ module.exports = {
       { shopName, ownerId, email, contactNo, address },
       { Shop }
     ) => {
-      const shop = await Shop.findOne({
-        shopName
-      });
-      if (shop) {
-        throw new Error("This shop name already exists");
-      }
-
       const newShop = new Shop({
         shopName,
         owner: ownerId,

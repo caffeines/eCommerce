@@ -11,7 +11,8 @@ import {
   SIGNIN_USER,
   GET_PRODUCTS,
   GET_CURRENT_USER,
-  SIGNUP_USER
+  SIGNUP_USER,
+  CREATE_SHOP
 } from "./queries";
 
 export default new Vuex.Store({
@@ -50,6 +51,7 @@ export default new Vuex.Store({
       // @ts-ignore
       router.go();
     },
+
     getCurrentUser: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
@@ -66,6 +68,7 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
+
     getAllProducts: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
@@ -81,6 +84,7 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
+
     // @ts-ignore
     signinUser: ({ commit }, payload) => {
       commit("setLoading", true);
@@ -119,6 +123,25 @@ export default new Vuex.Store({
           // to make sure created method is run in main.js  ( we ru getCurrentUser ), reload page
           // @ts-ignore
           router.push("/signin");
+        })
+        .catch(err => {
+          commit("setLoading", false);
+          console.error(err);
+        });
+    },
+    createShop: ({ commit }, payload) => {
+      commit("setLoading", true);
+
+      apolloClient
+        .mutate({
+          mutation: CREATE_SHOP,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log(data);
+          // @ts-ignore
+          router.push(`/shop/${data.createShop._id}`);
         })
         .catch(err => {
           commit("setLoading", false);

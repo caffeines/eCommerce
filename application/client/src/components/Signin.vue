@@ -106,7 +106,7 @@
 			user: function(value) {
 				// if user value change from null
 				if (value) {
-					this.$router.push('/');
+					this.$router.go(-1);
 				}
 			}
 		},

@@ -14,7 +14,7 @@
 				<v-flex xs12 sm4 offset-sm4>
 					<v-card color="#fff" class="form_card">
 						<v-container>
-							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
+							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleCreateShop">
 								<v-layout row>
 									<v-flex xs-12>
 										<v-text-field
@@ -87,12 +87,14 @@
 </template>
 <script>
 	import TypeWriter from "@/components/layouts/TypeWriter";
+	import { mapGetters } from "vuex";
 	export default {
 		components: {
 			TypeWriter
 		},
 		data() {
 			return {
+				isFormValid: true,
 				shopName: "",
 				email: "",
 				contactNo: "",
@@ -125,7 +127,22 @@
 				]
 			};
 		},
-		methods: {}
+		computed: {
+			...mapGetters(["user", "loading"])
+		},
+		methods: {
+			handleCreateShop() {
+				if (this.$refs.form.validate()) {
+					this.$store.dispatch("createShop", {
+						shopName: this.shopName,
+						email: this.email,
+						contactNo: this.contactNo,
+						address: this.address,
+						ownerId: this.$store.getters.user._id
+					});
+				}
+			}
+		}
 	};
 </script>
 <style lang="scss">

@@ -92,11 +92,15 @@ export const CREATE_SHOP = gql`
       _id
       shopName
       email
+      shopId
       contactNo
       address
       logo
       rating
       dateOfCreation
+      owner {
+        _id
+      }
     }
   }
 `;

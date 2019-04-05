@@ -1,14 +1,21 @@
-const mongoose = require( 'mongoose' );
-const shopSchema = new mongoose.Schema( {
+const mongoose = require("mongoose");
+var rug = require("random-username-generator");
+
+const shopSchema = new mongoose.Schema({
   shopName: {
     type: String,
-    required: true,
-    trim: true,
-    unique: true
+    required: true
   },
+  shopId: {
+    type: String,
+    trim: true,
+    unique: true,
+    default: rug.generate()
+  },
+
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true
   },
   email: {
@@ -30,39 +37,42 @@ const shopSchema = new mongoose.Schema( {
     default: Date.now
   },
   logo: {
-    type: String,
+    type: String
   },
-  coverPic: [ {
-    src: {
-      type: String,
-      required: true
-    },
-    head: {
-      type: String,
-      required: true
-    },
-    shrotDescription: {
-      type: String,
-      required: true
+  coverPic: [
+    {
+      src: {
+        type: String,
+        required: true
+      },
+      head: {
+        type: String,
+        required: true
+      },
+      shrotDescription: {
+        type: String,
+        required: true
+      }
     }
-  } ],
+  ],
   rating: {
     type: Number,
     default: 0
   },
-  kudos: [ {
-    name: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String
-    },
-    year: {
-      type: String
+  kudos: [
+    {
+      name: {
+        type: String,
+        required: true
+      },
+      description: {
+        type: String
+      },
+      year: {
+        type: String
+      }
     }
-  } ]
+  ]
+});
 
-} );
-
-module.exports = mongoose.model( 'Shop', shopSchema );
+module.exports = mongoose.model("Shop", shopSchema);
