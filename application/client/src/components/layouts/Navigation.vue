@@ -4,7 +4,9 @@
 			<v-toolbar fixed>
 				<v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
 				<v-toolbar-title>
-					<router-link to="/" tag="span" style="cursor: pointer">Gogonjo</router-link>
+					<router-link to="/" tag="span" style="cursor: pointer">
+						<span color="primary">Gogonjo</span>
+					</router-link>
 				</v-toolbar-title>
 			</v-toolbar>
 
@@ -39,7 +41,7 @@
 				flex
 				prepend-icon="search"
 				:placeholder="text"
-				color="info"
+				color="primary"
 				single-line-hide-details
 			></v-text-field>
 

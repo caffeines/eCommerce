@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Signin from "./views/Signin.vue";
 import userGuard from "./Auth/userGuard";
+import Profile from "./views/Profile";
 Vue.use(Router);
 
 export default new Router({
@@ -28,7 +29,7 @@ export default new Router({
     {
       path: "/profile",
       name: "profile",
-      component: () => import("./views/Profile.vue"),
+      component: Profile,
       beforeEnter: userGuard
     },
     {

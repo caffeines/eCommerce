@@ -1,8 +1,12 @@
 <template>
-	<h1>Create</h1>
+	<CreateShop/>
 </template>
 <script>
-export default {
-    
-}
+	import CreateShop from "@/components/CreateShop";
+	export default {
+		name: "create",
+		components: {
+			CreateShop
+		}
+	};
 </script>

@@ -4,8 +4,6 @@
 			<appLoading/>
 		</div>
 		<div v-else col-sm-12>
-			<div v-if="user">{{user.firstName}} {{user.userName}}</div>
-
 			<v-carousel aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.picture[i]">
 					<div class="head">

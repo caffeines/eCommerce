@@ -1,10 +1,12 @@
 <template>
-	<div>
+	<div v-if="!user && !loading">
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
-				<v-flex xs12 sm4 offset-sm4 mb-5>
-					<h2>Welcome back!</h2>
-				</v-flex>
+				<div class="mb-5 typeWriter">
+					<h2 class="type">
+						<TypeWriter :text="text"/>
+					</h2>
+				</div>
 			</v-layout>
 
 			<!-- signin form -->
@@ -41,7 +43,7 @@
 
 								<v-layout row>
 									<v-flex xs-12>
-										<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
+										<v-btn :loading="loading" :disabled="!isFormValid" color="primary" type="submit">
 											Signin
 											<template v-slot:loader>
 												<span class="custom-loader">
@@ -74,14 +76,19 @@
 	</div>
 </template>
 <script>
+	import TypeWriter from "@/components/layouts/TypeWriter";
 	import { mapGetters } from "vuex";
 	export default {
+		components: {
+			TypeWriter
+		},
 		data: () => {
 			return {
 				isFormValid: true,
 				userName: "",
 				password: "",
 				USER: null,
+				text: ["Welcome back!", "Sign in here"],
 				userNameRules: [
 					// check if userName in input
 					userName => !!userName || "Username is required"
@@ -99,7 +106,7 @@
 			user: function(value) {
 				// if user value change from null
 				if (value) {
-					this.$router.push("/");
+					this.$router.push('/');
 				}
 			}
 		},
@@ -119,9 +126,9 @@
 <style lang="scss">
 	.form_card {
 		border-radius: 2% !important;
-
+		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);
 		&:hover {
-			box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+			box-shadow: 0 1rem 2rem rgba(#ef5350, 0.6);
 		}
 	}
 	.link {
@@ -173,5 +180,8 @@
 		to {
 			transform: rotate(360deg);
 		}
+	}
+	.typeWriter {
+		margin: 0 auto;
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-progress-circular class="loading" :size="90" :width="9" color="purple" indeterminate></v-progress-circular>
+		<v-progress-circular class="loading" :size="90" :width="9" color="primary" indeterminate></v-progress-circular>
 	</div>
 </template>
 <script>

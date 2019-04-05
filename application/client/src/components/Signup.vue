@@ -2,9 +2,11 @@
 	<div>
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
-				<v-flex xs12 sm4 offset-sm4 mb-5>
-					<h2>Get started here</h2>
-				</v-flex>
+				<div class="mb-5 typeWriter">
+					<h2 class="type">
+						<TypeWriter :text="text"/>
+					</h2>
+				</div>
 			</v-layout>
 			<!-- step-1 -->
 			<v-layout row wrap>
@@ -63,7 +65,7 @@
 									</v-layout>
 									<v-layout row>
 										<v-flex xs-12>
-											<v-btn :disabled="!isFormValid" color="accent" @click="next">next</v-btn>
+											<v-btn :disabled="!isFormValid" color="primary" @click="next">next</v-btn>
 										</v-flex>
 									</v-layout>
 								</div>
@@ -138,8 +140,8 @@
 
 									<v-layout row>
 										<v-flex xs-12>
-											<v-btn color="accent" @click="prev">prev</v-btn>
-											<v-btn :loading="loading" :disabled="!isFormValid" color="accent" type="submit">
+											<v-btn color="primary" @click="prev">prev</v-btn>
+											<v-btn :loading="loading" :disabled="!isFormValid" color="primary" type="submit">
 												Signup
 												<template v-slot:loader>
 													<span class="custom-loader">
@@ -159,8 +161,12 @@
 	</div>
 </template>
 <script>
+	import TypeWriter from "@/components/layouts/TypeWriter";
 	import { mapGetters } from "vuex";
 	export default {
+		components: {
+			TypeWriter
+		},
 		data: () => {
 			return {
 				date: new Date().toISOString().substr(0, 10),
@@ -175,6 +181,7 @@
 				userName: "",
 				password: "",
 				email: "",
+				text: ["Get started here"],
 				passwordConfirmation: "",
 				firstNameRules: [
 					firstName => !!firstName || "First name is required",
@@ -187,7 +194,8 @@
 				contactRules: [
 					contact =>
 						/\+?(88)?(01)[3-9][0-9]{8}\b/g.test(contact) ||
-						"Must be a valid contact number"
+						"Must be a valid contact number",
+					contact => !!contact || "Contact number is required"
 				],
 				emailRules: [
 					email => !!email || "Email is required",
@@ -210,10 +218,11 @@
 			...mapGetters(["user", "loading"])
 		},
 		watch: {
-			// whenever question changes, this function will run
-			user: function(newValue, oldValue) {
-				console.log(`oldValue ${oldValue}, newValue ${newValue} `);
-				console.log("*******************Wacthed*****************");
+			user: function(value) {
+				// if user value change from null
+				if (value) {
+					this.$router.go(-1);
+				}
 			}
 		},
 		methods: {
@@ -235,7 +244,6 @@
 					: "Password must be match";
 			},
 			handleSignup() {
-				console.log("Date of birth: ", this.date);
 				if (this.$refs.form.validate()) {
 					this.$store.dispatch("signupUser", {
 						userName: this.userName,
