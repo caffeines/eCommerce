@@ -73,3 +73,30 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
+
+export const CREATE_SHOP = gql`
+  mutation(
+    $shopName: String!
+    $ownerId: ID!
+    $email: String!
+    $contactNo: String!
+    $address: String!
+  ) {
+    createShop(
+      shopName: $shopName
+      ownerId: $ownerId
+      email: $email
+      contactNo: $contactNo
+      address: $address
+    ) {
+      _id
+      shopName
+      email
+      contactNo
+      address
+      logo
+      rating
+      dateOfCreation
+    }
+  }
+`;

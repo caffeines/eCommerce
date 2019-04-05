@@ -32,6 +32,12 @@ export default new Router({
       beforeEnter: userGuard
     },
     {
+      path: "/create",
+      name: "create",
+      component: () => import("./views/Create.vue"),
+      beforeEnter: userGuard
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting

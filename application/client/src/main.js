@@ -5,9 +5,11 @@ import router from "./router";
 import store from "./store";
 import ApolloClient from "apollo-boost";
 import VueApollo, { ApolloProvider } from "vue-apollo";
+import VueTyperPlugin from "vue-typer";
 import { configure } from "protobufjs";
 
 Vue.use(VueApollo);
+Vue.use(VueTyperPlugin);
 
 // configuration of apollo-client
 export const defaultClient = new ApolloClient({

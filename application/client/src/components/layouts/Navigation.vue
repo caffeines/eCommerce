@@ -8,7 +8,7 @@
 				</v-toolbar-title>
 			</v-toolbar>
 
-			<v-list>
+			<v-list style="margin-top: 62px">
 				<v-list-tile v-for="item in sideNavItems" :key="item.title" :to="item.link" router exact>
 					<v-list-tile-action>
 						<v-icon>{{ item.icon }}</v-icon>
@@ -38,7 +38,7 @@
 			<v-text-field
 				flex
 				prepend-icon="search"
-				placeholder="Search here"
+				:placeholder="text"
 				color="info"
 				single-line-hide-details
 			></v-text-field>
@@ -69,7 +69,9 @@
 	export default {
 		data() {
 			return {
-				drawer: false
+				drawer: false,
+				text: "",
+				txt: "Type to search (ex: iPhone XS)"
 			};
 		},
 		computed: {
@@ -77,7 +79,7 @@
 			navItems() {
 				let items = [
 					{ icon: "lock_open", title: "Sign in", link: "/signin" },
-					{ icon: "create", title: "Sign up", link: "/signup" }
+					{ icon: "how_to_reg", title: "Sign up", link: "/signup" }
 				];
 				if (this.user) {
 					items = [
@@ -88,20 +90,21 @@
 			},
 			sideNavItems() {
 				let items = [
-					{ icon: "", title: "", link: "/" },
 					{ icon: "lock_open", title: "Sign in", link: "/signin" },
-					{ icon: "create", title: "Sign up", link: "/signup" }
+					{ icon: "how_to_reg", title: "Sign up", link: "/signup" }
 				];
 				if (this.user) {
 					items = [
-						{ icon: "", title: "", link: "/" },
-						{ icon: "account_circle", title: "Profile", link: "/cart" },
+						{ icon: "store", title: "Department", link: "/department" },
+						{ icon: "create", title: "Create", link: "/create" },
+						{ icon: "account_circle", title: "Profile", link: "/profile" },
 						{ icon: "chat", title: "Post", link: "/posts" }
 					];
 				}
 				return items;
 			}
 		},
+		created() {},
 		methods: {
 			signoutUser() {
 				this.$store.dispatch("signoutUser");

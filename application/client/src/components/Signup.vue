@@ -2,13 +2,13 @@
 	<div>
 		<v-container text-xs-center mt-4 pt-5>
 			<v-layout row wrap>
-				<v-flex xs12 sm6 offset-sm3 mb-5>
+				<v-flex xs12 sm4 offset-sm4 mb-5>
 					<h2>Get started here</h2>
 				</v-flex>
 			</v-layout>
 			<!-- step-1 -->
 			<v-layout row wrap>
-				<v-flex xs12 sm6 offset-sm3>
+				<v-flex xs12 sm4 offset-sm4>
 					<v-card color="#fff" class="form_card">
 						<v-container>
 							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignup">
@@ -218,8 +218,10 @@
 		},
 		methods: {
 			next() {
-				if (this.step < 2) {
-					this.step++;
+				if (this.$refs.form.validate()) {
+					if (this.step < 2) {
+						this.step++;
+					}
 				}
 			},
 			prev() {
