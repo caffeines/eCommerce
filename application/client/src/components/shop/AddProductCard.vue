@@ -53,12 +53,27 @@
 									</v-layout>
 									<v-layout row>
 										<v-flex xs-12>
-											<v-btn :disabled="!isFormValid" color="primary" @click="next">Next</v-btn>
+											<v-btn round :disabled="!isFormValid" color="primary" @click="next">Next</v-btn>
 										</v-flex>
 									</v-layout>
 								</div>
 
 								<div v-if="step == 2">
+									<v-layout row>
+										<v-flex xs-12>
+											<v-autocomplete
+												prepend-icon="category"
+												v-model="category"
+												multiple
+												attach
+												chips
+												:rules="categoryRules"
+												:items="categoryItems"
+												label="Category"
+											></v-autocomplete>
+										</v-flex>
+									</v-layout>
+
 									<v-layout row>
 										<v-flex xs-12>
 											<v-autocomplete
@@ -79,6 +94,7 @@
 												v-model="color"
 												multiple
 												attach
+												:rules="colorRules"
 												chips
 												:items="colorItems"
 												label="Color"
@@ -93,27 +109,72 @@
 												multiple
 												attach
 												chips
+												:rules="sizeRules"
 												:items="sizeItems"
 												label="Size"
 											></v-autocomplete>
 										</v-flex>
 									</v-layout>
+
 									<v-layout row>
 										<v-flex xs-12>
-											<v-autocomplete
-												prepend-icon="category"
-												v-model="category"
-												multiple
-												attach
-												chips
-												:items="categoryItems"
-												label="Category"
-											></v-autocomplete>
+											<v-btn round color="primary" @click="prev">Prev</v-btn>
+											<v-btn round :disabled="!isFormValid" color="primary" @click="next">Next</v-btn>
+										</v-flex>
+									</v-layout>
+								</div>
+								<div v-if="step==3">
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="pictureRules"
+												v-model="picture[0]"
+												prepend-icon="add_a_photo"
+												label="Picture-1"
+												type="text"
+												required="true"
+											></v-text-field>
 										</v-flex>
 									</v-layout>
 									<v-layout row>
 										<v-flex xs-12>
-											<v-btn color="primary" @click="prev">Prev</v-btn>
+											<v-text-field
+												:rules="pictureRules"
+												v-model="picture[1]"
+												prepend-icon="add_a_photo"
+												label="Picture-2"
+												type="text"
+												required="true"
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-text-field
+												:rules="pictureRules"
+												v-model="picture[2]"
+												prepend-icon="add_a_photo"
+												label="Picture-3"
+												type="text"
+												required="true"
+											></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout wrap row>
+										<v-flex xs-3 sm-3>
+											<img :src="picture[0]" height="100px">
+										</v-flex>
+										<v-flex xs-3 sm-3>
+											<img :src="picture[1]" height="100px">
+										</v-flex>
+										<v-flex xs-3 sm-3>
+											<img :src="picture[2]" height="100px">
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<v-btn round color="primary" @click="prev">Prev</v-btn>
+											<v-btn round :disabled="!isFormValid" color="primary" @click="next">Add product</v-btn>
 										</v-flex>
 									</v-layout>
 								</div>
@@ -189,7 +250,11 @@
 				descriptionRules: [
 					description => !!description || "Description is required",
 					description =>
-						description.length < 200 || "Description length must be less than 200"
+						description.length < 200 ||
+						"Description length must be less than 200",
+					description =>
+						description.length > 50 ||
+						"Description length must be greater than 50"
 				],
 				categoryRules: [
 					category => category.length > 0 || "Category is required"
