@@ -4,7 +4,7 @@
 			<appLoading/>
 		</div>
 		<div v-else col-sm-12>
-			<v-carousel aspect-ratio="1" hide-delimiters class="carousel">
+			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.picture[i]">
 					<div class="head">
 						<div class="sub_title" :style="{color: color}">{{"T-shirt"}}</div>

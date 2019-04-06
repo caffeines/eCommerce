@@ -24,7 +24,7 @@ export default new Router({
     {
       path: "/signup",
       name: "signup",
-      component: () => import("./views/Signup.vue")
+      component: () => import("./views/Signin.vue")
     },
     {
       path: "/profile",
@@ -36,6 +36,12 @@ export default new Router({
       path: "/create",
       name: "create",
       component: () => import("./views/Create.vue"),
+      beforeEnter: userGuard
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: () => import("./views/Dashboard.vue"),
       beforeEnter: userGuard
     },
     {

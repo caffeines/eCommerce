@@ -15,6 +15,7 @@ import {
   CREATE_SHOP,
   GET_SHOP
 } from "./queries";
+import { stat } from "fs";
 
 export default new Vuex.Store({
   //! Sate
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     products: [],
     user: null,
     authError: null,
-    loading: false
+    loading: false,
+    entry: false
   },
 
   //! Mutations
@@ -31,6 +33,12 @@ export default new Vuex.Store({
   mutations: {
     setShop: (state, payload) => {
       state.shop = payload;
+    },
+    signinSet: state => {
+      state.entry = false;
+    },
+    signupSet: state => {
+      state.entry = true;
     },
     setAuthError: (state, payload) => {
       state.authError = payload;
@@ -148,6 +156,7 @@ export default new Vuex.Store({
           commit("setLoading", false);
           //localStorage.setItem("token", data.signup.token);
           // to make sure created method is run in main.js  ( we ru getCurrentUser ), reload page
+          commit("signinSet");
           // @ts-ignore
           router.push("/signin");
         })
@@ -183,6 +192,7 @@ export default new Vuex.Store({
     loading: state => state.loading,
     user: state => state.user,
     authError: state => state.authError,
-    shop: state => state.shop
+    shop: state => state.shop,
+    entry: state => state.entry
   }
 });

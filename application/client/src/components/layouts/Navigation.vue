@@ -1,7 +1,7 @@
 <template>
 	<div class="mb-3">
 		<v-navigation-drawer temporary v-model="drawer" fixed app>
-			<v-toolbar fixed>
+			<v-toolbar fixed flat>
 				<v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
 				<v-toolbar-title>
 					<router-link to="/" tag="span" style="cursor: pointer">
@@ -30,16 +30,18 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-toolbar fixed app>
+		<v-toolbar fixed app flat>
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
-				<router-link to="/" tag="span" style="cursor: pointer">
-					<div v-if="shop">{{shop.shopName}}</div>
-					<div v-else>Gogonjo</div>
-				</router-link>
+				<div v-if="shop && this.$route.params.id">
+					<router-link to="/" tag="span" style="cursor: pointer">{{shop.shopName}}</router-link>
+				</div>
+
+				<div v-else>
+					<router-link to="/" tag="span" style="cursor: pointer">Gogonjo</router-link>
+				</div>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-
 			<v-text-field
 				flex
 				prepend-icon="search"
@@ -52,9 +54,17 @@
 
 			<!-- Icon & Items -->
 			<div class="hidden-xs-only">
-				<v-btn flat v-for="item in navItems" :key="item.title" :to="item.link">
+				<!-- <v-btn flat v-for="item in navItems" :key="item.title" :to="item.link">
 					<v-icon class="hidden-sm-only">{{item.icon}}</v-icon>
 					<div>{{item.title}}</div>
+				</v-btn>-->
+				<v-btn flat v-if="!user" to="/signin" @click="signinSet">
+					<v-icon class="hidden-sm-only">lock_open</v-icon>
+					<div>Signin</div>
+				</v-btn>
+				<v-btn flat v-if="!user" to="/signin" @click="signupSet">
+					<v-icon class="hidden-sm-only">how_to_reg</v-icon>
+					<div>Signup</div>
 				</v-btn>
 				<v-btn flat v-if="user" @click="signoutUser">
 					<v-icon class="hidden-sm-only">exit_to_app</v-icon>Signout
@@ -71,6 +81,8 @@
 
 <script>
 	import { mapGetters } from "vuex";
+	import { mapMutations } from "vuex";
+
 	export default {
 		data() {
 			return {
@@ -82,10 +94,7 @@
 		computed: {
 			...mapGetters(["user", "shop"]),
 			navItems() {
-				let items = [
-					{ icon: "lock_open", title: "Sign in", link: "/signin" },
-					{ icon: "how_to_reg", title: "Sign up", link: "/signup" }
-				];
+				let items = [{ icon: "lock_open", title: "Sign in", link: "/signin" }];
 				if (this.user) {
 					items = [
 						{ icon: "account_circle", title: "Profile", link: "/profile" }
@@ -95,22 +104,30 @@
 			},
 			sideNavItems() {
 				let items = [
-					{ icon: "lock_open", title: "Sign in", link: "/signin" },
-					{ icon: "how_to_reg", title: "Sign up", link: "/signup" }
+					{
+						icon: "lock_open",
+						title: "Sign in",
+						link: "/signin",
+						click: "signinSet"
+					}
 				];
 				if (this.user) {
 					items = [
-						{ icon: "store", title: "Department", link: "/department" },
-						{ icon: "create", title: "Create", link: "/create" },
 						{ icon: "account_circle", title: "Profile", link: "/profile" },
+						{ icon: "business", title: "Department", link: "/department" },
+						{ icon: "dashboard", title: "Dashboard", link: "/dashboard" },
+						{ icon: "store", title: "Shop", link: "/shop" },
+						{ icon: "create", title: "Create", link: "/create" },
 						{ icon: "chat", title: "Post", link: "/posts" }
 					];
 				}
+
 				return items;
 			}
 		},
 		created() {},
 		methods: {
+			...mapMutations(["signupSet", "signinSet"]),
 			signoutUser() {
 				this.$store.dispatch("signoutUser");
 			}

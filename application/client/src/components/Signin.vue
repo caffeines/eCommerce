@@ -1,6 +1,6 @@
 <template>
 	<div v-if="!user && !loading">
-		<v-container text-xs-center mt-4 pt-5>
+		<v-container text-xs-center mt-2 pt-5>
 			<v-layout row wrap>
 				<div class="mb-5 typeWriter">
 					<h2 class="type">
@@ -8,7 +8,6 @@
 					</h2>
 				</div>
 			</v-layout>
-
 			<!-- signin form -->
 			<v-layout row wrap>
 				<v-flex xs12 sm4 offset-sm4>
@@ -53,8 +52,8 @@
 										</v-btn>
 										<h3>
 											Don't have an account?
-											<router-link to="/signup">
-												<span class="link">Signup</span>
+											<router-link to="/signin">
+												<span class="link" @click="signupSet">Signup</span>
 											</router-link>
 										</h3>
 									</v-flex>
@@ -62,7 +61,7 @@
 
 								<v-layout row>
 									<v-flex xs-12>
-										<router-link to="/signup">
+										<router-link to>
 											<span class="link">Forgot password?</span>
 										</router-link>
 									</v-flex>
@@ -78,6 +77,8 @@
 <script>
 	import TypeWriter from "@/components/layouts/TypeWriter";
 	import { mapGetters } from "vuex";
+	import { mapMutations } from "vuex";
+
 	export default {
 		components: {
 			TypeWriter
@@ -111,6 +112,7 @@
 			}
 		},
 		methods: {
+			...mapMutations(["signinSet", "signupSet"]),
 			handleSignin() {
 				if (this.$refs.form.validate()) {
 					this.$store.dispatch("signinUser", {

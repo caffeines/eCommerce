@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-container text-xs-center mt-4 pt-5>
+		<v-container text-xs-center mt-2 pt-5>
 			<v-layout row wrap>
 				<div class="mb-5 typeWriter">
 					<h2 class="type">
@@ -66,6 +66,13 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-btn :disabled="!isFormValid" color="primary" @click="next">next</v-btn>
+										</v-flex>
+									</v-layout>
+									<v-layout row>
+										<v-flex xs-12>
+											<router-link to="/signin">
+												<span class="link" @click="signinSet">Already have an account?</span>
+											</router-link>
 										</v-flex>
 									</v-layout>
 								</div>
@@ -163,6 +170,7 @@
 <script>
 	import TypeWriter from "@/components/layouts/TypeWriter";
 	import { mapGetters } from "vuex";
+	import { mapMutations } from "vuex";
 	export default {
 		components: {
 			TypeWriter
@@ -220,12 +228,14 @@
 		watch: {
 			user: function(value) {
 				// if user value change from null
+				console.log("Watched");
 				if (value) {
-					this.$router.go(-1);
+					this.$router.push("/");
 				}
 			}
 		},
 		methods: {
+			...mapMutations(["signinSet", "signupSet"]),
 			next() {
 				if (this.$refs.form.validate()) {
 					if (this.step < 2) {
