@@ -2,10 +2,12 @@
 	<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row>
-				<v-flex xs4>
+				<v-flex xs3>
+					<div v-if="shopX == null ? shopX=allShopNameByaUser[0]: shopX=shopX"/>
 					<v-select
 						v-model="shopX"
-						:items="shopItems"
+						:items="allShopNameByaUser"
+						color="red"
 						menu-props="auto"
 						label="Shop"
 						hide-details
@@ -53,7 +55,7 @@
 						<v-card-title primary-title>
 							<v-icon x-large color="#fff">money</v-icon>
 							<div class="ml-5">
-								<div class="headline head">$19280</div>
+								<div class="headline head">&#2547; 19280</div>
 								<span class="head">Revenue</span>
 							</div>
 						</v-card-title>
@@ -109,7 +111,7 @@
 </template>
 
 <script>
-	import { mapGetters } from "vuex";
+	import { mapGetters, mapMutations } from "vuex";
 	import AddProductCard from "@/components/shop/AddProductCard";
 	import DataTable from "@/components/shop/DataTable";
 
@@ -122,41 +124,39 @@
 			return {
 				selectedShopName: "",
 				dialog: false,
-				shopX: "",
+				shopX: null,
 				ID: null,
 				notifications: false,
 				sound: true,
 				widgets: false,
 				productCard: true,
-				carouselCard: false,
-				shopItems: []
+				carouselCard: false
 			};
 		},
 		created() {
 			this.getShop();
 		},
 		computed: {
-			...mapGetters(["shop", "getProducts", "user", "allShopByaUser"])
+			...mapGetters([
+				"shop",
+				"getProducts",
+				"user",
+				"allShopByaUser",
+				"allShopNameByaUser",
+				"currentShop"
+			])
 		},
 		watch: {
-			//TODO need to store in vuex store
-			allShopByaUser: function(value) {
-				if (value) {
-					this.shopX = this.allShopByaUser[0].shopName;
+			shopX: function(newValue, oldValue) {
+				console.log(newValue, oldValue);
+				if (newValue) {
 					for (var i = 0; i < this.allShopByaUser.length; i++) {
-						console.log("Shop items:", this.allShopByaUser[i].shopName);
-						this.shopItems.push(this.allShopByaUser[i].shopName);
-					}
-				}
-			},
-			shopX: function(value) {
-				if (value) {
-					for (var i = 0; i < this.allShopByaUser.length; i++) {
-						if (this.allShopByaUser[i].shopName === value) {
+						if (this.allShopByaUser[i].shopName === newValue) {
 							this.ID = this.allShopByaUser[i]._id;
 							break;
 						}
 					}
+					this.$store.dispatch("setCurrentShopName", newValue);
 				}
 			}
 		},

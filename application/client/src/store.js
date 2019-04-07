@@ -18,6 +18,7 @@ import {
   GET_ALL_SHOP_BY_A_USER
 } from "./queries";
 import { stat } from "fs";
+import { STATES } from "mongoose";
 
 export default new Vuex.Store({
   //! Sate
@@ -28,12 +29,20 @@ export default new Vuex.Store({
     authError: null,
     loading: false,
     entry: false,
-    allShopByaUser: []
+    allShopByaUser: [],
+    allShopNameByaUser: null,
+    currentShop: null
   },
 
   //! Mutations
 
   mutations: {
+    setcurrentShop: (state, payload) => {
+      state.currentShop = payload;
+    },
+    setAllShopNameByaUser: (state, payload) => {
+      state.allShopNameByaUser = payload;
+    },
     setShop: (state, payload) => {
       state.shop = payload;
     },
@@ -102,13 +111,22 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           commit("setLoading", false);
-          console.log(data.getAllShopByaUser);
+          let temp = [];
+          for (var i = 0; i < data.getAllShopByaUser.length; i++) {
+            temp.push(data.getAllShopByaUser[i].shopName);
+          }
+          //console.log("temp:", temp[0]);
+          commit("setAllShopNameByaUser", temp);
           commit("setAllShopByaUser", data.getAllShopByaUser);
         })
         .catch(err => {
           console.error(err);
           commit("setLoading", false);
         });
+    },
+    setCurrentShopName: ({ commit }, payload) => {
+      console.log(payload);
+      commit("setcurrentShop", payload);
     },
     getCurrentUser: ({ commit }) => {
       commit("setLoading", true);
@@ -234,6 +252,8 @@ export default new Vuex.Store({
     authError: state => state.authError,
     shop: state => state.shop,
     allShopByaUser: state => state.allShopByaUser,
-    entry: state => state.entry
+    entry: state => state.entry,
+    currentShop: state => state.currentShop,
+    allShopNameByaUser: state => state.allShopNameByaUser
   }
 });
