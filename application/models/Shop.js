@@ -18,6 +18,10 @@ const shopSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
+  ownerEmail: {
+    type: String,
+    trim: true
+  },
   email: {
     type: String,
     required: true,

@@ -82,6 +82,7 @@ export const CREATE_SHOP = gql`
     $email: String!
     $contactNo: String!
     $address: String!
+    $ownerEmail: String!
   ) {
     createShop(
       shopName: $shopName
@@ -89,6 +90,7 @@ export const CREATE_SHOP = gql`
       email: $email
       contactNo: $contactNo
       address: $address
+      ownerEmail: $ownerEmail
     ) {
       _id
       shopName
@@ -96,6 +98,7 @@ export const CREATE_SHOP = gql`
       shopId
       contactNo
       address
+      ownerEmail
       logo
       rating
       dateOfCreation
@@ -137,6 +140,84 @@ export const GET_SHOP = gql`
         name
         description
         year
+      }
+    }
+  }
+`;
+
+//* Get shop for a single usser
+export const GET_ALL_SHOP_BY_A_USER = gql`
+  query($id: String!) {
+    getAllShopByaUser(id: $id) {
+      _id
+      shopName
+      address
+      owner {
+        _id
+        firstName
+        lastName
+        userName
+        profilePic
+      }
+      contactNo
+      address
+      shopId
+      logo
+      coverPic {
+        _id
+        src
+        head
+        shortDescription
+      }
+      dateOfCreation
+      rating
+      kudos {
+        _id
+        name
+        description
+        year
+      }
+    }
+  }
+`;
+
+//* Add product
+export const ADD_PRODUCT = gql`
+  mutation(
+    $productName: String!
+    $price: Int!
+    $description: String!
+    $tag: [String]!
+    $category: [String]!
+    $size: [String]!
+    $color: [String]!
+    $parent: String
+    $picture: [String]!
+    $creatorId: ID
+  ) {
+    addProduct(
+      productName: $productName
+      price: $price
+      description: $description
+      tag: $tag
+      category: $category
+      size: $size
+      color: $color
+      parent: $parent
+      picture: $picture
+      creatorId: $creatorId
+    ) {
+      _id
+      price
+      description
+      tag
+      category
+      size
+      color
+      picture
+      parent
+      createdBy {
+        _id
       }
     }
   }

@@ -1,7 +1,7 @@
-const mongoose = require( 'mongoose' );
-const bcrypt = require( 'bcrypt' );
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema( {
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true
@@ -12,11 +12,13 @@ const userSchema = new mongoose.Schema( {
   },
   email: {
     type: String,
+    unique: true,
     required: true,
     trim: true
   },
   contactNo: {
     type: String,
+    unique: true,
     required: true
   },
   password: {
@@ -38,39 +40,38 @@ const userSchema = new mongoose.Schema( {
     default: Date.now
   },
   profilePic: {
-    type: String,
+    type: String
   },
   coverPic: {
-    type: String,
+    type: String
   },
   role: {
     type: String,
     default: "public"
   },
   love: {
-    type: [ mongoose.Schema.Types.ObjectId ],
-    ref: 'Product'
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Product"
   }
-
-} );
+});
 
 // @ts-ignore
-userSchema.pre( 'save', function ( next ) {
-  if ( !this.isModified( 'password' ) ) {
+userSchema.pre("save", function(next) {
+  if (!this.isModified("password")) {
     return next();
   }
-  bcrypt.genSalt( 10, ( err, salt ) => {
-    if ( err ) return next( err );
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
 
     // @ts-ignore
-    bcrypt.hash( this.password, salt, ( err, hash ) => {
-      if ( err ) return next( err );
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
 
       // @ts-ignore
       this.password = hash;
       next();
-    } )
-  } )
-} );
+    });
+  });
+});
 
-module.exports = mongoose.model( 'User', userSchema );
+module.exports = mongoose.model("User", userSchema);

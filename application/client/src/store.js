@@ -13,7 +13,9 @@ import {
   GET_CURRENT_USER,
   SIGNUP_USER,
   CREATE_SHOP,
-  GET_SHOP
+  GET_SHOP,
+  ADD_PRODUCT,
+  GET_ALL_SHOP_BY_A_USER
 } from "./queries";
 import { stat } from "fs";
 
@@ -25,7 +27,8 @@ export default new Vuex.Store({
     user: null,
     authError: null,
     loading: false,
-    entry: false
+    entry: false,
+    allShopByaUser: []
   },
 
   //! Mutations
@@ -33,6 +36,9 @@ export default new Vuex.Store({
   mutations: {
     setShop: (state, payload) => {
       state.shop = payload;
+    },
+    setAllShopByaUser: (state, payload) => {
+      state.allShopByaUser = payload;
     },
     signinSet: state => {
       state.entry = false;
@@ -81,6 +87,23 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit("setLoading", false);
           commit("setShop", data.getShop);
+        })
+        .catch(err => {
+          console.error(err);
+          commit("setLoading", false);
+        });
+    },
+    getAllShopByaUser: ({ commit }, payload) => {
+      commit("setLoading", true);
+      apolloClient
+        .query({
+          query: GET_ALL_SHOP_BY_A_USER,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log(data.getAllShopByaUser);
+          commit("setAllShopByaUser", data.getAllShopByaUser);
         })
         .catch(err => {
           console.error(err);
@@ -183,6 +206,23 @@ export default new Vuex.Store({
           commit("setLoading", false);
           console.error(err);
         });
+    },
+    addProduct: ({ commit }, payload) => {
+      commit("setLoading", true);
+
+      apolloClient
+        .mutate({
+          mutation: ADD_PRODUCT,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log("addProduct: ", data);
+        })
+        .catch(err => {
+          commit("setLoading", false);
+          console.error(err);
+        });
     }
   },
 
@@ -193,6 +233,7 @@ export default new Vuex.Store({
     user: state => state.user,
     authError: state => state.authError,
     shop: state => state.shop,
+    allShopByaUser: state => state.allShopByaUser,
     entry: state => state.entry
   }
 });

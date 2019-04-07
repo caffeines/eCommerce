@@ -138,7 +138,8 @@
 						email: this.email,
 						contactNo: this.contactNo,
 						address: this.address,
-						ownerId: this.$store.getters.user._id
+						ownerId: this.$store.getters.user._id,
+						ownerEmail: this.$store.getters.user.email
 					});
 				}
 			}

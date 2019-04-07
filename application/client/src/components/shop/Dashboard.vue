@@ -2,10 +2,23 @@
 	<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row>
-				<h1 class="heading">Sultana's Dream</h1>
+				<v-flex xs4>
+					<v-select
+						v-model="shopX"
+						:items="shopItems"
+						menu-props="auto"
+						label="Shop"
+						hide-details
+						prepend-icon="map"
+						single-line
+					>
+						<!-- <h1 class="heading">Sultana's Dream</h1> -->
+					</v-select>
+				</v-flex>
+				<v-btn class="mt-4 two" round flat @click="visitShop">Visit</v-btn>
 				<v-spacer></v-spacer>
 
-				<!-- modal starts here -->
+				<!-- Modal starts here -->
 				<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 					<template v-slot:activator="{ on }">
 						<v-btn fab v-on="on" class="four">
@@ -27,13 +40,13 @@
 						</v-toolbar>
 						<v-layout align-start justify-center row fill-height></v-layout>
 						<div v-if="productCard">
-							<AddProductCard/>
+							<AddProductCard shopID="shop._id"/>
 						</div>
 					</v-card>
 				</v-dialog>
-
-				<!-- Modal ends here -->
 			</v-layout>
+			<!-- Modal ends here -->
+
 			<v-layout mt-2 align-center justify-center wrap row fill-height>
 				<v-flex xs6 sm3>
 					<v-card class="custom_card one" flat>
@@ -80,6 +93,17 @@
 					</v-card>
 				</v-flex>
 			</v-layout>
+
+			<!-- Top card ends here -->
+
+			<v-layout row>
+				<v-flex xs-8>
+					<DataTable/>
+				</v-flex>
+				<v-flex xs-4>
+					<v-card>image will be shown here</v-card>
+				</v-flex>
+			</v-layout>
 		</v-container>
 	</div>
 </template>
@@ -87,23 +111,64 @@
 <script>
 	import { mapGetters } from "vuex";
 	import AddProductCard from "@/components/shop/AddProductCard";
+	import DataTable from "@/components/shop/DataTable";
+
 	export default {
 		components: {
-			AddProductCard
+			AddProductCard,
+			DataTable
 		},
 		data() {
 			return {
 				selectedShopName: "",
 				dialog: false,
+				shopX: "",
+				ID: null,
 				notifications: false,
 				sound: true,
 				widgets: false,
 				productCard: true,
-				carouselCard: false
+				carouselCard: false,
+				shopItems: []
 			};
 		},
+		created() {
+			this.getShop();
+		},
 		computed: {
-			...mapGetters(["shop"])
+			...mapGetters(["shop", "getProducts", "user", "allShopByaUser"])
+		},
+		watch: {
+			//TODO need to store in vuex store
+			allShopByaUser: function(value) {
+				if (value) {
+					this.shopX = this.allShopByaUser[0].shopName;
+					for (var i = 0; i < this.allShopByaUser.length; i++) {
+						console.log("Shop items:", this.allShopByaUser[i].shopName);
+						this.shopItems.push(this.allShopByaUser[i].shopName);
+					}
+				}
+			},
+			shopX: function(value) {
+				if (value) {
+					for (var i = 0; i < this.allShopByaUser.length; i++) {
+						if (this.allShopByaUser[i].shopName === value) {
+							this.ID = this.allShopByaUser[i]._id;
+							break;
+						}
+					}
+				}
+			}
+		},
+		methods: {
+			getShop() {
+				this.$store.dispatch("getAllShopByaUser", {
+					id: this.user.email
+				});
+			},
+			visitShop() {
+				this.$router.push("/shop/" + this.ID);
+			}
 		}
 	};
 </script>

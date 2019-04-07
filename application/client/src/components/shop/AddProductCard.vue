@@ -188,8 +188,10 @@
 </template>
 
 <script>
+	import { mapGetters } from "vuex";
 	import TypeWriter from "@/components/layouts/TypeWriter";
 	export default {
+		props: ["shopID"],
 		components: {
 			TypeWriter
 		},
@@ -267,8 +269,13 @@
 				]
 			};
 		},
+		computed: {
+			...mapGetters(["loading"])
+		},
 		methods: {
 			next() {
+				console.log(this.shopID);
+
 				if (this.$refs.form.validate()) {
 					if (this.step < 3) {
 						this.step++;
@@ -280,16 +287,20 @@
 					this.step--;
 				}
 			},
-			handleSignup() {
+			handleAddProduct() {
+				//console.log(this.shopID);
 				if (this.$refs.form.validate()) {
-					this.$store.dispatch("signupUser", {
-						userName: this.userName,
-						email: this.email,
-						password: this.password,
-						contactNo: this.contact,
-						firstName: this.firstName,
-						lastName: this.lastName,
-						dateOfBirth: this.date
+					this.$store.dispatch("addProduct", {
+						productName: this.productName,
+						price: this.price,
+						description: this.description,
+						tag: this.tag,
+						category: this.category,
+						size: this.size,
+						color: this.color,
+						parent: this.parentCompany,
+						picture: this.picture,
+						shopID: this.shopID
 					});
 				}
 			}

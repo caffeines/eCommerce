@@ -47,6 +47,7 @@ type Shop {
   shopId: String
   owner: User!
   email: String!
+  ownerEmail: String!
   contactNo: String!
   address: String!
   dateOfCreation: String
@@ -79,6 +80,7 @@ type Query {
   getUser(userName: String!): User
   getCurrentUser: User
   getShop(id: String!): Shop
+  getAllShopByaUser(id: String!): [Shop]
 }
 
 type Mutation {
@@ -110,6 +112,7 @@ type Mutation {
   createShop(
     shopName: String!
     ownerId: ID!
+    ownerEmail: String!
     email: String!
     contactNo: String!
     address: String!

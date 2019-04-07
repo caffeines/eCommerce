@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const createToken = (user, secret, expiresIn) => {
   const { userName, email, role } = user;
@@ -48,6 +49,20 @@ module.exports = {
         return shop;
       } else {
         throw new Error("Shop dosent found");
+      }
+    },
+
+    //* get all shop for a single user
+    getAllShopByaUser: async (_, { id }, { Shop }) => {
+      const shop = await Shop.find({ ownerEmail: id }).populate({
+        path: "owner",
+        model: "User"
+      });
+      console.log("ID:", id);
+      if (shop) {
+        return shop;
+      } else {
+        throw new Error(`Shop dosen't found against _id: ${id}`);
       }
     },
 
@@ -159,12 +174,13 @@ module.exports = {
      */
     createShop: async (
       _,
-      { shopName, ownerId, email, contactNo, address },
+      { shopName, ownerId, ownerEmail, email, contactNo, address },
       { Shop }
     ) => {
       const newShop = new Shop({
         shopName,
         owner: ownerId,
+        ownerEmail,
         email,
         contactNo,
         address
