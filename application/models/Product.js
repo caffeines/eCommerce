@@ -1,6 +1,6 @@
-const mongoose = require( 'mongoose' );
+const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema( {
+const productSchema = new mongoose.Schema({
   productName: {
     type: String,
     required: true
@@ -13,43 +13,45 @@ const productSchema = new mongoose.Schema( {
     type: String,
     required: true
   },
-  comment: [ {
-    body: {
-      type: String,
-      required: true
-    },
-    commentUser: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
-    },
-    commentDate: {
-      type: Date,
-      default: Date.now
-    },
-    like: {
-      type: Number,
-      default: 0
+  comment: [
+    {
+      body: {
+        type: String,
+        required: true
+      },
+      commentUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+      },
+      commentDate: {
+        type: Date,
+        default: Date.now
+      },
+      like: {
+        type: Number,
+        default: 0
+      }
     }
-  } ],
+  ],
   rating: {
     type: Number,
     default: 0
   },
   tag: {
-    type: [ String ],
+    type: [String],
     required: true
   },
   category: {
-    type: [ String ],
+    type: [String],
     required: true
   },
   size: {
-    type: [ String ],
+    type: [String],
     required: true
   },
   color: {
-    type: [ String ],
+    type: [String],
     required: true
   },
   parent: {
@@ -59,7 +61,7 @@ const productSchema = new mongoose.Schema( {
     type: Number
   },
   picture: {
-    type: [ String ],
+    type: [String],
     required: true
   },
   dateOfAdd: {
@@ -70,10 +72,14 @@ const productSchema = new mongoose.Schema( {
     type: Number,
     default: 0
   },
+  shopId: {
+    type: String,
+    required: true
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shop'
+    ref: "Shop"
   }
-} );
+});
 
-module.exports = mongoose.model( 'Product', productSchema );
+module.exports = mongoose.model("Product", productSchema);

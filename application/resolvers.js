@@ -24,6 +24,21 @@ module.exports = {
       return product;
     },
     /*
+     ** Product fetching by shop id
+     */
+    getProductsByShopId: async (_, args, { Product }) => {
+      const product = await Product.find({ shopId: args.id })
+        .sort({
+          dateOfAdd: "desc"
+        })
+        .populate({
+          path: "createdBy",
+          model: "Shop"
+        });
+      console.log(args.id);
+      return product;
+    },
+    /*
      ** User fetching
      */
     getUser: async (_, { userName }, { User }) => {
@@ -58,7 +73,6 @@ module.exports = {
         path: "owner",
         model: "User"
       });
-      console.log("ID:", id);
       if (shop) {
         return shop;
       } else {
@@ -165,8 +179,10 @@ module.exports = {
         color,
         parent,
         picture,
-        createdBy: creatorId
+        createdBy: creatorId,
+        shopId: creatorId
       }).save();
+      console.log(newProduct);
       return newProduct;
     },
     /*

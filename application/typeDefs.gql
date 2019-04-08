@@ -29,6 +29,7 @@ type Product {
   discountPrice: Int
   picture: [String]!
   dateOfAdd: String
+  shopId: String!
   love: Int
   createdBy: Shop!
 }
@@ -44,7 +45,6 @@ type Comment {
 type Shop {
   _id: ID
   shopName: String!
-  shopId: String
   owner: User!
   email: String!
   ownerEmail: String!
@@ -54,6 +54,7 @@ type Shop {
   logo: String
   coverPic: [Carousel]
   rating: Float
+  shopId: String!
   kudos: Kudos
 }
 
@@ -81,6 +82,7 @@ type Query {
   getCurrentUser: User
   getShop(id: String!): Shop
   getAllShopByaUser(id: String!): [Shop]
+  getProductsByShopId(id: String!): [Product]
 }
 
 type Mutation {
@@ -100,13 +102,14 @@ type Mutation {
     productName: String!
     price: Int!
     description: String!
-    tag: [String]!
+    tag: [String]
     category: [String]!
     size: [String]!
     color: [String]!
     parent: String
     picture: [String]!
-    creatorId: ID
+    creatorId: ID!
+    shopId: String!
   ): Product!
 
   createShop(

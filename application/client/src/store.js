@@ -15,7 +15,8 @@ import {
   CREATE_SHOP,
   GET_SHOP,
   ADD_PRODUCT,
-  GET_ALL_SHOP_BY_A_USER
+  GET_ALL_SHOP_BY_A_USER,
+  GET_PRODUCT_BY_SHOPID
 } from "./queries";
 import { stat } from "fs";
 import { STATES } from "mongoose";
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     entry: false,
     allShopByaUser: [],
     allShopNameByaUser: null,
-    currentShop: null
+    currentShop: null,
+    productsByShopId: null
   },
 
   //! Mutations
@@ -63,6 +65,9 @@ export default new Vuex.Store({
     },
     setProducts: (state, payload) => {
       state.products = payload;
+    },
+    setProductsByShopId: (state, payload) => {
+      state.productsByShopId = payload;
     },
     setLoading: (state, payload) => {
       state.loading = payload;
@@ -144,7 +149,23 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
-
+    getProductsByShopId: ({ commit }, payload) => {
+      commit("setLoading", true);
+      apolloClient
+        .query({
+          query: GET_PRODUCT_BY_SHOPID,
+          variables: payload
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log(data);
+          commit("setProductsByShopId", data.getProductsByShopId);
+        })
+        .catch(err => {
+          commit("setLoading", false);
+          console.error(err);
+        });
+    },
     getAllProducts: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
@@ -235,7 +256,8 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           commit("setLoading", false);
-          console.log("addProduct: ", data);
+          // @ts-ignore
+          router.go();
         })
         .catch(err => {
           commit("setLoading", false);
@@ -254,6 +276,7 @@ export default new Vuex.Store({
     allShopByaUser: state => state.allShopByaUser,
     entry: state => state.entry,
     currentShop: state => state.currentShop,
-    allShopNameByaUser: state => state.allShopNameByaUser
+    allShopNameByaUser: state => state.allShopNameByaUser,
+    productsByShopId: state => state.productsByShopId
   }
 });

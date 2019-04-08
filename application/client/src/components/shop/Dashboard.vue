@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- <h1 class="heading">{{shopX}}</h1> -->
 		<v-container fluid grid-list-xl>
 			<v-layout row>
 				<v-flex xs3>
@@ -13,9 +14,7 @@
 						hide-details
 						prepend-icon="map"
 						single-line
-					>
-						<!-- <h1 class="heading">Sultana's Dream</h1> -->
-					</v-select>
+					></v-select>
 				</v-flex>
 				<v-btn class="mt-4 two" round flat @click="visitShop">Visit</v-btn>
 				<v-spacer></v-spacer>
@@ -29,20 +28,22 @@
 					</template>
 					<v-card>
 						<v-toolbar flat>
-							<v-btn icon @click="dialog = false">
-								<v-icon large>close</v-icon>
-							</v-btn>
+							<h3>{{shopX}}</h3>
+							<v-spacer></v-spacer>
 							<v-btn round @click="productCard = true , carouselCard= false" color="one">
 								<span class="head">Add product</span>
 							</v-btn>
 							<v-btn round @click="carouselCard = true, productCard = false" color="three">
 								<span class="head">Add carousel</span>
 							</v-btn>
-							<v-spacer></v-spacer>
+
+							<v-btn icon @click="dialog = false">
+								<v-icon large>close</v-icon>
+							</v-btn>
 						</v-toolbar>
 						<v-layout align-start justify-center row fill-height></v-layout>
 						<div v-if="productCard">
-							<AddProductCard shopID="shop._id"/>
+							<AddProductCard :shopID="ID"/>
 						</div>
 					</v-card>
 				</v-dialog>
@@ -100,7 +101,7 @@
 
 			<v-layout row>
 				<v-flex xs-8>
-					<DataTable/>
+					<DataTable :shopID="ID"/>
 				</v-flex>
 				<v-flex xs-4>
 					<v-card>image will be shown here</v-card>
@@ -148,7 +149,7 @@
 		},
 		watch: {
 			shopX: function(newValue, oldValue) {
-				console.log(newValue, oldValue);
+				//console.log(newValue, oldValue);
 				if (newValue) {
 					for (var i = 0; i < this.allShopByaUser.length; i++) {
 						if (this.allShopByaUser[i].shopName === newValue) {

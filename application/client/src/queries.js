@@ -22,6 +22,24 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
+// get product by shopId
+export const GET_PRODUCT_BY_SHOPID = gql`
+  query($shopId: String!) {
+    getProductsByShopId(id: $shopId) {
+      _id
+      productName
+      price
+      size
+      description
+      rating
+      color
+      category
+      tag
+      picture
+    }
+  }
+`;
+
 //* Signup user
 
 export const SIGNUP_USER = gql`
@@ -193,7 +211,8 @@ export const ADD_PRODUCT = gql`
     $color: [String]!
     $parent: String
     $picture: [String]!
-    $creatorId: ID
+    $creatorId: ID!
+    $shopId: String!
   ) {
     addProduct(
       productName: $productName
@@ -206,6 +225,7 @@ export const ADD_PRODUCT = gql`
       parent: $parent
       picture: $picture
       creatorId: $creatorId
+      shopId: $shopId
     ) {
       _id
       price

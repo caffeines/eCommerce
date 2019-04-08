@@ -1,5 +1,5 @@
 <template>
-	<div v-if="!loading">
+	<div>
 		<v-container text-xs-center pt-3>
 			<v-layout row wrap>
 				<div class="mb-5 typeWriter">
@@ -174,7 +174,13 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-btn round color="primary" @click="prev">Prev</v-btn>
-											<v-btn round :disabled="!isFormValid" color="primary" @click="next">Add product</v-btn>
+											<v-btn
+												:loading="loading"
+												round
+												:disabled="!isFormValid"
+												color="primary"
+												type="submit"
+											>Add product</v-btn>
 										</v-flex>
 									</v-layout>
 								</div>
@@ -199,7 +205,7 @@
 			return {
 				text: ["Add product", "Sell product", "Make money"],
 				productName: "",
-				price: null,
+				price: 0,
 				step: 1,
 				isFormValid: true,
 				description: "",
@@ -274,7 +280,7 @@
 		},
 		methods: {
 			next() {
-				console.log(this.shopID);
+				//console.log(this.shopID);
 
 				if (this.$refs.form.validate()) {
 					if (this.step < 3) {
@@ -292,7 +298,7 @@
 				if (this.$refs.form.validate()) {
 					this.$store.dispatch("addProduct", {
 						productName: this.productName,
-						price: this.price,
+						price: parseInt(this.price, 10),
 						description: this.description,
 						tag: this.tag,
 						category: this.category,
@@ -300,7 +306,8 @@
 						color: this.color,
 						parent: this.parentCompany,
 						picture: this.picture,
-						shopID: this.shopID
+						creatorId: this.shopID,
+						shopId: this.shopID
 					});
 				}
 			}
