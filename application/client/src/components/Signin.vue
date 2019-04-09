@@ -1,87 +1,97 @@
 <template>
-	<div v-if="!user && !loading">
-		<v-container text-xs-center mt-2 pt-5>
-			<v-layout row wrap>
-				<div class="mb-5 typeWriter">
-					<h2 class="type">
-						<TypeWriter :text="text"/>
-					</h2>
-				</div>
-			</v-layout>
-			<!-- signin form -->
-			<v-layout row wrap>
-				<v-flex xs12 sm4 offset-sm4>
-					<v-card color="#fff" class="form_card">
-						<v-container>
-							<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
-								<v-layout row>
-									<v-flex xs-12>
-										<v-text-field
-											:rules="userNameRules"
-											v-model="userName"
-											prepend-icon="face"
-											label="Username"
-											type="text"
-											required="true"
-										></v-text-field>
-									</v-flex>
-								</v-layout>
+	<div>
+		<div v-if="loading">
+			<Loading/>
+		</div>
+		<div v-else-if="!loading && !user">
+			<div>
+				<v-container text-xs-center mt-2 pt-5>
+					<v-layout row wrap>
+						<div class="mb-5 typeWriter">
+							<h2 class="type">
+								<TypeWriter :text="text"/>
+							</h2>
+						</div>
+					</v-layout>
+					<!-- signin form -->
+					<v-layout row wrap>
+						<v-flex xs12 sm4 offset-sm4>
+							<v-card color="#fff" class="form_card">
+								<v-container>
+									<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
+										<v-layout row>
+											<v-flex xs-12>
+												<v-text-field
+													:rules="userNameRules"
+													v-model="userName"
+													prepend-icon="face"
+													label="Username"
+													type="text"
+													required="true"
+												></v-text-field>
+											</v-flex>
+										</v-layout>
 
-								<v-layout row>
-									<v-flex xs-12>
-										<v-text-field
-											:rules="passwordRules"
-											v-model="password"
-											prepend-icon="lock_open"
-											label="Password"
-											type="password"
-											required
-										></v-text-field>
-									</v-flex>
-								</v-layout>
+										<v-layout row>
+											<v-flex xs-12>
+												<v-text-field
+													:rules="passwordRules"
+													v-model="password"
+													prepend-icon="lock_open"
+													label="Password"
+													type="password"
+													required
+												></v-text-field>
+											</v-flex>
+										</v-layout>
 
-								<v-layout row>
-									<v-flex xs-12>
-										<v-btn :loading="loading" :disabled="!isFormValid" color="primary" type="submit">
-											Signin
-											<template v-slot:loader>
-												<span class="custom-loader">
-													<v-icon light>cached</v-icon>
-												</span>
-											</template>
-										</v-btn>
-										<h3>
-											Don't have an account?
-											<router-link to="/signin">
-												<span class="link" @click="signupSet">Signup</span>
-											</router-link>
-										</h3>
-									</v-flex>
-								</v-layout>
+										<v-layout row>
+											<v-flex xs-12>
+												<v-btn :loading="loading" :disabled="!isFormValid" color="primary" type="submit">
+													Signin
+													<template v-slot:loader>
+														<span class="custom-loader">
+															<v-icon light>cached</v-icon>
+														</span>
+													</template>
+												</v-btn>
+												<h3>
+													Don't have an account?
+													<router-link to="/signin">
+														<span class="link" @click="signupSet">Signup</span>
+													</router-link>
+												</h3>
+											</v-flex>
+										</v-layout>
 
-								<v-layout row>
-									<v-flex xs-12>
-										<router-link to>
-											<span class="link">Forgot password?</span>
-										</router-link>
-									</v-flex>
-								</v-layout>
-							</v-form>
-						</v-container>
-					</v-card>
-				</v-flex>
-			</v-layout>
-		</v-container>
+										<v-layout row>
+											<v-flex xs-12>
+												<router-link to>
+													<span class="link">Forgot password?</span>
+												</router-link>
+											</v-flex>
+										</v-layout>
+									</v-form>
+								</v-container>
+							</v-card>
+						</v-flex>
+					</v-layout>
+				</v-container>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
 	import TypeWriter from "@/components/layouts/TypeWriter";
+	import Loading from "@/components/layouts/Loading";
+
 	import { mapGetters } from "vuex";
 	import { mapMutations } from "vuex";
 
 	export default {
 		components: {
-			TypeWriter
+			TypeWriter,
+			Loading
 		},
 		data: () => {
 			return {

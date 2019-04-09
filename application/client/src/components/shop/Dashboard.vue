@@ -1,22 +1,11 @@
 <template>
 	<div>
-		<!-- <h1 class="heading">{{shopX}}</h1> -->
 		<v-container fluid grid-list-xl>
 			<v-layout row>
-				<v-flex xs3>
-					<div v-if="shopX == null ? shopX=allShopNameByaUser[0]: shopX=shopX"/>
-					<v-select
-						v-model="shopX"
-						:items="allShopNameByaUser"
-						color="red"
-						menu-props="auto"
-						label="Shop"
-						hide-details
-						prepend-icon="map"
-						single-line
-					></v-select>
+				<v-flex xs6>
+					<h1 class="heading size" @click="visitShop">{{shop.shopName}}</h1>
 				</v-flex>
-				<v-btn class="mt-4 two" round flat @click="visitShop">Visit</v-btn>
+
 				<v-spacer></v-spacer>
 
 				<!-- Modal starts here -->
@@ -28,12 +17,11 @@
 					</template>
 					<v-card>
 						<v-toolbar flat>
-							<h3>{{shopX}}</h3>
 							<v-spacer></v-spacer>
-							<v-btn round @click="productCard = true , carouselCard= false" color="one">
+							<v-btn round flat @click="productCard = true , carouselCard = false" class="one">
 								<span class="head">Add product</span>
 							</v-btn>
-							<v-btn round @click="carouselCard = true, productCard = false" color="three">
+							<v-btn round flat @click="carouselCard = true, productCard = false" class="one">
 								<span class="head">Add carousel</span>
 							</v-btn>
 
@@ -43,7 +31,7 @@
 						</v-toolbar>
 						<v-layout align-start justify-center row fill-height></v-layout>
 						<div v-if="productCard">
-							<AddProductCard :shopID="ID"/>
+							<AddProductCard/>
 						</div>
 					</v-card>
 				</v-dialog>
@@ -99,12 +87,17 @@
 
 			<!-- Top card ends here -->
 
-			<v-layout row>
-				<v-flex xs-8>
-					<DataTable :shopID="ID"/>
+			<v-layout row justify-center>
+				<v-flex xs-8 sm-8>
+					<DataTable :propProducts="this.$store.getters.productsByShopId"/>
 				</v-flex>
-				<v-flex xs-4>
-					<v-card>image will be shown here</v-card>
+				<v-flex xs-4 sm-4>
+					<div v-if="getPicture == null">
+						<v-img class="picCard" :src="'http://tiny.cc/wqfy4y'" aspect-ratio="1"></v-img>
+					</div>
+					<div v-else>
+						<v-img class="picCard" :src="getPicture.pic" aspect-ratio="1"></v-img>
+					</div>
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -123,7 +116,6 @@
 		},
 		data() {
 			return {
-				selectedShopName: "",
 				dialog: false,
 				shopX: null,
 				ID: null,
@@ -138,37 +130,18 @@
 			this.getShop();
 		},
 		computed: {
-			...mapGetters([
-				"shop",
-				"getProducts",
-				"user",
-				"allShopByaUser",
-				"allShopNameByaUser",
-				"currentShop"
-			])
+			...mapGetters(["shop", "getPicture"])
 		},
-		watch: {
-			shopX: function(newValue, oldValue) {
-				//console.log(newValue, oldValue);
-				if (newValue) {
-					for (var i = 0; i < this.allShopByaUser.length; i++) {
-						if (this.allShopByaUser[i].shopName === newValue) {
-							this.ID = this.allShopByaUser[i]._id;
-							break;
-						}
-					}
-					this.$store.dispatch("setCurrentShopName", newValue);
-				}
-			}
-		},
+		watch: {},
 		methods: {
 			getShop() {
-				this.$store.dispatch("getAllShopByaUser", {
-					id: this.user.email
+				this.$store.dispatch("getShop", { id: this.$route.params.id });
+				this.$store.dispatch("getProductsByShopId", {
+					shopId: this.$store.getters.shop._id
 				});
 			},
 			visitShop() {
-				this.$router.push("/shop/" + this.ID);
+				this.$router.push("/shop/" + this.$route.params.id);
 			}
 		}
 	};
@@ -194,6 +167,9 @@
 			rgba(255, 0, 0, 0.767)
 		);
 	}
+	.bg {
+		background-color: none;
+	}
 	.four {
 		background-image: linear-gradient(to right, #706fd3, #1b9cfc);
 	}
@@ -211,5 +187,14 @@
 		);
 		-webkit-background-clip: text;
 		color: transparent;
+	}
+	.size {
+		font-size: 28px;
+		cursor: pointer;
+	}
+
+	.picCard {
+		width: 305px;
+		height: 325px;
 	}
 </style>

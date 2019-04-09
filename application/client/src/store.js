@@ -13,10 +13,10 @@ import {
   GET_CURRENT_USER,
   SIGNUP_USER,
   CREATE_SHOP,
-  GET_SHOP,
   ADD_PRODUCT,
   GET_ALL_SHOP_BY_A_USER,
-  GET_PRODUCT_BY_SHOPID
+  GET_PRODUCT_BY_SHOPID,
+  GET_SHOP_BY_SHOP_ID
 } from "./queries";
 import { stat } from "fs";
 import { STATES } from "mongoose";
@@ -25,6 +25,7 @@ export default new Vuex.Store({
   //! Sate
   state: {
     shop: null,
+    picture: null,
     products: [],
     user: null,
     authError: null,
@@ -39,6 +40,9 @@ export default new Vuex.Store({
   //! Mutations
 
   mutations: {
+    setPicture: (state, payload) => {
+      state.picture = payload;
+    },
     setcurrentShop: (state, payload) => {
       state.currentShop = payload;
     },
@@ -91,11 +95,15 @@ export default new Vuex.Store({
       // @ts-ignore
       router.go();
     },
+    pictureSetter: ({ commit }, payload) => {
+      commit("setPicture", payload);
+    },
+    //* get shop by a shop id
     getShop: ({ commit }, payload) => {
       commit("setLoading", true);
       apolloClient
         .query({
-          query: GET_SHOP,
+          query: GET_SHOP_BY_SHOP_ID,
           variables: payload
         })
         .then(({ data }) => {
@@ -107,6 +115,7 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
+
     getAllShopByaUser: ({ commit }, payload) => {
       commit("setLoading", true);
       apolloClient
@@ -277,6 +286,7 @@ export default new Vuex.Store({
     entry: state => state.entry,
     currentShop: state => state.currentShop,
     allShopNameByaUser: state => state.allShopNameByaUser,
-    productsByShopId: state => state.productsByShopId
+    productsByShopId: state => state.productsByShopId,
+    getPicture: state => state.picture
   }
 });

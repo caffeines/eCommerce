@@ -127,8 +127,8 @@ export const CREATE_SHOP = gql`
   }
 `;
 
-//* Get shop (single)
-export const GET_SHOP = gql`
+//* Get shop by shopid (single)
+export const GET_SHOP_BY_SHOP_ID = gql`
   query($id: String!) {
     getShop(id: $id) {
       _id

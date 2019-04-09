@@ -39,7 +39,7 @@ export default new Router({
       beforeEnter: userGuard
     },
     {
-      path: "/dashboard",
+      path: "/dashboard/:id",
       name: "dashboard",
       component: () => import("./views/Dashboard.vue"),
       beforeEnter: userGuard
@@ -47,7 +47,7 @@ export default new Router({
     {
       path: "/shop/",
       name: "shop",
-      component: () => import("./views/Shop.vue")
+      component: () => import("./views/Allshop.vue")
     },
     {
       path: "/shop/:id",

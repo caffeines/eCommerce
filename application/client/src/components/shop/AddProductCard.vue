@@ -197,7 +197,6 @@
 	import { mapGetters } from "vuex";
 	import TypeWriter from "@/components/layouts/TypeWriter";
 	export default {
-		props: ["shopID"],
 		components: {
 			TypeWriter
 		},
@@ -276,12 +275,10 @@
 			};
 		},
 		computed: {
-			...mapGetters(["loading"])
+			...mapGetters(["loading", "shop"])
 		},
 		methods: {
 			next() {
-				//console.log(this.shopID);
-
 				if (this.$refs.form.validate()) {
 					if (this.step < 3) {
 						this.step++;
@@ -294,7 +291,7 @@
 				}
 			},
 			handleAddProduct() {
-				//console.log(this.shopID);
+				//console.log(this.$store.getters.shop._id);
 				if (this.$refs.form.validate()) {
 					this.$store.dispatch("addProduct", {
 						productName: this.productName,
@@ -306,8 +303,8 @@
 						color: this.color,
 						parent: this.parentCompany,
 						picture: this.picture,
-						creatorId: this.shopID,
-						shopId: this.shopID
+						creatorId: this.$store.getters.shop._id,
+						shopId: this.$store.getters.shop._id
 					});
 				}
 			}
