@@ -65,7 +65,7 @@
 		methods: {
 			getProducts() {
 				this.$store.dispatch("getProductsByShopId", {
-					shopId: "5ca932923e9310107897cfd9"
+					shopId: this.$route.params.id
 				});
 			}
 		}

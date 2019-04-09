@@ -2,13 +2,8 @@
 	<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row>
-				<v-flex xs6>
-					{{shop}}
-					<h1 class="heading size" @click="visitShop">{{shop.shopName}}</h1>
-				</v-flex>
-
+				<h1 class="heading point mt-3" @click="visitShop">{{shop.shopName}}</h1>
 				<v-spacer></v-spacer>
-
 				<!-- Modal starts here -->
 				<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 					<template v-slot:activator="{ on }">
@@ -113,7 +108,6 @@
 	import AddProductCard from "@/components/shop/AddProductCard";
 	import AddCarousel from "@/components/shop/AddCarousel";
 	import DataTable from "@/components/shop/DataTable";
-
 	export default {
 		components: {
 			AddProductCard,
@@ -140,10 +134,10 @@
 		},
 		watch: {},
 		methods: {
-			getShop() {
-				this.$store.dispatch("getShop", { id: this.$route.params.id });
-				this.$store.dispatch("getProductsByShopId", {
-					shopId: this.$store.getters.shop._id
+			async getShop() {
+				await this.$store.dispatch("getShop", { id: this.$route.params.id });
+				await this.$store.dispatch("getProductsByShopId", {
+					shopId: this.$route.params.id
 				});
 			},
 			visitShop() {
@@ -194,11 +188,10 @@
 		-webkit-background-clip: text;
 		color: transparent;
 	}
-	.size {
-		font-size: 28px;
+	.point {
 		cursor: pointer;
+		font-size: 28px !important;
 	}
-
 	.picCard {
 		width: 305px;
 		height: 325px;

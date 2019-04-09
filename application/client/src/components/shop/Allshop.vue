@@ -1,6 +1,5 @@
 <template>
 	<div>
-		{{user.email}}
 		<div v-if="allShopByaUser">
 			<v-container fluid grid-list-xl>
 				<v-layout mt-2 align-center justify-center wrap row fill-height>
@@ -70,6 +69,7 @@
 				this.$router.push("/shop/" + ID);
 			},
 			visitDashboard(ID) {
+				this.$store.commit("setProductsByShopId", null);
 				this.$router.push("/dashboard/" + ID);
 			}
 		}

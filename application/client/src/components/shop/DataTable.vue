@@ -79,11 +79,6 @@
 		},
 
 		methods: {
-			getProducts() {
-				this.$store.dispatch("getProductsByShopId", {
-					shopId: this.$store.getters.shop._id
-				});
-			},
 			initialize() {
 				for (let i = 0; i < this.propProducts.length; i++) {
 					//console.log("Product name: ", this.propProducts[i].productName);

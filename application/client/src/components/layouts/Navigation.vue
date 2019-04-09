@@ -33,11 +33,7 @@
 		<v-toolbar fixed app flat>
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
-				<div v-if="shop && this.$route.params.id">
-					<router-link to="/" tag="span" style="cursor: pointer">{{shop.shopName}}</router-link>
-				</div>
-
-				<div v-else>
+				<div>
 					<router-link to="/" tag="span" style="cursor: pointer">Gogonjo</router-link>
 				</div>
 			</v-toolbar-title>

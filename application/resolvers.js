@@ -26,8 +26,8 @@ module.exports = {
     /*
      ** Product fetching by shop id
      */
-    getProductsByShopId: async (_, args, { Product }) => {
-      const product = await Product.find({ shopId: args.id })
+    getProductsByShopId: async (_, { id }, { Product }) => {
+      const product = await Product.find({ shopId: id })
         .sort({
           dateOfAdd: "desc"
         })
@@ -35,7 +35,7 @@ module.exports = {
           path: "createdBy",
           model: "Shop"
         });
-      console.log(args.id);
+      console.log(product);
       return product;
     },
     /*
