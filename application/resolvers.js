@@ -35,7 +35,7 @@ module.exports = {
           path: "createdBy",
           model: "Shop"
         });
-      console.log(product);
+
       return product;
     },
     /*

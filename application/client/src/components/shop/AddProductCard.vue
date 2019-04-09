@@ -139,7 +139,6 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
-												:rules="pictureRules"
 												v-model="picture[1]"
 												prepend-icon="add_a_photo"
 												label="Picture-2"
@@ -151,7 +150,6 @@
 									<v-layout row>
 										<v-flex xs-12>
 											<v-text-field
-												:rules="pictureRules"
 												v-model="picture[2]"
 												prepend-icon="add_a_photo"
 												label="Picture-3"
@@ -268,7 +266,7 @@
 				],
 				sizeRules: [size => size.length > 0 || "Size is required"],
 				colorRules: [color => color.length > 0 || "Color is required"],
-				pictureRules: [picture => picture.length > 0 || "Picture is required"]
+				pictureRules: [picture => !!picture || "At least one picture is required"]
 			};
 		},
 		computed: {
@@ -276,6 +274,7 @@
 		},
 		methods: {
 			next() {
+				console.log(this.$store.getters.shop._id);
 				if (this.$refs.form.validate()) {
 					if (this.step < 3) {
 						this.step++;
@@ -288,7 +287,7 @@
 				}
 			},
 			handleAddProduct() {
-				//console.log(this.$store.getters.shop._id);
+				console.log(this.$store.getters.shop._id);
 				if (this.$refs.form.validate()) {
 					this.$store.dispatch("addProduct", {
 						productName: this.productName,

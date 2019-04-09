@@ -60,7 +60,7 @@
 			this.getProducts();
 		},
 		computed: {
-			...mapGetters(["productsByShopId"])
+			...mapGetters(["productsByShopId", "shop"])
 		},
 		methods: {
 			getProducts() {

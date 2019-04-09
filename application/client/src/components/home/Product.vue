@@ -26,10 +26,13 @@
 								<div class="text">
 									<strong>{{ product.productName }}</strong>
 								</div>
+								<h4>
+									<strong>{{product.createdBy.shopName}}</strong>
+								</h4>
 							</div>
 						</v-card-title>
 						<div class="ml-3">
-							<v-layout align-end fill-height row>
+							<v-layout row>
 								<v-rating
 									v-model="rating"
 									color="yellow darken-3"
@@ -60,13 +63,12 @@
 			this.getProducts();
 		},
 		computed: {
-			...mapGetters(["products"])
+			...mapGetters(["products", "shop"])
 		},
 		methods: {
-			getProducts() {
-				this.$store.dispatch("getAllProducts", {
-					shopId: "5ca932923e9310107897cfd9"
-				});
+			async getProducts() {
+				await this.$store.dispatch("getShop", { id: this.$route.params.id });
+				await this.$store.dispatch("getAllProducts");
 			}
 		}
 	};
@@ -87,7 +89,7 @@
 	}
 	.text {
 		color: rgb(114, 113, 113);
-		font-size: 14px;
+		font-size: 13px;
 	}
 	.rating {
 		color: #f9a825;

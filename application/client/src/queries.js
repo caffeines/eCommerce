@@ -1,5 +1,4 @@
 import { gql } from "apollo-boost";
-import { Query } from "mongoose";
 
 //* Signin user
 export const SIGNIN_USER = gql`
@@ -18,6 +17,10 @@ export const GET_PRODUCTS = gql`
       productName
       price
       picture
+      createdBy {
+        _id
+        shopName
+      }
     }
   }
 `;

@@ -13,7 +13,7 @@
 					hide-details
 				></v-text-field>
 			</v-card-title>
-			<div v-if="products.length == 0? initialize() : products"></div>
+			<div v-if="products.length == 0 && propProducts.length > 0? initialize() : products"></div>
 			<v-data-table :headers="headers" :items="products" v-model="value1" :search="search">
 				<template v-slot:items="props">
 					<td @click="show(props.item.pic)">{{ props.item.name }}</td>
@@ -74,7 +74,6 @@
 		},
 
 		created() {
-			this.getProducts();
 			this.initialize();
 		},
 
