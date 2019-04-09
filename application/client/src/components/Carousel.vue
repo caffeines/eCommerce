@@ -7,10 +7,10 @@
 			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.picture[i]">
 					<div class="head">
-						<div class="sub_title" :style="{color: color}">{{"T-shirt"}}</div>
+						<div class="sub_title ml-1" :style="{color: color}">{{"T-shirt"}}</div>
 						<div class="title mt-2" style>&#2547;{{50}}</div>
-						<div class="button">
-							<button class="cbtn cbtn-secondary mt-5">Shop now</button>
+						<div class="button ml-1 mt-2">
+							<v-btn round flat class="one">Shop now</v-btn>
 						</div>
 					</div>
 				</v-carousel-item>
@@ -73,6 +73,13 @@
 		font-weight: 700;
 		font-size: 100px !important;
 		font-family: "Berkshire Swash", cursive !important;
+	}
+	.one {
+		background-image: linear-gradient(
+			to right,
+			rgba(128, 0, 128, 0.76),
+			rgba(255, 68, 0, 0.801)
+		);
 	}
 	.head {
 		color: black;

@@ -3,6 +3,7 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row>
 				<v-flex xs6>
+					{{shop}}
 					<h1 class="heading size" @click="visitShop">{{shop.shopName}}</h1>
 				</v-flex>
 
@@ -32,6 +33,9 @@
 						<v-layout align-start justify-center row fill-height></v-layout>
 						<div v-if="productCard">
 							<AddProductCard/>
+						</div>
+						<div v-if="carouselCard">
+							<AddCarousel/>
 						</div>
 					</v-card>
 				</v-dialog>
@@ -107,12 +111,14 @@
 <script>
 	import { mapGetters, mapMutations } from "vuex";
 	import AddProductCard from "@/components/shop/AddProductCard";
+	import AddCarousel from "@/components/shop/AddCarousel";
 	import DataTable from "@/components/shop/DataTable";
 
 	export default {
 		components: {
 			AddProductCard,
-			DataTable
+			DataTable,
+			AddCarousel
 		},
 		data() {
 			return {

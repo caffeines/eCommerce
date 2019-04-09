@@ -115,7 +115,6 @@
 					items = [
 						{ icon: "account_circle", title: "Profile", link: "/profile" },
 						{ icon: "business", title: "Department", link: "/department" },
-						{ icon: "dashboard", title: "Dashboard", link: "/dashboard" },
 						{ icon: "store", title: "Shop", link: "/shop" },
 						{ icon: "create", title: "Create", link: "/create" },
 						{ icon: "chat", title: "Post", link: "/posts" }

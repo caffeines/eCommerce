@@ -277,6 +277,7 @@ export default new Vuex.Store({
 
   //! Getters
   getters: {
+    products: state => state.products,
     getProducts: state => state.products,
     loading: state => state.loading,
     user: state => state.user,

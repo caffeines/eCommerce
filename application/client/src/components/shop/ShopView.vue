@@ -1,14 +1,17 @@
 <template>
 	<div class="mt-2">
-		<Carousel/>
-		<div v-if="shop">{{shop}}</div>
+		<!-- <Carousel/> -->
+		<ProductCard/>
 	</div>
 </template>
 <script>
 	import Carousel from "@/components/Carousel";
+	import ProductCard from "@/components/shop/ProductCard";
+
 	import { mapGetters } from "vuex";
 	export default {
 		components: {
+			ProductCard,
 			Carousel
 		},
 		created() {

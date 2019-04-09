@@ -268,10 +268,7 @@
 				],
 				sizeRules: [size => size.length > 0 || "Size is required"],
 				colorRules: [color => color.length > 0 || "Color is required"],
-				pictureRules: [
-					picture =>
-						picture.length > 2 || "Number of picture must be grearer than 2"
-				]
+				pictureRules: [picture => picture.length > 0 || "Picture is required"]
 			};
 		},
 		computed: {
