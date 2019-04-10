@@ -4,23 +4,21 @@ import { defaultClient as apolloClient } from "./main";
 import router from "./router";
 Vue.use(Vuex);
 // @ts-ignore
-import { gql } from "apollo-boost";
 
 //* Queries import here
+import { SIGNIN_USER, GET_CURRENT_USER, SIGNUP_USER } from "./queries/user";
 import {
-  SIGNIN_USER,
   GET_PRODUCTS,
-  GET_CURRENT_USER,
-  SIGNUP_USER,
-  CREATE_SHOP,
   ADD_PRODUCT,
-  GET_ALL_SHOP_BY_A_USER,
   GET_PRODUCT_BY_SHOPID,
-  GET_SHOP_BY_SHOP_ID,
   DELETE_PRODUCT_BY_ID
-} from "./queries";
-import { stat } from "fs";
-import { STATES } from "mongoose";
+} from "./queries/product";
+
+import {
+  CREATE_SHOP,
+  GET_ALL_SHOP_BY_A_USER,
+  GET_SHOP_BY_SHOP_ID
+} from "./queries/shop";
 
 export default new Vuex.Store({
   //! Sate
@@ -296,7 +294,6 @@ export default new Vuex.Store({
               variables: payload,
               data
             });
-            
           },
           optimisticResponse: {
             __typename: "Mutation",
