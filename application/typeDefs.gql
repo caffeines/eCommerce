@@ -120,4 +120,6 @@ type Mutation {
     contactNo: String!
     address: String!
   ): Shop!
+
+  deleteProduct(id: String!): Product!
 }

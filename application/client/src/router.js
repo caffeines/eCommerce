@@ -4,6 +4,8 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Signin from "./views/Signin.vue";
 import userGuard from "./Auth/userGuard";
+import shopGuard from "./Auth/shopGuard";
+
 import Profile from "./views/Profile";
 Vue.use(Router);
 
@@ -42,7 +44,7 @@ export default new Router({
       path: "/dashboard/:id",
       name: "dashboard",
       component: () => import("./views/Dashboard.vue"),
-      beforeEnter: userGuard
+      beforeEnter: shopGuard
     },
     {
       path: "/shop/",

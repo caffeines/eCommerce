@@ -68,7 +68,14 @@ export const SIGNUP_USER = gql`
     }
   }
 `;
-
+export const DELETE_PRODUCT_BY_ID = gql`
+  mutation($id: String!) {
+    deleteProduct(id: $id) {
+      _id
+      productName
+    }
+  }
+`;
 //* Get current user
 export const GET_CURRENT_USER = gql`
   query {

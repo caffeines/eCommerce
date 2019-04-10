@@ -5,10 +5,15 @@
 				<h1 class="heading point mt-3" @click="visitShop">{{shop.shopName}}</h1>
 				<v-spacer></v-spacer>
 				<!-- Modal starts here -->
-				<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+				<v-dialog
+					v-model="addProductDailog"
+					fullscreen
+					hide-overlay
+					transition="dialog-bottom-transition"
+				>
 					<template v-slot:activator="{ on }">
-						<v-btn fab v-on="on" class="four">
-							<v-icon x-large color="#fff">add</v-icon>
+						<v-btn fab class="four">
+							<v-icon x-large color="#fff" @click="toggleAddProductDailog">add</v-icon>
 						</v-btn>
 					</template>
 					<v-card>
@@ -21,7 +26,7 @@
 								<span class="head">Add carousel</span>
 							</v-btn>
 
-							<v-btn icon @click="dialog = false">
+							<v-btn icon @click="toggleAddProductDailog">
 								<v-icon large>close</v-icon>
 							</v-btn>
 						</v-toolbar>
@@ -88,7 +93,7 @@
 
 			<v-layout row justify-center>
 				<v-flex xs-8 sm-8>
-					<DataTable :propProducts="this.$store.getters.productsByShopId"/>
+					<DataTable/>
 				</v-flex>
 				<v-flex xs-4 sm-4>
 					<div v-if="getPicture == null">
@@ -116,7 +121,6 @@
 		},
 		data() {
 			return {
-				dialog: false,
 				shopX: null,
 				ID: null,
 				notifications: false,
@@ -130,10 +134,11 @@
 			this.getShop();
 		},
 		computed: {
-			...mapGetters(["shop", "getPicture"])
+			...mapGetters(["shop", "getPicture", "addProductDailog"])
 		},
 		watch: {},
 		methods: {
+			...mapMutations(["toggleAddProductDailog"]),
 			async getShop() {
 				await this.$store.dispatch("getShop", { id: this.$route.params.id });
 				await this.$store.dispatch("getProductsByShopId", {

@@ -202,6 +202,11 @@ module.exports = {
         address
       }).save();
       return newShop;
+    },
+    //! delete product
+    deleteProduct: async (_, { id }, { Product }) => {
+      const product = await Product.findOneAndRemove({ _id: id });
+      return product;
     }
 
     /* new one starts here */

@@ -2,7 +2,26 @@
 	<div>
 		<v-card flat>
 			<v-card-title>
-				All product
+				<v-layout row>
+					<div class="text mt-1">All product &nbsp;</div>
+					<div @click="clicked">
+						<v-btn
+							class="ml-0"
+							round
+							:loading="loading4"
+							:disabled="loading4"
+							flat
+							@click="loader = 'loading4'"
+						>
+							<v-icon class="head">autorenew</v-icon>
+							<template v-slot:loader>
+								<span class="custom-loader">
+									<v-icon light>cached</v-icon>
+								</span>
+							</template>
+						</v-btn>
+					</div>
+				</v-layout>
 				<v-spacer></v-spacer>
 				<v-text-field
 					xs-8
@@ -13,7 +32,9 @@
 					hide-details
 				></v-text-field>
 			</v-card-title>
-			<div v-if="products.length == 0 && propProducts.length > 0? initialize() : products"></div>
+			<div
+				v-if="(products.length == 0 && this.$store.getters.productsByShopId.length > 0)? initialize() : products"
+			></div>
 			<v-data-table :headers="headers" :items="products" v-model="value1" :search="search">
 				<template v-slot:items="props">
 					<td @click="show(props.item.pic)">{{ props.item.name }}</td>
@@ -40,9 +61,13 @@
 <script>
 	import { mapGetters } from "vuex";
 	export default {
-		props: ["propProducts"],
 		data() {
 			return {
+				loader: null,
+				loading: false,
+				loading2: false,
+				loading3: false,
+				loading4: false,
 				search: "",
 				pict: null,
 				value1: [],
@@ -68,27 +93,49 @@
 		},
 
 		watch: {
+			loader() {
+				const l = this.loader;
+				this[l] = !this[l];
+
+				setTimeout(() => (this[l] = false), 1000);
+
+				this.loader = null;
+			},
 			dialog(val) {
 				val || this.close();
 			}
 		},
 
 		created() {
-			this.initialize();
+			this.getProducts();
 		},
 
 		methods: {
+			clicked() {
+				for (let i = 0; i < 2; i++) {
+					setTimeout(() => this.getProducts(), 500);
+				}
+			},
+			async getProducts() {
+				await this.$store.dispatch("getProductsByShopId", {
+					shopId: this.$route.params.id
+				});
+				this.initialize();
+			},
 			initialize() {
-				for (let i = 0; i < this.propProducts.length; i++) {
-					//console.log("Product name: ", this.propProducts[i].productName);
+				this.products = [];
+				const prod = this.$store.getters.productsByShopId;
+				console.log(prod.length);
+				for (let i = 0; i < prod.length; i++) {
 					let temp = {
-						name: this.propProducts[i].productName,
-						price: this.propProducts[i].price,
-						category: this.propProducts[i].category.join(", "),
-						tag: this.propProducts[i].tag.join(", "),
-						color: this.propProducts[i].color.join(", "),
-						size: this.propProducts[i].size.join(", "),
-						pic: this.propProducts[i].picture[0]
+						name: prod[i].productName,
+						price: prod[i].price,
+						category: prod[i].category.join(", "),
+						tag: prod[i].tag.join(", "),
+						color: prod[i].color.join(", "),
+						size: prod[i].size.join(", "),
+						pic: prod[i].picture[0],
+						id: prod[i]._id
 					};
 					this.products.push(temp);
 				}
@@ -101,8 +148,14 @@
 
 			deleteItem(item) {
 				const index = this.products.indexOf(item);
-				confirm("Are you sure you want to delete this item?") &&
+				const deleteAction = window.confirm(
+					"Are you sure you want to delete this item?"
+				);
+				if (deleteAction) {
 					this.products.splice(index, 1);
+					console.log(item.id);
+					this.$store.dispatch("deleteProduct", { id: item.id });
+				}
 			},
 
 			close() {
@@ -126,3 +179,45 @@
 		}
 	};
 </script>
+<style lang="scss">
+	.text {
+		font-size: 20px;
+	}
+
+	.custom-loader {
+		animation: loader 1s infinite;
+		display: flex;
+	}
+	@-moz-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-o-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+</style>

@@ -46,30 +46,36 @@
 </template>
 <script>
 	import { mapGetters } from "vuex";
+	import { setTimeout } from "timers";
 	export default {
-		props: ["user"],
 		data() {
 			return {
 				rating: 3.5
 			};
 		},
 		created() {
-			this.getShop();
+			this.userFetch();
 		},
 		computed: {
-			...mapGetters(["allShopByaUser"])
+			...mapGetters(["allShopByaUser", "user"])
 		},
 		methods: {
-			getShop() {
-				this.$store.dispatch("getAllShopByaUser", {
-					id: this.user.email
+			async userFetch() {
+				await this.$store.dispatch("getCurrentUser");
+				for (let i = 0; i < 2; i++) {
+					setTimeout(() => this.getShop(), 500);
+				}
+			},
+			async getShop() {
+				await this.$store.commit("setProductsByShopId", null);
+				await this.$store.dispatch("getAllShopByaUser", {
+					id: this.$store.getters.user.email
 				});
 			},
 			visitShop(ID) {
 				this.$router.push("/shop/" + ID);
 			},
-			visitDashboard(ID) {
-				this.$store.commit("setProductsByShopId", null);
+			async visitDashboard(ID) {
 				this.$router.push("/dashboard/" + ID);
 			}
 		}

@@ -16,7 +16,8 @@ import {
   ADD_PRODUCT,
   GET_ALL_SHOP_BY_A_USER,
   GET_PRODUCT_BY_SHOPID,
-  GET_SHOP_BY_SHOP_ID
+  GET_SHOP_BY_SHOP_ID,
+  DELETE_PRODUCT_BY_ID
 } from "./queries";
 import { stat } from "fs";
 import { STATES } from "mongoose";
@@ -24,6 +25,7 @@ import { STATES } from "mongoose";
 export default new Vuex.Store({
   //! Sate
   state: {
+    addProductDailog: false,
     shop: null,
     picture: null,
     products: [],
@@ -40,6 +42,9 @@ export default new Vuex.Store({
   //! Mutations
 
   mutations: {
+    toggleAddProductDailog: state => {
+      state.addProductDailog = !state.addProductDailog;
+    },
     setPicture: (state, payload) => {
       state.picture = payload;
     },
@@ -84,6 +89,20 @@ export default new Vuex.Store({
   //! Action
 
   actions: {
+    deleteProduct: ({ state, commit }, payload) => {
+      commit("setLoading", true);
+      apolloClient
+        .mutate({
+          mutation: DELETE_PRODUCT_BY_ID,
+          variables: payload
+        })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     signoutUser: async ({ commit }) => {
       commit("clearUser");
       // remove token storage in localstorage
@@ -261,12 +280,36 @@ export default new Vuex.Store({
       apolloClient
         .mutate({
           mutation: ADD_PRODUCT,
-          variables: payload
+          variables: payload,
+          update: (cache, { data: { addProduct } }) => {
+            // first read the query
+            console.log(cache);
+            const data = cache.readQuery({
+              query: GET_PRODUCT_BY_SHOPID,
+              variables: payload
+            });
+            //create updated data
+            data.getProductsByShopId.unshift(addProduct);
+            // write updated data back to query
+            cache.writeQuery({
+              query: GET_PRODUCT_BY_SHOPID,
+              variables: payload,
+              data
+            });
+            
+          },
+          optimisticResponse: {
+            __typename: "Mutation",
+            addProduct: {
+              __typename: "Product",
+              _id: -1,
+              ...payload
+            }
+          }
         })
         .then(({ data }) => {
           commit("setLoading", false);
-          // @ts-ignore
-          router.go();
+          commit("toggleAddProductDailog");
         })
         .catch(err => {
           commit("setLoading", false);
@@ -288,6 +331,7 @@ export default new Vuex.Store({
     currentShop: state => state.currentShop,
     allShopNameByaUser: state => state.allShopNameByaUser,
     productsByShopId: state => state.productsByShopId,
-    getPicture: state => state.picture
+    getPicture: state => state.picture,
+    addProductDailog: state => state.addProductDailog
   }
 });
