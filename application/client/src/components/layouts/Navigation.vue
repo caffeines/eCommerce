@@ -4,9 +4,7 @@
 			<v-toolbar fixed flat>
 				<v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
 				<v-toolbar-title>
-					<router-link to="/" tag="span" style="cursor: pointer">
-						<span color="primary">Gogonjo</span>
-					</router-link>
+					<span color="primary" style="cursor: pointer" @click="refresh">Gogonjo</span>
 				</v-toolbar-title>
 			</v-toolbar>
 
@@ -34,7 +32,7 @@
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
 				<div>
-					<router-link to="/" tag="span" style="cursor: pointer">Gogonjo</router-link>
+					<span color="primary" style="cursor: pointer" @click="refresh">Gogonjo</span>
 				</div>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
@@ -78,6 +76,7 @@
 <script>
 	import { mapGetters } from "vuex";
 	import { mapMutations } from "vuex";
+	import { setTimeout } from "timers";
 
 	export default {
 		data() {
@@ -120,11 +119,23 @@
 				return items;
 			}
 		},
-		created() {},
+		created() {
+			this.refresh();
+		},
 		methods: {
 			...mapMutations(["signupSet", "signinSet"]),
 			signoutUser() {
 				this.$store.dispatch("signoutUser");
+			},
+			refresh() {
+				console.log("clicked");
+				for (let i = 0; i < 2; i++) {
+					setTimeout(() => this.getAllProducts(), 500);
+				}
+				this.$router.push("/");
+			},
+			getAllProducts() {
+				this.$store.dispatch("getAllProducts");
 			}
 		}
 	};
