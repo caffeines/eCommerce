@@ -44,7 +44,8 @@ export default new Router({
       path: "/dashboard/:id",
       name: "dashboard",
       component: () => import("./views/Dashboard.vue"),
-      beforeEnter: shopGuard
+      beforeEnter: shopGuard,
+      props: true
     },
     {
       path: "/shop/",
@@ -52,14 +53,16 @@ export default new Router({
       component: () => import("./views/Allshop.vue")
     },
     {
-      path: "/shop/:id",
+      path: "/shop/:shopRouteId",
       name: "shopView",
-      component: () => import("./views/ShopView.vue")
+      component: () => import("./views/ShopView.vue"),
+      props: true
     },
     {
-      path: "/product/:id",
+      path: "/product/:productRouteId",
       name: "productView",
-      component: ProductView
+      component: ProductView,
+      props: true
     },
     {
       path: "/about",

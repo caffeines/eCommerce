@@ -187,17 +187,21 @@
 				this.$router.push("/cart");
 			},
 			gotoSearchUser(id) {
-				this.cardFlag = false;
 				this.$router.push("/profile/" + id);
+				this.clear();
 			},
 			gotoSearchShop(id) {
-				this.cardFlag = false;
 				this.$router.push("/shop/" + id);
+				this.clear();
 			},
 			gotoSearchProduct(id) {
-				this.$store.commit("toggleView", true);
-				this.cardFlag = false;
 				this.$router.push("/product/" + id);
+				this.clear();
+			},
+			clear() {
+				this.searchInput = "";
+				this.cardFlag = false;
+				this.$store.commit("clearSearchResult");
 			}
 		}
 	};

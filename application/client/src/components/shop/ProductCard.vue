@@ -51,11 +51,20 @@
 </template><script>
 	import { mapGetters } from "vuex";
 	export default {
+		props: ["shopRouteId"],
 		data() {
 			return {
 				rating: 4.6,
 				card_text: "Vue t-Shirt"
 			};
+		},
+		watch: {
+			shopRouteId: function(newValue, oldValue) {
+				console.log(newValue, oldValue);
+				if (newValue) {
+					this.getProducts();
+				}
+			}
 		},
 		created() {
 			this.getProducts();
@@ -66,7 +75,7 @@
 		methods: {
 			getProducts() {
 				this.$store.dispatch("getProductsByShopId", {
-					shopId: this.$route.params.id
+					shopId: this.shopRouteId
 				});
 			},
 			viewProduct(id) {

@@ -20,3 +20,7 @@ export const setSearchResult = (state, payload) => {
 export const toggleView = (state, payload) => {
   state.productView = payload;
 };
+
+export const clearSearchResult = state => {
+  state.searchResult = null;
+};

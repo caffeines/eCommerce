@@ -91,25 +91,20 @@
 		computed: {
 			...mapGetters(["productsByShopId"])
 		},
-
 		watch: {
 			loader() {
 				const l = this.loader;
 				this[l] = !this[l];
-
 				setTimeout(() => (this[l] = false), 1000);
-
 				this.loader = null;
 			},
 			dialog(val) {
 				val || this.close();
 			}
 		},
-
 		created() {
 			this.getProducts();
 		},
-
 		methods: {
 			clicked() {
 				for (let i = 0; i < 2; i++) {
@@ -145,7 +140,6 @@
 				this.editedItem = Object.assign({}, item);
 				this.dialog = true;
 			},
-
 			deleteItem(item) {
 				const index = this.products.indexOf(item);
 				const deleteAction = window.confirm(
@@ -157,7 +151,6 @@
 					this.$store.dispatch("deleteProduct", { id: item.id });
 				}
 			},
-
 			close() {
 				this.dialog = false;
 				setTimeout(() => {
@@ -183,7 +176,6 @@
 	.text {
 		font-size: 20px;
 	}
-
 	.custom-loader {
 		animation: loader 1s infinite;
 		display: flex;

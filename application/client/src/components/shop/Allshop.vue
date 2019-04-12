@@ -88,7 +88,6 @@
 			rgba(128, 0, 128, 0.76),
 			rgba(255, 68, 0, 0.801)
 		);
-
 		&:hover {
 			background-image: linear-gradient(to right, #fff, #fff);
 		}

@@ -230,6 +230,7 @@
 				</div>
 			</v-flex>
 		</v-layout>
+		{{productRouteId}}
 		<div class="false"></div>
 	</div>
 </template>
@@ -244,6 +245,7 @@
 		GET_PRODUCT_BY_PRODUCT_ID
 	} from "@/queries/product";
 	export default {
+		props: ["productRouteId"],
 		data() {
 			return {
 				rating: 4.9,
@@ -267,7 +269,15 @@
 		computed: {
 			...mapGetters(["userLoved", "productByProductId", "products", "user"])
 		},
-		watch: {},
+		watch: {
+			productRouteId: function(newValue, oldValue) {
+				console.log(newValue, oldValue);
+				if (newValue) {
+					this.getProduct();
+					flag = true;
+				}
+			}
+		},
 		created() {
 			this.counter = 0;
 			this.getProduct();
@@ -275,8 +285,9 @@
 		methods: {
 			async getProduct() {
 				await this.$store.dispatch("getProductByProductId", {
-					id: this.$route.params.id.toString()
+					id: this.productRouteId
 				});
+				this.flag = false;
 			},
 			checkIfProductLoved(id) {
 				if (this.userLoved && this.userLoved.some(lv => lv._id === id)) {
@@ -309,12 +320,12 @@
 							update: (cache, { data: { addComment } }) => {
 								const data = cache.readQuery({
 									query: GET_PRODUCT_BY_PRODUCT_ID,
-									variables: { id: this.$route.params.id }
+									variables: { id: this.productRouteId }
 								});
 								data.getProductByProductId.comments.unshift(addComment);
 								cache.writeQuery({
 									query: GET_PRODUCT_BY_PRODUCT_ID,
-									variables: { id: this.$route.params.id },
+									variables: { id: this.productRouteId },
 									data
 								});
 							}
@@ -369,12 +380,12 @@
 						update: (cache, { data: { loveProduct } }) => {
 							const data = cache.readQuery({
 								query: GET_PRODUCT_BY_PRODUCT_ID,
-								variables: { id: this.$route.params.id }
+								variables: { id: this.productRouteId }
 							});
 							data.getProductByProductId.love += 1;
 							cache.writeQuery({
 								query: GET_PRODUCT_BY_PRODUCT_ID,
-								variables: { id: this.$route.params.id },
+								variables: { id: this.productRouteId },
 								data
 							});
 						}
@@ -404,12 +415,12 @@
 						update: (cache, { data: { unLoveProduct } }) => {
 							const data = cache.readQuery({
 								query: GET_PRODUCT_BY_PRODUCT_ID,
-								variables: { id: this.$route.params.id }
+								variables: { id: this.productRouteId }
 							});
 							data.getProductByProductId.love -= 1;
 							cache.writeQuery({
 								query: GET_PRODUCT_BY_PRODUCT_ID,
-								variables: { id: this.$route.params.id },
+								variables: { id: this.productRouteId },
 								data
 							});
 						}
