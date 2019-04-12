@@ -64,10 +64,15 @@
 					<v-icon class="hidden-sm-only">exit_to_app</v-icon>Signout
 				</v-btn>
 			</div>
-			<div>
-				<v-btn flat :to="'/cart'">
-					<i class="material-icons">shopping_cart</i>
-				</v-btn>
+			<div class="mr-2">
+				<v-badge color="primary">
+					<template v-slot:badge>
+						<span>1</span>
+					</template>
+					<div @click="goToCart" style="cursor: pointer">
+						<v-icon>shopping_cart</v-icon>
+					</div>
+				</v-badge>
 			</div>
 		</v-toolbar>
 	</div>
@@ -119,9 +124,7 @@
 				return items;
 			}
 		},
-		created() {
-			this.refresh();
-		},
+		created() {},
 		methods: {
 			...mapMutations(["signupSet", "signinSet"]),
 			signoutUser() {
@@ -136,6 +139,9 @@
 			},
 			getAllProducts() {
 				this.$store.dispatch("getAllProducts");
+			},
+			goToCart() {
+				this.$router.push("/cart");
 			}
 		}
 	};

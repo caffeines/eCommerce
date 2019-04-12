@@ -14,12 +14,20 @@ type User {
   love: [Product]
 }
 
+type Comment {
+  _id: ID
+  body: String!
+  commentUser: User!
+  commentDate: String!
+  like: Int
+}
+
 type Product {
   _id: ID
   productName: String!
   price: Int!
   description: String!
-  comment: [Comment]
+  comments: [Comment]
   rating: Float
   tag: [String]!
   category: [String]!
@@ -32,14 +40,6 @@ type Product {
   shopId: String!
   love: Int
   createdBy: Shop!
-}
-
-type Comment {
-  _id: ID
-  body: String
-  commentUser: User
-  commentDate: String
-  like: Int
 }
 
 type Shop {
@@ -76,6 +76,11 @@ type Token {
   token: String!
 }
 
+type ProductPage {
+  products: [Product]
+  hasMore: Boolean
+}
+
 type Query {
   getProducts: [Product]
   getUser(userName: String!): User
@@ -83,6 +88,8 @@ type Query {
   getShop(id: String!): Shop
   getAllShopByaUser(id: String!): [Shop]
   getProductsByShopId(id: String!): [Product]
+  infiniteScrollProduct(pageNum: Int!, pageSize: Int!): ProductPage!
+  getProductByProductId(id: String!): Product!
 }
 
 type Mutation {
@@ -122,4 +129,6 @@ type Mutation {
   ): Shop!
 
   deleteProduct(id: String!): Product!
+
+  addComment(body: String, userId: ID, productId: ID): Comment!
 }

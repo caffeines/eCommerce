@@ -16,6 +16,26 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
+//* Infinite scroll
+
+export const INFINITE_SCROLL_PRODUCT = gql`
+  query($pageNum: Int!, $pageSize: Int!) {
+    infiniteScrollProduct(pageNum: $pageNum, pageSize: $pageSize) {
+      hasMore
+      products {
+        _id
+        productName
+        price
+        picture
+        createdBy {
+          _id
+          shopName
+        }
+      }
+    }
+  }
+`;
+
 // get product by shopId
 export const GET_PRODUCT_BY_SHOPID = gql`
   query($shopId: String!) {
@@ -30,6 +50,44 @@ export const GET_PRODUCT_BY_SHOPID = gql`
       category
       tag
       picture
+    }
+  }
+`;
+
+export const GET_PRODUCT_BY_PRODUCT_ID = gql`
+  query($id: String!) {
+    getProductByProductId(id: $id) {
+      _id
+      productName
+      price
+      description
+      comments {
+        _id
+        body
+        commentUser {
+          _id
+          firstName
+          lastName
+          profilePic
+        }
+        commentDate
+        like
+      }
+      rating
+      tag
+      category
+      size
+      color
+      parent
+      discountPrice
+      picture
+      shopId
+      love
+      createdBy {
+        _id
+        shopName
+        logo
+      }
     }
   }
 `;
@@ -83,6 +141,24 @@ export const ADD_PRODUCT = gql`
       createdBy {
         _id
       }
+    }
+  }
+`;
+
+//* add comment
+
+export const ADD_PRODUCT_COMMENT = gql`
+  mutation($body: String, $userId: ID, $productId: ID) {
+    addComment(body: $body, userId: $userId, productId: $productId) {
+      _id
+      body
+      commentUser {
+        _id
+        firstName
+        lastName
+        profilePic
+      }
+      commentDate
     }
   }
 `;

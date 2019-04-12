@@ -7,3 +7,6 @@ export const setProducts = (state, payload) => {
 export const setProductsByShopId = (state, payload) => {
   state.productsByShopId = payload;
 };
+export const setProductByProductId = (state, payload) => {
+  state.productByProductId = payload;
+};

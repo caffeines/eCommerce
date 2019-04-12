@@ -6,6 +6,7 @@ import Signin from "./views/Signin.vue";
 import userGuard from "./Auth/userGuard";
 import shopGuard from "./Auth/shopGuard";
 import Profile from "./views/Profile";
+import ProductView from "./views/SingleProductView";
 Vue.use(Router);
 
 export default new Router({
@@ -55,7 +56,11 @@ export default new Router({
       name: "shopView",
       component: () => import("./views/ShopView.vue")
     },
-
+    {
+      path: "/product/:id",
+      name: "productView",
+      component: ProductView
+    },
     {
       path: "/about",
       name: "about",

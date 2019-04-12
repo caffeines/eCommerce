@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  comment: [
+  comments: [
     {
       body: {
         type: String,
@@ -21,8 +21,7 @@ const productSchema = new mongoose.Schema({
       },
       commentUser: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+        ref: "User"
       },
       commentDate: {
         type: Date,

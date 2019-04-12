@@ -1,7 +1,8 @@
 import {
   toggleAddProductDailog,
   setProducts,
-  setProductsByShopId
+  setProductsByShopId,
+  setProductByProductId
 } from "./mutation/product";
 
 import {
@@ -34,6 +35,7 @@ export const mutations = {
   toggleAddProductDailog,
   setProducts,
   setProductsByShopId,
+  setProductByProductId,
 
   //* Shop
   setAllShopByaUser,

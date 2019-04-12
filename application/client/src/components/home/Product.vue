@@ -1,7 +1,17 @@
 <template>
 	<v-container grid-list-xl>
 		<v-layout wrap>
-			<v-flex mt-4 xs12 xl2 lg3 md4 sm6 v-for="product in products" :key="product">
+			<v-flex
+				mt-4
+				xs12
+				xl2
+				lg3
+				md4
+				sm6
+				v-for="product in products"
+				:key="'product'"
+				@click="viewProduct(product._id)"
+			>
 				<v-hover>
 					<v-card
 						height="400"
@@ -67,8 +77,10 @@
 		},
 		methods: {
 			async getProducts() {
-				await this.$store.dispatch("getShop", { id: this.$route.params.id });
 				await this.$store.dispatch("getAllProducts");
+			},
+			viewProduct(id) {
+				this.$router.push("/product/" + id);
 			}
 		}
 	};

@@ -9,6 +9,7 @@
 						class="card mx-auto"
 						slot-scope="{ hover }"
 						color="grey lighten-4"
+						@click="viewProduct(prod._id)"
 					>
 						<v-img :src="prod.picture[0]" aspect-ratio="1">
 							<v-expand-transition>
@@ -67,6 +68,9 @@
 				this.$store.dispatch("getProductsByShopId", {
 					shopId: this.$route.params.id
 				});
+			},
+			viewProduct(id) {
+				this.$router.push("/product/" + id);
 			}
 		}
 	};

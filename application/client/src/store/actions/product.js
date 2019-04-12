@@ -4,7 +4,8 @@ import {
   GET_PRODUCTS,
   ADD_PRODUCT,
   GET_PRODUCT_BY_SHOPID,
-  DELETE_PRODUCT_BY_ID
+  DELETE_PRODUCT_BY_ID,
+  GET_PRODUCT_BY_PRODUCT_ID
 } from "../../queries/product";
 
 export const deleteProduct = ({ state, commit }, payload) => {
@@ -33,6 +34,23 @@ export const getProductsByShopId = ({ commit }, payload) => {
       commit("setLoading", false);
       console.log(data);
       commit("setProductsByShopId", data.getProductsByShopId);
+    })
+    .catch(err => {
+      commit("setLoading", false);
+      console.error(err);
+    });
+};
+export const getProductByProductId = ({ commit }, payload) => {
+  commit("setLoading", true);
+  apolloClient
+    .query({
+      query: GET_PRODUCT_BY_PRODUCT_ID,
+      variables: payload
+    })
+    .then(({ data }) => {
+      commit("setLoading", false);
+      console.log(data);
+      commit("setProductByProductId", data.getProductByProductId);
     })
     .catch(err => {
       commit("setLoading", false);

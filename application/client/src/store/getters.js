@@ -9,6 +9,7 @@ export const getters = {
   getProducts: state => state.products,
   productsByShopId: state => state.productsByShopId,
   addProductDailog: state => state.addProductDailog,
+  productByProductId: state => state.productByProductId,
 
   //* Shop
   shop: state => state.shop,

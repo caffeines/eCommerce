@@ -23,3 +23,14 @@
 		}
 	};
 </script>
+
+<style>
+	@import url(
+		https://fonts.googleapis.com/css?family=Lato:100,
+		300,
+		400,
+		500,
+		400i,
+		700|Audiowide|Berkshire+Swash|Ubuntu+Mono:400
+	);
+</style>

@@ -253,13 +253,7 @@
 					price => price > 0 || "Price can't be negative"
 				],
 				descriptionRules: [
-					description => !!description || "Description is required",
-					description =>
-						description.length < 200 ||
-						"Description length must be less than 200",
-					description =>
-						description.length > 50 ||
-						"Description length must be greater than 50"
+					description => !!description || "Description is required"
 				],
 				categoryRules: [
 					category => category.length > 0 || "Category is required"

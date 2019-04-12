@@ -10,5 +10,6 @@ export const state = {
   allShopByaUser: [],
   allShopNameByaUser: null,
   currentShop: null,
-  productsByShopId: null
+  productsByShopId: null,
+  productByProductId: null
 };

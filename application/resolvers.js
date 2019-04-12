@@ -51,6 +51,53 @@ module.exports = {
         throw new Error("User dosen't exists");
       }
     },
+
+    //* infinite scroll
+    infiniteScrollProduct: async (_, { pageNum, pageSize }, { Product }) => {
+      let products;
+      if (pageNum == 1) {
+        products = await Product.find({})
+          .sort({ createdDate: "Desc" })
+          .populate({
+            path: "createdBy",
+            model: "Shop"
+          })
+          .limit(pageSize);
+      } else {
+        const skips = pageSize * (pageNum - 1);
+        products = await Product.find({})
+          .sort({ createdDate: "Desc" })
+          .populate({
+            path: "createdBy",
+            model: "Shop"
+          })
+          .skip(skips)
+          .limit(pageSize);
+      }
+      const totalDocs = await Product.countDocuments();
+      const hasMore = totalDocs > pageSize * pageNum;
+
+      return { products, hasMore };
+    },
+
+    //* get product by product by product id
+    getProductByProductId: async (_, { id }, { Product }) => {
+      const product = await Product.findOne({ _id: id })
+        .populate({
+          path: "createdBy",
+          model: "Shop"
+        })
+        .populate({
+          path: "comments.commentUser",
+          model: "User"
+        });
+      if (product) {
+        return product;
+      } else {
+        return new Error("Product not found");
+      }
+    },
+
     /*
      ** Get Shop
      */
@@ -185,6 +232,7 @@ module.exports = {
       console.log(newProduct);
       return newProduct;
     },
+
     /*
      ** New shop created here
      */
@@ -207,8 +255,29 @@ module.exports = {
     deleteProduct: async (_, { id }, { Product }) => {
       const product = await Product.findOneAndRemove({ _id: id });
       return product;
-    }
+    },
 
+    //* add comment
+    addComment: async (_, { body, userId, productId }, { Product }) => {
+      const newComment = {
+        body,
+        commentUser: userId
+      };
+      console.log(userId);
+      const product = await Product.findOneAndUpdate(
+        //! first find the product by id
+        { _id: productId },
+        //! prepned new comment to the beginning of comment array
+        { $push: { comments: { $each: [newComment], $position: 0 } } },
+
+        { new: true }
+      ).populate({
+        path: "comments.commentUser",
+        model: "User"
+      });
+      console.log(product.comments[0]);
+      return product.comments[0];
+    }
     /* new one starts here */
   }
 };
