@@ -65,6 +65,11 @@ type Carousel {
   shortDescription: String!
 }
 
+type Love {
+  loves: Int
+  wishList: [Product]
+}
+
 type Kudos {
   _id: ID
   name: String
@@ -129,6 +134,7 @@ type Mutation {
   ): Shop!
 
   deleteProduct(id: String!): Product!
-
+  loveProduct(productId: ID!, userName: String!): Love!
+  unLoveProduct(productId: ID!, userName: String!): Love!
   addComment(body: String, userId: ID, productId: ID): Comment!
 }

@@ -234,6 +234,8 @@
 	import { mapGetters } from "vuex";
 	import { defaultClient as apolloClient } from "../../main";
 	import {
+		LOVE_PRODUCT,
+		UNLOVE_PRODUCT,
 		ADD_PRODUCT_COMMENT,
 		GET_PRODUCT_BY_PRODUCT_ID
 	} from "@/queries/product";

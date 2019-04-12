@@ -277,6 +277,50 @@ module.exports = {
       });
       console.log(product.comments[0]);
       return product.comments[0];
+    },
+
+    //* love && unlove
+
+    loveProduct: async (_, { productId, userName }, { Product, User }) => {
+      const product = await Product.findOneAndUpdate(
+        { _id: productId },
+        { $inc: { love: 1 } },
+        { new: true }
+      );
+
+      const user = await User.findOneAndUpdate(
+        { userName },
+        { $addToSet: { love: productId } },
+        { new: true }
+      ).populate({
+        path: "love",
+        model: "Product"
+      });
+      return {
+        loves: product.love,
+        wishList: user.love
+      };
+    },
+
+    unLoveProduct: async (_, { productId, userName }, { Product, User }) => {
+      const product = await Product.findOneAndUpdate(
+        { _id: productId },
+        { $inc: { love: -1 } },
+        { new: true }
+      );
+
+      const user = await User.findOneAndUpdate(
+        { userName },
+        { $pull: { love: productId } },
+        { new: true }
+      ).populate({
+        path: "love",
+        model: "Product"
+      });
+      return {
+        loves: product.love,
+        wishList: user.love
+      };
     }
     /* new one starts here */
   }

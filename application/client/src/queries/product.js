@@ -162,3 +162,33 @@ export const ADD_PRODUCT_COMMENT = gql`
     }
   }
 `;
+
+//* Love product
+
+export const LOVE_PRODUCT = gql`
+  mutation($productId: ID!, $userName: String!) {
+    loveProduct(productId: $productId, userName: $userName) {
+      loves
+      wishList {
+        _id
+        productName
+        price
+        picture
+      }
+    }
+  }
+`;
+
+export const UNLOVE_PRODUCT = gql`
+  mutation($productId: ID!, $userName: String!) {
+    unLoveProduct(productId: $productId, userName: $userName) {
+      loves
+      wishList {
+        _id
+        productName
+        price
+        picture
+      }
+    }
+  }
+`;
