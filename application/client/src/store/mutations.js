@@ -2,7 +2,9 @@ import {
   toggleAddProductDailog,
   setProducts,
   setProductsByShopId,
-  setProductByProductId
+  setProductByProductId,
+  setSearchResult,
+  toggleView
 } from "./mutation/product";
 
 import {
@@ -42,5 +44,9 @@ export const mutations = {
   setAllShopNameByaUser,
   setShop,
   setPicture,
-  setcurrentShop
+  setcurrentShop,
+
+  //* mix
+  setSearchResult,
+  toggleView
 };

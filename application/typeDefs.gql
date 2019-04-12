@@ -77,6 +77,12 @@ type Kudos {
   year: String
 }
 
+type Search {
+  product: [Product]
+  shop: [Shop]
+  user: [User]
+}
+
 type Token {
   token: String!
 }
@@ -95,6 +101,7 @@ type Query {
   getProductsByShopId(id: String!): [Product]
   infiniteScrollProduct(pageNum: Int!, pageSize: Int!): ProductPage!
   getProductByProductId(id: String!): Product!
+  searchAny(any: String): Search
 }
 
 type Mutation {

@@ -2,6 +2,7 @@ export const getters = {
   //* User
   loading: state => state.loading,
   user: state => state.user,
+  userLoved: state => state.user && state.user.love,
   authError: state => state.authError,
 
   //* Product
@@ -17,5 +18,9 @@ export const getters = {
   entry: state => state.entry,
   currentShop: state => state.currentShop,
   allShopNameByaUser: state => state.allShopNameByaUser,
-  getPicture: state => state.picture
+  getPicture: state => state.picture,
+
+  //* Search and mix
+  searchResult: state => state.searchResult,
+  productView: state => state.productView
 };

@@ -37,6 +37,8 @@
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-text-field
+				v-model="searchInput"
+				@input="handleSearch"
 				flex
 				prepend-icon="search"
 				:placeholder="text"
@@ -44,8 +46,41 @@
 				single-line-hide-details
 			></v-text-field>
 
-			<v-spacer></v-spacer>
+			<!-- search results card -->
 
+			<v-card flat v-if="searchResult && cardFlag" class="search__card">
+				<v-layout>
+					<v-flex xs12 sm12 md4 lg4 xl4>
+						<h3 class="type">Product</h3>
+						<v-list>
+							<v-list-tile v-for="pres in searchResult.product" :key="'pres'">
+								<v-list-tile-title class="result" @click="gotoSearchProduct(pres._id)">{{pres.productName}}</v-list-tile-title>
+							</v-list-tile>
+						</v-list>
+					</v-flex>
+					<v-flex xs12 sm12 md4 lg4 xl4>
+						<h3 class="type">Shop</h3>
+						<v-list>
+							<v-list-tile v-for="sres in searchResult.shop" :key="'sres'">
+								<v-list-tile-title class="result" @click="gotoSearchShop(sres._id)">{{sres.shopName}}</v-list-tile-title>
+							</v-list-tile>
+						</v-list>
+					</v-flex>
+					<v-flex xs12 sm12 md4 lg4 xl4>
+						<h3 class="type">User</h3>
+						<v-list>
+							<v-list-tile v-for="ures in searchResult.user" :key="'ures'">
+								<v-list-tile-title
+									class="result"
+									@click="gotoSearchUser(ures._id)"
+								>{{ures.firstName}} {{ ures.lastName}}</v-list-tile-title>
+							</v-list-tile>
+						</v-list>
+					</v-flex>
+				</v-layout>
+			</v-card>
+
+			<v-spacer></v-spacer>
 			<!-- Icon & Items -->
 			<div class="hidden-xs-only">
 				<!-- <v-btn flat v-for="item in navItems" :key="item.title" :to="item.link">
@@ -86,13 +121,15 @@
 	export default {
 		data() {
 			return {
+				cardFlag: false,
+				searchInput: "",
 				drawer: false,
 				text: "",
 				txt: "Type to search (ex: iPhone XS)"
 			};
 		},
 		computed: {
-			...mapGetters(["user", "shop"]),
+			...mapGetters(["user", "shop", "searchResult"]),
 			navItems() {
 				let items = [{ icon: "lock_open", title: "Sign in", link: "/signin" }];
 				if (this.user) {
@@ -130,6 +167,12 @@
 			signoutUser() {
 				this.$store.dispatch("signoutUser");
 			},
+			handleSearch() {
+				this.cardFlag = true;
+				this.$store.dispatch("searchProduct", {
+					any: this.searchInput
+				});
+			},
 			refresh() {
 				console.log("clicked");
 				for (let i = 0; i < 2; i++) {
@@ -142,10 +185,40 @@
 			},
 			goToCart() {
 				this.$router.push("/cart");
+			},
+			gotoSearchUser(id) {
+				this.cardFlag = false;
+				this.$router.push("/profile/" + id);
+			},
+			gotoSearchShop(id) {
+				this.cardFlag = false;
+				this.$router.push("/shop/" + id);
+			},
+			gotoSearchProduct(id) {
+				this.$store.commit("toggleView", true);
+				this.cardFlag = false;
+				this.$router.push("/product/" + id);
 			}
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
+	.search__card {
+		position: absolute;
+		width: 100vw;
+		z-index: 8;
+		top: 100%;
+		left: 0%;
+	}
+	.type {
+		margin-left: 12px;
+		color: rgba(214, 28, 28, 0.356);
+	}
+	.result {
+		cursor: pointer;
+		&:hover {
+			color: rgba(83, 83, 83, 0.76);
+		}
+	}
 </style>

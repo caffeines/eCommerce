@@ -81,9 +81,13 @@
 					<v-layout row justify-center>
 						<v-btn color="error" round>Add to Cart</v-btn>
 						<div v-if="user">
-							<v-icon large class="fav mt-1" v-if="!loved" @click="love">favorite_border</v-icon>
-							<v-icon large class="fav mt-1" v-else @click="love">favorite</v-icon>
+							<v-btn @click="toggleLoved" flat large icon v-if="user">
+								<v-icon large :color="checkIfProductLoved(productByProductId._id) ? 'red' : 'grey'">favorite</v-icon>
+							</v-btn>
+							<!-- <v-icon large class="fav mt-1" v-if="!loved" @click="toggleLoved">favorite_border</v-icon>
+							<v-icon large class="fav mt-1" v-else @click="toggleLoved">favorite</v-icon>-->
 						</div>
+						<span class="love_text" v-if="user">{{productByProductId.love}}</span>
 					</v-layout>
 				</div>
 			</v-flex>
@@ -261,7 +265,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["productByProductId", "products", "user"])
+			...mapGetters(["userLoved", "productByProductId", "products", "user"])
 		},
 		watch: {},
 		created() {
@@ -273,6 +277,22 @@
 				await this.$store.dispatch("getProductByProductId", {
 					id: this.$route.params.id.toString()
 				});
+			},
+			checkIfProductLoved(id) {
+				if (this.userLoved && this.userLoved.some(lv => lv._id === id)) {
+					this.loved = true;
+					return true;
+				} else {
+					this.loved = false;
+					return false;
+				}
+			},
+			toggleLoved() {
+				if (this.loved) {
+					this.handleunLove();
+				} else {
+					this.handleLove();
+				}
 			},
 			handleAddComment() {
 				if (this.$refs.form.validate()) {
@@ -300,7 +320,6 @@
 							}
 						})
 						.then(({ data }) => {
-							console.log(data);
 							this.$refs.form.reset();
 							this.getProduct();
 						})
@@ -324,7 +343,6 @@
 				}
 			},
 			imgSource(cmnt) {
-				console.log();
 				let src =
 					"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" +
 					cmnt.commentUser.firstName +
@@ -332,17 +350,85 @@
 					cmnt.commentUser.lastName;
 				return src;
 			},
+
 			decrement() {
 				if (this.num > 0) {
 					this.num--;
 				}
 			},
-			love() {
-				this.loved = !this.loved;
+			handleLove() {
+				const variables = {
+					productId: this.productByProductId._id,
+					userName: this.user.userName
+				};
+
+				apolloClient
+					.mutate({
+						mutation: LOVE_PRODUCT,
+						variables,
+						update: (cache, { data: { loveProduct } }) => {
+							const data = cache.readQuery({
+								query: GET_PRODUCT_BY_PRODUCT_ID,
+								variables: { id: this.$route.params.id }
+							});
+							data.getProductByProductId.love += 1;
+							cache.writeQuery({
+								query: GET_PRODUCT_BY_PRODUCT_ID,
+								variables: { id: this.$route.params.id },
+								data
+							});
+						}
+					})
+					.then(({ data }) => {
+						const updateUser = {
+							...this.user,
+							love: data.loveProduct.wishList
+						};
+						this.$store.commit("setUser", updateUser);
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			},
-			setPic(img) {
-				console.log(img);
-				this.image = img;
+
+			handleunLove() {
+				const variables = {
+					productId: this.productByProductId._id,
+					userName: this.user.userName
+				};
+
+				apolloClient
+					.mutate({
+						mutation: UNLOVE_PRODUCT,
+						variables,
+						update: (cache, { data: { unLoveProduct } }) => {
+							const data = cache.readQuery({
+								query: GET_PRODUCT_BY_PRODUCT_ID,
+								variables: { id: this.$route.params.id }
+							});
+							data.getProductByProductId.love -= 1;
+							cache.writeQuery({
+								query: GET_PRODUCT_BY_PRODUCT_ID,
+								variables: { id: this.$route.params.id },
+								data
+							});
+						}
+					})
+					.then(({ data }) => {
+						const updateUser = {
+							...this.user,
+							love: data.unLoveProduct.wishList
+						};
+						this.getProduct();
+						this.$store.commit("setUser", updateUser);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			},
+
+			setPic(IMG) {
+				this.image = IMG;
 				this.flag = true;
 			},
 			description() {
@@ -368,6 +454,13 @@
 </script>
 
 <style lang="scss">
+	.love_text {
+		font-size: 20px;
+		margin-top: 13px;
+		margin-left: 3px;
+		font-weight: 400;
+		color: rgb(102, 102, 102);
+	}
 	._comment {
 		&__head {
 			font-size: 20px;

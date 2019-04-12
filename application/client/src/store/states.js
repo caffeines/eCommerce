@@ -11,5 +11,7 @@ export const state = {
   allShopNameByaUser: null,
   currentShop: null,
   productsByShopId: null,
-  productByProductId: null
+  productByProductId: null,
+  searchResult: null,
+  productView: true
 };

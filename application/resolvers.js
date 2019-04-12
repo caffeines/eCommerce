@@ -9,6 +9,39 @@ const createToken = (user, secret, expiresIn) => {
 
 module.exports = {
   Query: {
+    searchAny: async (_, { any }, { User, Product, Shop }) => {
+      if (any) {
+        const searchProduct = await Product.find(
+          { $text: { $search: any } },
+          { score: { $meta: "textScore" } }
+        )
+          .sort({
+            score: { $meta: "textScore" },
+            rating: "desc"
+          })
+          .limit(15);
+        const searchShop = await Shop.find(
+          { $text: { $search: any } },
+          { score: { $meta: "textScore" } }
+        )
+          .sort({
+            score: { $meta: "textScore" },
+            rating: "desc"
+          })
+          .limit(15);
+
+        const searchUser = await User.find(
+          { $text: { $search: any } },
+          { score: { $meta: "textScore" } }
+        ).limit(15);
+
+        return {
+          shop: searchShop,
+          product: searchProduct,
+          user: searchUser
+        };
+      }
+    },
     /*
      ** Product fetching
      */
@@ -229,7 +262,6 @@ module.exports = {
         createdBy: creatorId,
         shopId: creatorId
       }).save();
-      console.log(newProduct);
       return newProduct;
     },
 
@@ -263,7 +295,6 @@ module.exports = {
         body,
         commentUser: userId
       };
-      console.log(userId);
       const product = await Product.findOneAndUpdate(
         //! first find the product by id
         { _id: productId },
@@ -275,7 +306,6 @@ module.exports = {
         path: "comments.commentUser",
         model: "User"
       });
-      console.log(product.comments[0]);
       return product.comments[0];
     },
 

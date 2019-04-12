@@ -5,7 +5,8 @@ import {
   ADD_PRODUCT,
   GET_PRODUCT_BY_SHOPID,
   DELETE_PRODUCT_BY_ID,
-  GET_PRODUCT_BY_PRODUCT_ID
+  GET_PRODUCT_BY_PRODUCT_ID,
+  SEARCH
 } from "../../queries/product";
 
 export const deleteProduct = ({ state, commit }, payload) => {
@@ -20,6 +21,21 @@ export const deleteProduct = ({ state, commit }, payload) => {
     })
     .catch(err => {
       console.error(err);
+    });
+};
+
+export const searchProduct = ({ commit }, payload) => {
+  apolloClient
+    .query({
+      query: SEARCH,
+      variables: payload
+    })
+    .then(({ data }) => {
+      console.log(data.searchAny);
+      commit("setSearchResult", data.searchAny);
+    })
+    .catch(err => {
+      console.log(err);
     });
 };
 

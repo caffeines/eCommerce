@@ -74,4 +74,7 @@ userSchema.pre("save", function(next) {
   });
 });
 
+userSchema.index({
+  "$**": "text"
+});
 module.exports = mongoose.model("User", userSchema);

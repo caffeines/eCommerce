@@ -192,3 +192,29 @@ export const UNLOVE_PRODUCT = gql`
     }
   }
 `;
+
+//* Searh anything
+export const SEARCH = gql`
+  query($any: String) {
+    searchAny(any: $any) {
+      product {
+        _id
+        productName
+        picture
+      }
+      shop {
+        _id
+        shopName
+        shopId
+        logo
+      }
+      user {
+        _id
+        userName
+        firstName
+        lastName
+        profilePic
+      }
+    }
+  }
+`;

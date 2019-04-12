@@ -79,4 +79,7 @@ const shopSchema = new mongoose.Schema({
   ]
 });
 
+shopSchema.index({
+  "$**": "text"
+});
 module.exports = mongoose.model("Shop", shopSchema);
