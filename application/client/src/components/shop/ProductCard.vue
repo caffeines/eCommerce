@@ -48,7 +48,8 @@
 			</v-flex>
 		</v-layout>
 	</v-container>
-</template><script>
+</template>
+<script>
 	import { mapGetters } from "vuex";
 	export default {
 		props: ["shopRouteId"],

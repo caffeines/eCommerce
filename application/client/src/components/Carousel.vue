@@ -1,15 +1,14 @@
 <template>
-	<div>
-		{{items}}
+	<div v-if="items">
 		<div v-if="loading">
 			<appLoading/>
 		</div>
 		<div v-else col-sm-12>
 			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
-					<div class="head">
+					<div class="head" v-if="item.title && item.button && item.subtitle">
 						<div class="sub_title ml-5" :style="{color: item.subtitleColor}">{{item.subtitle}}</div>
-						<div class="title mt-2 ml-4" :style="{color: item.titleColor}">{{item.title}}</div>
+						<div class="title mt-2 ml-5" :style="{color: item.titleColor}">{{item.title}}</div>
 						<div class="button ml-5 mt-2">
 							<v-btn round flat class="one">Shop now</v-btn>
 						</div>
@@ -71,8 +70,8 @@
 		font-size: 3rem;
 	}
 	.title {
-		font-weight: 700;
-		font-size: 100px !important;
+		font-weight: 600;
+		font-size: 50px !important;
 		font-family: "Berkshire Swash", cursive !important;
 	}
 	.one {
@@ -86,7 +85,7 @@
 		color: black;
 		position: absolute;
 		top: 45%;
-		left: 30%;
+		left: 35%;
 		transform: translate(-50%, -50%);
 		text-transform: capitalize;
 	}

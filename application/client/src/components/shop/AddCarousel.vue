@@ -39,7 +39,6 @@
 										<v-layout row>
 											<v-flex xs-8>
 												<v-text-field
-													:rules="buttonRules"
 													v-model="buttonText"
 													prepend-icon="rounded_corner"
 													label="Button Text"
@@ -49,7 +48,6 @@
 											<v-spacer></v-spacer>
 											<v-flex ml-5 xs-2>
 												<v-text-field
-													:rules="colorRules"
 													v-model="buttonColor"
 													prepend-icon="color_lens"
 													label="Button color"
@@ -60,18 +58,11 @@
 										</v-layout>
 										<v-layout row>
 											<v-flex xs-8>
-												<v-text-field
-													:rules="titleRules"
-													v-model="titleText"
-													prepend-icon="title"
-													label="Title Text"
-													type="text"
-												></v-text-field>
+												<v-text-field v-model="title" prepend-icon="title" label="Title Text" type="text"></v-text-field>
 											</v-flex>
 											<v-spacer></v-spacer>
 											<v-flex ml-5 xs-2>
 												<v-text-field
-													:rules="colorRules"
 													v-model="titleColor"
 													prepend-icon="color_lens"
 													label="Title color"
@@ -83,8 +74,7 @@
 										<v-layout row>
 											<v-flex xs-8>
 												<v-text-field
-													:rules="subtitleRules"
-													v-model="subtitleText"
+													v-model="subtitle"
 													prepend-icon="subtitles"
 													label="Subtitle Text"
 													type="text"
@@ -93,7 +83,6 @@
 											<v-spacer></v-spacer>
 											<v-flex ml-5 xs-2>
 												<v-text-field
-													:rules="colorRules"
 													v-model="subtitleColor"
 													prepend-icon="color_lens"
 													label="Subtitle color"
@@ -123,6 +112,8 @@
 	</div>
 </template>
 <script>
+	import { defaultClient as apolloClient } from "../../main";
+	import { ADD_CAROUSEL, GET_SHOP_BY_SHOP_ID } from "@/queries/shop";
 	import TypeWriter from "@/components/layouts/TypeWriter";
 	import Loading from "@/components/layouts/Loading";
 
@@ -142,14 +133,14 @@
 				buttonText: "",
 				title: "",
 				titleColor: "",
-				subTitile: "",
-				subTitleColor: "",
+				subtitle: "",
+				subtitleColor: "",
 				text: ["Add carousel here"],
-				pictureRules: [picture => !!picture || "Picture is required"],
-				colorRules: [color => !!color || "Color is required"],
-				buttonRules: [button => !!button || "Button text is required"],
-				titleRules: [title => !!title || "Title is required"],
-				subtitleRules: [subtitle => !!subtitle || "Subtitle is required"]
+				pictureRules: [picture => !!picture || "Picture is required"]
+				// colorRules: [color => !!color || "Color is required"],
+				// buttonRules: [button => !!button || "Button text is required"],
+				// titleRules: [title => !!title || "Title is required"],
+				// subtitleRules: [subtitle => !!subtitle || "Subtitle is required"]
 			};
 		},
 		computed: {
@@ -158,17 +149,43 @@
 		watch: {},
 		methods: {
 			handleAddCarousel() {
+				const variables = {
+					src: this.picture,
+					title: this.title,
+					buttonColor: this.buttonColor,
+					subtitle: this.subtitle,
+					titleColor: this.titleColor,
+					subtitleColor: this.subtitleColor,
+					button: this.buttonText,
+					shopId: this.$store.getters.shop._id
+				};
+
 				if (this.$refs.form.validate()) {
-					this.$store.dispatch("addCarousel", {
-						picture: this.picture,
-						buttonColor: this.buttonColor,
-						buttonTex: this.buttonText,
-						title: this.title,
-						titleColor: this.titleColor,
-						subTitile: this.subTitile,
-						subTitileColor: this.subTitileColor,
-						shopId: this.$store.getters.shop._id
-					});
+					apolloClient
+						.mutate({
+							mutation: ADD_CAROUSEL,
+							variables,
+							update: (cache, { data: { addCarousel } }) => {
+								const data = cache.readQuery({
+									query: GET_SHOP_BY_SHOP_ID,
+									variables: { id: this.$store.getters.shop._id }
+								});
+								//console.log(data);
+								data.getShop.coverPic.unshift(addCarousel);
+								cache.writeQuery({
+									query: GET_SHOP_BY_SHOP_ID,
+									variables: { id: this.$store.getters.shop._id },
+									data
+								});
+							}
+						})
+						.then(({ data }) => {
+							console.log(data);
+							this.$refs.form.reset();
+						})
+						.catch(err => {
+							console.log(err);
+						});
 				}
 			}
 		}

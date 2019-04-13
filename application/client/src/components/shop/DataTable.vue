@@ -61,6 +61,7 @@
 <script>
 	import { mapGetters } from "vuex";
 	export default {
+		props: ["dashboardRouteId"],
 		data() {
 			return {
 				loader: null,

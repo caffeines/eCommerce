@@ -347,6 +347,7 @@ module.exports = {
         path: "love",
         model: "Product"
       });
+
       return {
         loves: product.love,
         wishList: user.love
@@ -386,7 +387,82 @@ module.exports = {
         { new: true }
       );
       return product.coverPic[0];
-      /* new one starts here */
+    },
+
+    //! update product rating
+    //*  update product rating
+    //! update product rating
+
+    updateProductRating: async (
+      _,
+      { productId, userId, givenRating },
+      { User, Product }
+    ) => {
+      const user = await User.findOne({ _id: userId });
+      console.log(user);
+      let oldRating = 0,
+        matched = false;
+      for (let i = 0; i < user.ratedProduct.length; i++) {
+        if (user.ratedProduct[i].productId == productId) {
+          oldRating = user.ratedProduct[i].rating;
+          matched = true;
+          console.log("Matched: ", user.ratedProduct[i].productId);
+        }
+      }
+
+      const tempProduct = await Product.findOne({ _id: productId });
+
+      let newRating = givenRating - oldRating;
+      const tempRating = tempProduct.rating.rate; // old avg rating in product
+      let noOfRat = tempProduct.rating.totalNumberOfRating; // no. of users who gave rating
+
+      console.log(
+        tempProduct.productName,
+        tempRating,
+        noOfRat,
+        "Old rating: ",
+        oldRating
+      );
+
+      let finalRating;
+      if (oldRating || givenRating == 0 || matched) {
+        finalRating = (newRating + tempRating) / noOfRat;
+      } else {
+        noOfRat += 1;
+        finalRating = (newRating + tempRating) / noOfRat;
+      }
+      const rat = {
+        rate: finalRating,
+        totalNumberOfRating: noOfRat
+      };
+      const product = await Product.findOneAndUpdate(
+        { _id: productId },
+        {
+          $set: {
+            rating: rat
+          }
+        },
+        { new: true }
+      );
+      const updatedRatedProduct = {
+        productId: productId,
+        rating: finalRating
+      };
+
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userId },
+        { $addToSet: { ratedProduct: updatedRatedProduct } },
+        { new: true }
+      ).populate({
+        path: "ratedProduct.productId",
+        model: "Product"
+      });
+
+      //console.log("updatedUser: ", updatedUser);
+      //console.log("updatedProduct: ", product);
+
+      return product;
     }
+    /* new one starts here */
   }
 };

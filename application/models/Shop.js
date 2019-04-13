@@ -50,34 +50,34 @@ const shopSchema = new mongoose.Schema({
         required: true
       },
       title: {
-        type: String,
-        required: true
+        type: String
       },
       subtitle: {
-        type: String,
-        required: true
+        type: String
       },
       titleColor: {
-        type: String,
-        required: true
+        type: String
       },
       subtitleColor: {
-        type: String,
-        required: true
+        type: String
       },
       button: {
-        type: String,
-        required: true
+        type: String
       },
       buttonColor: {
-        type: String,
-        required: true
+        type: String
       }
     }
   ],
   rating: {
-    type: Number,
-    default: 0
+    rate: {
+      type: Number,
+      default: 0
+    },
+    totalNumberOfRating: {
+      type: Number,
+      default: 0
+    }
   },
   kudos: [
     {

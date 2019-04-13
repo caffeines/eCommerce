@@ -1,3 +1,23 @@
+type prevProductRating {
+  product: Product
+  rating: Float
+}
+type prevShopRating {
+  shop: Shop
+  rating: Float
+}
+type productRating {
+  rate: Float!
+  totalNumberOfRating: Int!
+  ratedProduct: [prevProductRating]
+}
+
+type shopRating {
+  rate: Float!
+  totalNumberOfRating: Int!
+  ratedShop: [prevShopRating]
+}
+
 type User {
   _id: ID
   firstName: String!
@@ -12,6 +32,8 @@ type User {
   coverPic: String
   role: String
   love: [Product]
+  ratedProduct: [productRating]
+  ratedShop: [shopRating]
 }
 
 type Comment {
@@ -28,7 +50,7 @@ type Product {
   price: Int!
   description: String!
   comments: [Comment]
-  rating: Float
+  rating: productRating
   tag: [String]!
   category: [String]!
   size: [String]!
@@ -53,7 +75,7 @@ type Shop {
   dateOfCreation: String
   logo: String
   coverPic: [Carousel]
-  rating: Float
+  rating: shopRating
   shopId: String!
   kudos: Kudos
 }
@@ -61,9 +83,9 @@ type Shop {
 type Carousel {
   _id: ID
   src: String!
-  title: String!
-  button: String!
-  subtitle: String!
+  title: String
+  button: String
+  subtitle: String
   titleColor: String
   subtitleColor: String
   buttonColor: String
@@ -119,11 +141,13 @@ type Mutation {
     dateOfBirth: String
   ): Token
 
+  updateProductRating(productId: ID!, userId: ID!, givenRating: Float): Product!
+
   addCarousel(
     src: String!
-    title: String!
-    button: String!
-    subtitle: String!
+    title: String
+    button: String
+    subtitle: String
     titleColor: String
     subtitleColor: String
     buttonColor: String

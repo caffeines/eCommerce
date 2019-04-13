@@ -45,7 +45,10 @@ export const GET_PRODUCT_BY_SHOPID = gql`
       price
       size
       description
-      rating
+      rating {
+        rate
+        totalNumberOfRating
+      }
       color
       category
       tag
@@ -73,7 +76,10 @@ export const GET_PRODUCT_BY_PRODUCT_ID = gql`
         commentDate
         like
       }
-      rating
+      rating {
+        rate
+        totalNumberOfRating
+      }
       tag
       category
       size

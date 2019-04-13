@@ -230,7 +230,6 @@
 				</div>
 			</v-flex>
 		</v-layout>
-		{{productRouteId}}
 		<div class="false"></div>
 	</div>
 </template>

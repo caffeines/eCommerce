@@ -93,7 +93,7 @@
 
 			<v-layout row justify-center>
 				<v-flex xs-8 sm-8>
-					<DataTable/>
+					<DataTable :dashboardRouteId="dashboardRouteId"/>
 				</v-flex>
 				<v-flex xs-4 sm-4>
 					<div v-if="getPicture == null">

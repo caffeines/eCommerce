@@ -52,6 +52,21 @@ const userSchema = new mongoose.Schema({
   love: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Product"
+  },
+  ratedProduct: [
+    {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      },
+      rating: {
+        type: Number
+      }
+    }
+  ],
+  ratedShop: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Shop"
   }
 });
 

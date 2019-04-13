@@ -26,7 +26,10 @@ export const CREATE_SHOP = gql`
       address
       ownerEmail
       logo
-      rating
+      rating {
+        rate
+        totalNumberOfRating
+      }
       dateOfCreation
       owner {
         _id
@@ -64,7 +67,10 @@ export const GET_SHOP_BY_SHOP_ID = gql`
         subtitleColor
       }
       dateOfCreation
-      rating
+      rating {
+        rate
+        totalNumberOfRating
+      }
       kudos {
         _id
         name
@@ -104,7 +110,10 @@ export const GET_ALL_SHOP_BY_A_USER = gql`
         subtitleColor
       }
       dateOfCreation
-      rating
+      rating {
+        rate
+        totalNumberOfRating
+      }
       kudos {
         _id
         name
@@ -118,9 +127,9 @@ export const GET_ALL_SHOP_BY_A_USER = gql`
 export const ADD_CAROUSEL = gql`
   mutation(
     $src: String!
-    $title: String!
-    $button: String!
-    $subtitle: String!
+    $title: String
+    $button: String
+    $subtitle: String
     $titleColor: String
     $subtitleColor: String
     $buttonColor: String
@@ -137,7 +146,6 @@ export const ADD_CAROUSEL = gql`
       shopId: $shopId
     ) {
       _id
-      title
     }
   }
 `;
