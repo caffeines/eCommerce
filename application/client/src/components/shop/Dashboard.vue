@@ -114,6 +114,8 @@
 	import AddCarousel from "@/components/shop/AddCarousel";
 	import DataTable from "@/components/shop/DataTable";
 	export default {
+		name: "dashboard",
+		props: ["dashboardRouteId"],
 		components: {
 			AddProductCard,
 			DataTable,
@@ -140,13 +142,13 @@
 		methods: {
 			...mapMutations(["toggleAddProductDailog"]),
 			async getShop() {
-				await this.$store.dispatch("getShop", { id: this.$route.params.id });
+				await this.$store.dispatch("getShop", { id: this.dashboardRouteId });
 				await this.$store.dispatch("getProductsByShopId", {
-					shopId: this.$route.params.id
+					shopId: this.dashboardRouteId
 				});
 			},
 			visitShop() {
-				this.$router.push("/shop/" + this.$route.params.id);
+				this.$router.push("/shop/" + this.dashboardRouteId);
 			}
 		}
 	};

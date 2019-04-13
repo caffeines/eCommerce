@@ -41,7 +41,7 @@ export default new Router({
       beforeEnter: userGuard
     },
     {
-      path: "/dashboard/:id",
+      path: "/dashboard/:dashboardRouteId",
       name: "dashboard",
       component: () => import("./views/Dashboard.vue"),
       beforeEnter: shopGuard,

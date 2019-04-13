@@ -1,11 +1,13 @@
 <template>
-	<Dashboard :dashboardRouteId="dashboardRouteId"/>
+	<div>
+		<Dashboard :dashboardRouteId="dashboardRouteId"/>
+	</div>
 </template>
 <script>
 	import Dashboard from "@/components/shop/Dashboard.vue";
 	export default {
 		name: "dashboard",
-		propos: ["dashboardRouteId"],
+		props: ["dashboardRouteId"],
 		components: {
 			Dashboard
 		}

@@ -113,7 +113,7 @@
 			},
 			async getProducts() {
 				await this.$store.dispatch("getProductsByShopId", {
-					shopId: this.$route.params.id
+					shopId: this.dashboardRouteId
 				});
 				this.initialize();
 			},
