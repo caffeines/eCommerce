@@ -61,8 +61,12 @@ type Shop {
 type Carousel {
   _id: ID
   src: String!
-  head: String!
-  shortDescription: String!
+  title: String!
+  button: String!
+  subtitle: String!
+  titleColor: String
+  subtitleColor: String
+  buttonColor: String
 }
 
 type Love {
@@ -114,6 +118,17 @@ type Mutation {
     userName: String
     dateOfBirth: String
   ): Token
+
+  addCarousel(
+    src: String!
+    title: String!
+    button: String!
+    subtitle: String!
+    titleColor: String
+    subtitleColor: String
+    buttonColor: String
+    shopId: ID!
+  ): Carousel!
 
   signin(userName: String, password: String!): Token
 

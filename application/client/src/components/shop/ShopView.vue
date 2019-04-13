@@ -1,8 +1,7 @@
 <template>
 	<div class="mt-2">
-		<!-- <Carousel/> -->
+		<Carousel :items="shop.coverPic"/>
 		<ProductCard :shopRouteId="shopRouteId"/>
-		{{shopRouteId}}
 	</div>
 </template>
 <script>

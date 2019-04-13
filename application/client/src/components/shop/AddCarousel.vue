@@ -2,7 +2,6 @@
 	<div>
 		<div>
 			<div>
-				{{shop}}
 				<v-container text-xs-center mt-2 pt-5>
 					<v-layout row wrap>
 						<div class="mb-5 typeWriter">

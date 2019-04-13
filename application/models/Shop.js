@@ -49,11 +49,27 @@ const shopSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-      head: {
+      title: {
         type: String,
         required: true
       },
-      shrotDescription: {
+      subtitle: {
+        type: String,
+        required: true
+      },
+      titleColor: {
+        type: String,
+        required: true
+      },
+      subtitleColor: {
+        type: String,
+        required: true
+      },
+      button: {
+        type: String,
+        required: true
+      },
+      buttonColor: {
         type: String,
         required: true
       }

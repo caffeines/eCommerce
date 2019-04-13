@@ -351,7 +351,42 @@ module.exports = {
         loves: product.love,
         wishList: user.love
       };
+    },
+
+    //* Add carousel
+    addCarousel: async (
+      _,
+      {
+        title,
+        buttonColor,
+        titleColor,
+        subtitle,
+        subtitleColor,
+        src,
+        button,
+        shopId
+      },
+      { Shop }
+    ) => {
+      const newCarousel = {
+        title,
+        buttonColor,
+        titleColor,
+        subtitle,
+        subtitleColor,
+        src,
+        button
+      };
+      const product = await Shop.findOneAndUpdate(
+        //! first find the product by id
+        { _id: shopId },
+        //! prepned new comment to the beginning of comment array
+        { $push: { coverPic: { $each: [newCarousel], $position: 0 } } },
+
+        { new: true }
+      );
+      return product.coverPic[0];
+      /* new one starts here */
     }
-    /* new one starts here */
   }
 };

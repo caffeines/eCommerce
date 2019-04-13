@@ -1,15 +1,16 @@
 <template>
 	<div>
+		{{items}}
 		<div v-if="loading">
 			<appLoading/>
 		</div>
 		<div v-else col-sm-12>
 			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
-				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.picture[i]">
+				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
 					<div class="head">
-						<div class="sub_title ml-1" :style="{color: color}">{{"T-shirt"}}</div>
-						<div class="title mt-2" style>&#2547;{{50}}</div>
-						<div class="button ml-1 mt-2">
+						<div class="sub_title ml-5" :style="{color: item.subtitleColor}">{{item.subtitle}}</div>
+						<div class="title mt-2 ml-4" :style="{color: item.titleColor}">{{item.title}}</div>
+						<div class="button ml-5 mt-2">
 							<v-btn round flat class="one">Shop now</v-btn>
 						</div>
 					</div>

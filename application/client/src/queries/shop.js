@@ -56,8 +56,12 @@ export const GET_SHOP_BY_SHOP_ID = gql`
       coverPic {
         _id
         src
-        head
-        shortDescription
+        title
+        titleColor
+        button
+        buttonColor
+        subtitle
+        subtitleColor
       }
       dateOfCreation
       rating
@@ -92,8 +96,12 @@ export const GET_ALL_SHOP_BY_A_USER = gql`
       coverPic {
         _id
         src
-        head
-        shortDescription
+        title
+        titleColor
+        button
+        buttonColor
+        subtitle
+        subtitleColor
       }
       dateOfCreation
       rating
@@ -103,6 +111,33 @@ export const GET_ALL_SHOP_BY_A_USER = gql`
         description
         year
       }
+    }
+  }
+`;
+
+export const ADD_CAROUSEL = gql`
+  mutation(
+    $src: String!
+    $title: String!
+    $button: String!
+    $subtitle: String!
+    $titleColor: String
+    $subtitleColor: String
+    $buttonColor: String
+    $shopId: ID!
+  ) {
+    addCarousel(
+      src: $src
+      title: $title
+      button: $button
+      subtitle: $subtitle
+      titleColor: $titleColor
+      buttonColor: $buttonColor
+      subtitleColor: $subtitleColor
+      shopId: $shopId
+    ) {
+      _id
+      title
     }
   }
 `;
