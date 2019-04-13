@@ -36,6 +36,9 @@
 				<!-- <v-img :src="image" height="80vh"></v-img> -->
 			</v-flex>
 			<v-flex xs8 sm8 md2 lg4 xl4>
+				<div
+					v-if="productByProductId.rating.rate > 0? rating = productByProductId.rating.rate : rating = 0"
+				/>
 				<div class="ml-4">
 					<div class="__price mt-3">&#2547;&nbsp;{{productByProductId.price}}</div>
 					<div class="prodText">{{productByProductId.productName}}</div>

@@ -12,6 +12,10 @@ export const GET_PRODUCTS = gql`
         _id
         shopName
       }
+      rating {
+        rate
+        totalNumberOfRating
+      }
     }
   }
 `;
@@ -31,6 +35,10 @@ export const INFINITE_SCROLL_PRODUCT = gql`
           _id
           shopName
         }
+      }
+      rating {
+        rate
+        totalNumberOfRating
       }
     }
   }

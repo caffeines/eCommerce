@@ -31,6 +31,7 @@
 						</v-img>
 
 						<v-card-title>
+							<div v-if="product.rating.rate > 0? rating = product.rating.rate : rating = 0"/>
 							<div>
 								<h3 class="headline price">&#2547;&nbsp;{{product.price}}</h3>
 								<div class="text">
@@ -52,7 +53,7 @@
 									dense
 									readonly
 								></v-rating>
-								<span class="rating">{{rating}} (1455)</span>
+								<span class="rating">{{rating}} ({{product.rating.totalNumberOfRating}})</span>
 							</v-layout>
 						</div>
 					</v-card>
@@ -65,7 +66,7 @@
 	export default {
 		data() {
 			return {
-				rating: 4.6,
+				rating: 0,
 				card_text: "Vue t-Shirt"
 			};
 		},
