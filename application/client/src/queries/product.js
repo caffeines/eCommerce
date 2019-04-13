@@ -232,3 +232,20 @@ export const SEARCH = gql`
     }
   }
 `;
+
+export const UPDATE_PRODUCT_RATING = gql`
+  mutation($productId: ID!, $userId: ID!, $givenRating: Float) {
+    updateProductRating(
+      productId: $productId
+      userId: $userId
+      givenRating: $givenRating
+    ) {
+      _id
+      productName
+      rating {
+        rate
+        totalNumberOfRating
+      }
+    }
+  }
+`;

@@ -183,7 +183,7 @@
 										hover
 										dense
 									></v-rating>
-									<v-btn color="primary" round flat>Rate Now</v-btn>
+									<v-btn color="primary" round flat @click="rateNow">Rate Now</v-btn>
 								</v-layout>
 								<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleAddComment">
 									<v-layout>
@@ -251,7 +251,7 @@
 		data() {
 			return {
 				rating: 4.9,
-				rating2: 0,
+				rating2: 0, // for rate now
 				size: "",
 				color: "",
 				num: 0,
@@ -299,6 +299,13 @@
 					this.loved = false;
 					return false;
 				}
+			},
+			rateNow() {
+				this.$store.dispatch("updateProductRating", {
+					productId: this.productRouteId,
+					userId: this.user._id,
+					givenRating: this.rating2
+				});
 			},
 			toggleLoved() {
 				if (this.loved) {

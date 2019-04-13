@@ -6,7 +6,8 @@ import {
   GET_PRODUCT_BY_SHOPID,
   DELETE_PRODUCT_BY_ID,
   GET_PRODUCT_BY_PRODUCT_ID,
-  SEARCH
+  SEARCH,
+  UPDATE_PRODUCT_RATING
 } from "../../queries/product";
 
 export const deleteProduct = ({ state, commit }, payload) => {
@@ -125,6 +126,23 @@ export const addProduct = ({ commit }, payload) => {
     .then(({ data }) => {
       commit("setLoading", false);
       commit("toggleAddProductDailog");
+    })
+    .catch(err => {
+      commit("setLoading", false);
+      console.error(err);
+    });
+};
+
+export const updateProductRating = ({ commit }, payload) => {
+  commit("setLoading", true);
+  apolloClient
+    .mutate({
+      mutation: UPDATE_PRODUCT_RATING,
+      variables: payload
+    })
+    .then(({ data }) => {
+      console.log(data);
+      commit("setLoading", false);
     })
     .catch(err => {
       commit("setLoading", false);

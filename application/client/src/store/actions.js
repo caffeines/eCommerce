@@ -15,7 +15,8 @@ import {
   getProductsByShopId,
   addProduct,
   getProductByProductId,
-  searchProduct
+  searchProduct,
+  updateProductRating
 } from "./actions/product";
 
 import {
@@ -34,6 +35,7 @@ export const actions = {
   addProduct,
   getProductByProductId,
   searchProduct,
+  updateProductRating,
 
   //* User
   signinUser,
