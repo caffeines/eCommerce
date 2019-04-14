@@ -5,7 +5,8 @@ import {
   setProductByProductId,
   setSearchResult,
   toggleView,
-  clearSearchResult
+  clearSearchResult,
+  setOwnProductRating
 } from "./mutation/product";
 
 import {
@@ -40,6 +41,7 @@ export const mutations = {
   setProductsByShopId,
   setProductByProductId,
   clearSearchResult,
+  setOwnProductRating,
 
   //* Shop
   setAllShopByaUser,

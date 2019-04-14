@@ -118,6 +118,10 @@ type ProductPage {
   hasMore: Boolean
 }
 
+type OwnRating {
+  rating: Float
+}
+
 type Query {
   getProducts: [Product]
   getUser(userName: String!): User
@@ -128,6 +132,7 @@ type Query {
   infiniteScrollProduct(pageNum: Int!, pageSize: Int!): ProductPage!
   getProductByProductId(id: String!): Product!
   searchAny(any: String): Search
+  getOwnProductRating(productId: ID!, userId: ID!): OwnRating
 }
 
 type Mutation {

@@ -201,7 +201,7 @@
 								</v-form>
 							</div>
 							<div class="mt-5">
-								<v-layout class="mt-1" v-for="cmnt in productByProductId.comments" :key="cmnt">
+								<v-layout class="mt-1" v-for="cmnt in productByProductId.comments" :key="'cmnt'">
 									<v-layout align-center row mb-1>
 										<v-flex xs4 sm2 md1>
 											<v-avatar size="42px">
@@ -250,7 +250,7 @@
 		props: ["productRouteId"],
 		data() {
 			return {
-				rating: 4.9,
+				rating: 0,
 				rating2: 0, // for rate now
 				size: "",
 				color: "",
@@ -269,7 +269,13 @@
 			};
 		},
 		computed: {
-			...mapGetters(["userLoved", "productByProductId", "products", "user"])
+			...mapGetters([
+				"userLoved",
+				"productByProductId",
+				"products",
+				"user",
+				"ownProductRating"
+			])
 		},
 		watch: {
 			productRouteId: function(newValue, oldValue) {
@@ -289,7 +295,18 @@
 				await this.$store.dispatch("getProductByProductId", {
 					id: this.productRouteId
 				});
+				await this.$store.dispatch("getOwnProductRating", {
+					productId: this.productRouteId,
+					userId: this.user._id
+				});
 				this.flag = false;
+				setTimeout(() => {
+					this.checkRating();
+				}, 200);
+			},
+			checkRating() {
+				console.log("RATING: ", this.ownProductRating.rating);
+				this.rating2 = this.ownProductRating.rating;
 			},
 			checkIfProductLoved(id) {
 				if (this.userLoved && this.userLoved.some(lv => lv._id === id)) {

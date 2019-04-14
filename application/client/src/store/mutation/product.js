@@ -24,3 +24,7 @@ export const toggleView = (state, payload) => {
 export const clearSearchResult = state => {
   state.searchResult = null;
 };
+
+export const setOwnProductRating = (state, payload) => {
+  state.ownProductRating = payload;
+};

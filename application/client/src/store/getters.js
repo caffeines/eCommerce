@@ -11,6 +11,7 @@ export const getters = {
   productsByShopId: state => state.productsByShopId,
   addProductDailog: state => state.addProductDailog,
   productByProductId: state => state.productByProductId,
+  ownProductRating: state => state.ownProductRating,
 
   //* Shop
   shop: state => state.shop,

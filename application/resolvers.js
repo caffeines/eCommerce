@@ -172,6 +172,22 @@ module.exports = {
         model: "Product"
       });
       return user;
+    },
+
+    //* get own product rating
+    getOwnProductRating: async (_, { productId, userId }, { User }) => {
+      const user = await User.findOne({ _id: userId });
+      //console.log(user);
+      let oldRating = 0,
+        matched = false;
+      for (let i = 0; i < user.ratedProduct.length; i++) {
+        if (user.ratedProduct[i].productId == productId) {
+          oldRating = user.ratedProduct[i].rating;
+          matched = true;
+          //console.log( "Matched: ", user.ratedProduct[ i ].productId );
+        }
+      }
+      return { rating: oldRating };
     }
   },
 
@@ -208,6 +224,7 @@ module.exports = {
         userName,
         dateOfBirth
       }).save();
+      //TODO need to hide secret token
       return { token: createToken(newUser, "sadasas") };
     },
     /*
@@ -399,7 +416,7 @@ module.exports = {
       { User, Product }
     ) => {
       const user = await User.findOne({ _id: userId });
-      console.log(user);
+      //console.log(user);
       let oldRating = 0,
         matched = false;
       for (let i = 0; i < user.ratedProduct.length; i++) {
@@ -448,15 +465,26 @@ module.exports = {
         productId: productId,
         rating: finalRating
       };
-
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: userId },
-        { $addToSet: { ratedProduct: updatedRatedProduct } },
-        { new: true }
-      ).populate({
-        path: "ratedProduct.productId",
-        model: "Product"
-      });
+      let updatedUser;
+      if (matched) {
+        updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { ratedProduct: updatedRatedProduct } },
+          { new: true }
+        ).populate({
+          path: "ratedProduct.productId",
+          model: "Product"
+        });
+      } else {
+        updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { $addToSet: { ratedProduct: updatedRatedProduct } },
+          { new: true }
+        ).populate({
+          path: "ratedProduct.productId",
+          model: "Product"
+        });
+      }
 
       //console.log("updatedUser: ", updatedUser);
       //console.log("updatedProduct: ", product);

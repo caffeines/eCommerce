@@ -249,3 +249,11 @@ export const UPDATE_PRODUCT_RATING = gql`
     }
   }
 `;
+
+export const GET_OWN_PRODUCT_RATING = gql`
+  query($productId: ID!, $userId: ID!) {
+    getOwnProductRating(productId: $productId, userId: $userId) {
+      rating
+    }
+  }
+`;

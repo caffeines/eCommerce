@@ -13,5 +13,6 @@ export const state = {
   productsByShopId: null,
   productByProductId: null,
   searchResult: null,
-  productView: true
+  productView: true,
+  ownProductRating: null
 };

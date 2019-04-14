@@ -7,7 +7,8 @@ import {
   DELETE_PRODUCT_BY_ID,
   GET_PRODUCT_BY_PRODUCT_ID,
   SEARCH,
-  UPDATE_PRODUCT_RATING
+  UPDATE_PRODUCT_RATING,
+  GET_OWN_PRODUCT_RATING
 } from "../../queries/product";
 
 export const deleteProduct = ({ state, commit }, payload) => {
@@ -147,5 +148,22 @@ export const updateProductRating = ({ commit }, payload) => {
     .catch(err => {
       commit("setLoading", false);
       console.error(err);
+    });
+};
+
+export const getOwnProductRating = ({ commit }, payload) => {
+  commit("setLoading", true);
+  apolloClient
+    .query({
+      query: GET_OWN_PRODUCT_RATING,
+      variables: payload
+    })
+    .then(({ data }) => {
+      commit("setLoading", false);
+      console.log(data);
+      commit("setOwnProductRating", data.getOwnProductRating);
+    })
+    .catch(err => {
+      commit("setLoading", false);
     });
 };

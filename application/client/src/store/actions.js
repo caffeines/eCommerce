@@ -16,7 +16,8 @@ import {
   addProduct,
   getProductByProductId,
   searchProduct,
-  updateProductRating
+  updateProductRating,
+  getOwnProductRating
 } from "./actions/product";
 
 import {
@@ -36,6 +37,7 @@ export const actions = {
   getProductByProductId,
   searchProduct,
   updateProductRating,
+  getOwnProductRating,
 
   //* User
   signinUser,
