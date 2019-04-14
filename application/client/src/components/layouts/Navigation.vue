@@ -1,6 +1,6 @@
 <template>
 	<div class="mb-3">
-		<v-navigation-drawer temporary v-model="drawer" fixed app>
+		<v-navigation-drawer flat temporary v-model="drawer" fixed app>
 			<v-toolbar fixed flat>
 				<v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
 				<v-toolbar-title>
@@ -28,24 +28,25 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-toolbar fixed app flat>
+		<v-toolbar fixed app flat color="rgba(100, 100, 100, 0)">
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
-			<v-toolbar-title class="hidden-xs-only">
+			<v-toolbar-title>
 				<div>
 					<span color="primary" style="cursor: pointer" @click="refresh">Gogonjo</span>
 				</div>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-text-field
-				v-model="searchInput"
-				@input="handleSearch"
-				flex
-				prepend-icon="search"
-				:placeholder="text"
-				color="primary"
-				single-line-hide-details
-			></v-text-field>
-
+			<v-flex xs5 sm3 lg3 md4 xl2>
+				<v-text-field
+					v-model="searchInput"
+					@input="handleSearch"
+					flex
+					prepend-icon="search"
+					:placeholder="text"
+					color="primary"
+					single-line-hide-details
+				></v-text-field>
+			</v-flex>
 			<!-- search results card -->
 
 			<v-card flat v-if="searchResult && cardFlag" class="search__card">
@@ -174,7 +175,7 @@
 				});
 			},
 			refresh() {
-				console.log("clicked");
+				//console.log("clicked");
 				for (let i = 0; i < 2; i++) {
 					setTimeout(() => this.getAllProducts(), 500);
 				}
