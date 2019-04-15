@@ -140,7 +140,7 @@
 		background-color: rgba(255, 255, 255, 0);
 	}
 	.image {
-		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.3);
+		//box-shadow: 0 1rem 2rem rgba(#ef5350, 0.3);
 	}
 	.head {
 		text-transform: uppercase;
@@ -165,6 +165,8 @@
 		font-size: 1.3rem !important;
 	}
 	.img1 {
+		cursor: pointer;
+
 		border-radius: 2%;
 		transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);
@@ -174,6 +176,7 @@
 		}
 	}
 	.img2 {
+		cursor: pointer;
 		border-radius: 2%;
 		transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);
@@ -183,6 +186,7 @@
 		}
 	}
 	.img3 {
+		cursor: pointer;
 		border-radius: 2%;
 		transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);

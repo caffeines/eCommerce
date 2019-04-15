@@ -7,9 +7,9 @@
 			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
 					<div class="head" v-if="item.title && item.button && item.subtitle">
-						<div class="sub_title ml-5" :style="{color: item.subtitleColor}">{{item.subtitle}}</div>
-						<div class="title mt-2 ml-5" :style="{color: item.titleColor}">{{item.title}}</div>
-						<div class="button ml-5 mt-2">
+						<div class="sub_title" :style="{color: item.subtitleColor}">{{item.subtitle}}</div>
+						<div class="title mt-2" :style="{color: item.titleColor}">{{item.title}}</div>
+						<div class="button mt-2">
 							<v-btn round flat class="one">Shop now</v-btn>
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 	.sub_title {
 		font-family: "Ubuntu Mono", monospace !important;
 		font-weight: 400;
-		font-size: 3rem;
+		font-size: 2rem;
 	}
 	.title {
 		font-weight: 600;

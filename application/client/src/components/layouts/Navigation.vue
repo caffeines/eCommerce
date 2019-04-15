@@ -28,7 +28,7 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-toolbar fixed app flat color="rgba(100, 100, 100, 0)">
+		<v-toolbar fixed app flat>
 			<v-toolbar-side-icon @click="drawer = !drawer"/>
 			<v-toolbar-title>
 				<div>

@@ -82,7 +82,7 @@
 						</v-flex>
 					</v-layout>
 					<v-layout row justify-center>
-						<v-btn color="error" round>Add to Cart</v-btn>
+						<v-btn color="error" round @click="addToCart">Add to Cart</v-btn>
 						<div v-if="user">
 							<v-btn @click="toggleLoved" flat large icon v-if="user">
 								<v-icon large :color="checkIfProductLoved(productByProductId._id) ? 'red' : 'grey'">favorite</v-icon>
@@ -485,6 +485,43 @@
 			},
 			checkIfOwnCommment(cmnt) {
 				return this.user && this.user._id === cmnt.commentUser._id;
+			},
+			addToCart() {
+				if (this.num > 0 && this.size != "" && this.color != "") {
+					var myCart = [],
+						JSONready;
+					const item = {
+						_id: this.productByProductId._id,
+						name: this.productByProductId.productName,
+						quantity: this.num,
+						size: this.size,
+						color: this.color,
+						price: this.price,
+						shopName: this.productByProductId.createdBy.shopName
+					};
+					var cartFormLocalstorage = window.localStorage.getItem("cart");
+					if (cartFormLocalstorage == null) {
+						myCart.push(item);
+					} else {
+						cartFormLocalstorage = window.localStorage.getItem("cart");
+						myCart = JSON.parse(cartFormLocalstorage);
+						var alreadyIn = false;
+						for (let i = 0; i < myCart.length; i++) {
+							if (myCart[i]._id == this.productByProductId._id) {
+								alreadyIn = true;
+								myCart[i] = item;
+							}
+						}
+						if (!alreadyIn) {
+							myCart.push(item);
+						}
+					}
+					JSONready = JSON.stringify(myCart);
+					window.localStorage.setItem("cart", "");
+					window.localStorage.setItem("cart", JSONready);
+					//cartFormLocalstorage = window.localStorage.getItem("cart");
+					//console.log(cartFormLocalstorage);
+				}
 			}
 		}
 	};
