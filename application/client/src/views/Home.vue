@@ -1,6 +1,7 @@
 <template>
 	<div class="mt-2">
 		<Home :items="Products"/>
+		<ExtraInfo/>
 		<Product/>
 	</div>
 </template>
@@ -8,13 +9,15 @@
 <script>
 	import Home from "../components/Carousel";
 	import Product from "../components/home/Product";
+	import ExtraInfo from "../components/home/ExtraInfo";
 
 	import { mapGetters } from "vuex";
 	export default {
 		name: "home",
 		components: {
 			Home,
-			Product
+			Product,
+			ExtraInfo
 		},
 		computed: {
 			...mapGetters(["user"])

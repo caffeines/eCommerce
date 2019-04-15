@@ -55,7 +55,14 @@
 						<h3 class="type">Product</h3>
 						<v-list>
 							<v-list-tile v-for="pres in searchResult.product" :key="'pres'">
-								<v-list-tile-title class="result" @click="gotoSearchProduct(pres._id)">{{pres.productName}}</v-list-tile-title>
+								<v-list-tile-title class="result" @click="gotoSearchProduct(pres._id)">
+									<v-flex xs4 sm2 md1>
+										<v-avatar size="25px">
+											<img :src="pres.picture[0]">
+										</v-avatar>
+										{{pres.productName}}
+									</v-flex>
+								</v-list-tile-title>
 							</v-list-tile>
 						</v-list>
 					</v-flex>
@@ -218,7 +225,7 @@
 	}
 	.type {
 		margin-left: 12px;
-		color: rgba(214, 28, 28, 0.356);
+		color: rgba(231, 14, 14, 0.356);
 	}
 	.result {
 		cursor: pointer;
