@@ -1,5 +1,4 @@
 import { defaultClient as apolloClient } from "../../main";
-import router from "../../router";
 import { ADD_ORDER, GET_ORDER } from "../../queries/order";
 export const addOrder = ({ commit }, payload) => {
   commit("setLoading", true);
@@ -10,27 +9,16 @@ export const addOrder = ({ commit }, payload) => {
       variables: payload,
       update: (cache, { data: { addOrder } }) => {
         // first read the query
-        console.log(cache);
         const data = cache.readQuery({
-          query: GET_ORDER,
-          variables: payload
+          query: GET_ORDER
         });
         //create updated data
         data.getOrder.unshift(addOrder);
         // write updated data back to query
         cache.writeQuery({
           query: GET_ORDER,
-          variables: payload,
           data
         });
-      },
-      optimisticResponse: {
-        __typename: "Mutation",
-        addOrder: {
-          __typename: "Order",
-          _id: -1,
-          ...payload
-        }
       }
     })
     .then(({ data }) => {

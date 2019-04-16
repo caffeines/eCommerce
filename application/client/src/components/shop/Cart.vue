@@ -513,9 +513,17 @@
 						address: tempAddress
 					};
 					this.$store.dispatch("addOrder", order);
+					setTimeout(() => this.destroy(), 500);
 				} else {
 					this.checkoutChecker = false;
 				}
+			},
+			destroy() {
+				this.cart = [];
+				window.localStorage.removeItem("cart");
+				setTimeout(() => {
+					this.$store.commit("setNumberOfProduct");
+				}, 500);
 			}
 		}
 	};

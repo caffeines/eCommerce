@@ -162,6 +162,7 @@ type PurchaseItem {
   shopName: String!
   picture: String!
   productName: String!
+  status: String
 }
 type Order {
   _id: ID
@@ -171,7 +172,6 @@ type Order {
   total: Int!
   purchaseItems: [PurchaseItem]!
   address: Address!
-  status: String
 }
 
 type Query {

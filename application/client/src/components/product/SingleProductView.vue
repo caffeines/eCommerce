@@ -497,7 +497,7 @@
 						size: this.size,
 						color: this.color,
 						price: this.productByProductId.price,
-						shopId: this.productByProductId._id,
+						shopId: this.productByProductId.createdBy._id,
 						shopName: this.productByProductId.createdBy.shopName,
 						picture: this.productByProductId.picture[0]
 					};
@@ -509,10 +509,6 @@
 						myCart = JSON.parse(cartFormLocalstorage);
 						var alreadyIn = false;
 						for (let i = 0; i < myCart.length; i++) {
-							console.log(myCart[i].productItem, this.productByProductId._id);
-							console.log(myCart[i].color, this.color);
-							console.log(myCart[i].size, this.size);
-
 							if (
 								myCart[i].productItem == this.productByProductId._id &&
 								myCart[i].color == this.color &&

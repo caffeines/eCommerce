@@ -50,7 +50,7 @@ export const getProductsByShopId = ({ commit }, payload) => {
     })
     .then(({ data }) => {
       commit("setLoading", false);
-      console.log(data);
+      //console.log(data);
       commit("setProductsByShopId", data.getProductsByShopId);
     })
     .catch(err => {

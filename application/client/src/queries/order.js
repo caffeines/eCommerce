@@ -38,6 +38,8 @@ export const GET_ORDER = gql`
         shopId
         shopName
         quantity
+        status
+        price
       }
       consumer
       consumerEmail

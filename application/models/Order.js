@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema({
       },
       size: {
         type: String
+      },
+      status: {
+        type: String,
+        default: "InQueue"
       }
     }
   ],
@@ -77,10 +81,6 @@ const orderSchema = new mongoose.Schema({
   orderedDate: {
     type: Date,
     default: Date.now
-  },
-  status: {
-    type: String,
-    default: "InQueue"
   }
 });
 

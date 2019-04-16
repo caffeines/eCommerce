@@ -81,7 +81,7 @@
 						<v-card-title primary-title>
 							<v-icon x-large color="#fff">queue</v-icon>
 							<div class="ml-5 head">
-								<div class="headline" color="#fff">120</div>
+								<div class="headline" color="#fff">{{inQueue}}</div>
 								<span>Order in queue</span>
 							</div>
 						</v-card-title>
@@ -90,9 +90,7 @@
 			</v-layout>
 
 			<!-- Top card ends here -->
-			<div v-if="allOrder">
-				{{allOrder}}
-			</div>
+
 			<v-layout row justify-center>
 				<v-flex xs-8 sm-8>
 					<DataTable :dashboardRouteId="dashboardRouteId"/>
@@ -106,6 +104,12 @@
 					</div>
 				</v-flex>
 			</v-layout>
+			<v-layout row justify-center>
+				<v-flex xs-8 sm-8>
+					<OrderTable :order="order"/>
+				</v-flex>
+				<v-flex xs-4 sm-4></v-flex>
+			</v-layout>
 		</v-container>
 	</div>
 </template>
@@ -115,28 +119,34 @@
 	import AddProductCard from "@/components/shop/AddProductCard";
 	import AddCarousel from "@/components/shop/AddCarousel";
 	import DataTable from "@/components/shop/DataTable";
+	import OrderTable from "@/components/shop/OrderTable";
+
 	export default {
 		name: "dashboard",
 		props: ["dashboardRouteId"],
 		components: {
 			AddProductCard,
+			OrderTable,
 			DataTable,
 			AddCarousel
 		},
 		data() {
 			return {
+				order: [],
 				shopX: null,
 				ID: null,
 				notifications: false,
 				sound: true,
 				widgets: false,
 				productCard: true,
-				carouselCard: false
+				carouselCard: false,
+				inQueue: 0
 			};
 		},
 		created() {
 			this.getShop();
 		},
+		mounted() {},
 		computed: {
 			...mapGetters(["shop", "getPicture", "addProductDailog", "allOrder"])
 		},
@@ -149,9 +159,35 @@
 				await this.$store.dispatch("getProductsByShopId", {
 					shopId: this.dashboardRouteId
 				});
+				setTimeout(() => {
+					this.orderFilter();
+				}, 500);
 			},
 			visitShop() {
 				this.$router.push("/shop/" + this.dashboardRouteId);
+			},
+			orderFilter() {
+				this.inQueue = 0;
+				this.order = [];
+				console.log("orderFilter");
+				for (let i = 0; i < this.allOrder.length; i++) {
+					for (let j = 0; j < this.allOrder[i].purchaseItems.length; j++) {
+						if (
+							this.dashboardRouteId == this.allOrder[i].purchaseItems[j].shopId
+						) {
+							console.log(this.allOrder[i].purchaseItems[j].status);
+							if (this.allOrder[i].purchaseItems[j].status == "InQueue") {
+								this.inQueue++;
+								this.order.push({
+									item: this.allOrder[i].purchaseItems[j],
+									address: this.allOrder[i].address,
+									shipmentType: this.allOrder[i].shippingType,
+									consumer: this.allOrder[i].consumer
+								});
+							}
+						}
+					}
+				}
 			}
 		}
 	};
