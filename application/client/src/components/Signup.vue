@@ -65,7 +65,7 @@
 									</v-layout>
 									<v-layout row>
 										<v-flex xs-12>
-											<v-btn :disabled="!isFormValid" color="primary" @click="next">next</v-btn>
+											<v-btn :disabled="!isFormValid" round color="primary" @click="next">next</v-btn>
 										</v-flex>
 									</v-layout>
 									<v-layout row>

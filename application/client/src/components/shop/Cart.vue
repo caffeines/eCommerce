@@ -7,7 +7,7 @@
 			<v-icon v-if="cart.length > 0" color="black ml-2" @click="goBack">keyboard_backspace</v-icon>
 			<v-layout row v-if="cart.length > 0">
 				<v-flex xs7>
-					<v-card flat class="product_details mt-5">
+					<v-card flat class="product_details mt-5" v-if="productView">
 						<v-layout row justify-start v-for="(item, i) in cart" :key="'item'">
 							<v-flex xs2 class="ml-2 mt-4">
 								<v-avatar tile size="75" color="grey lighten-4">
@@ -26,7 +26,6 @@
 							</v-flex>
 							<v-flex xs2 class="ml-2 mt-5 product_price">&#2547; {{ item.price }}</v-flex>
 							<v-layout row justify-space-around>
-								<!-- <div v-if="numberOfProduct == null ? numberOfProduct = item.quantity : numberOfProduct"></div> -->
 								<v-flex class="ml-2 mt-5 product_button">
 									<v-icon class="button_color" @click="decrement(i)">remove</v-icon>
 									<span class="button_text">{{ item.quantity}}</span>
@@ -35,6 +34,74 @@
 								</v-flex>
 							</v-layout>
 						</v-layout>
+					</v-card>
+					<v-card flat class="product_details mt-5" v-if="!productView">
+						<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleSignin">
+							<v-card-text>
+								<v-text-field
+									v-model="name"
+									:rules="[() => !!name || 'This field is required']"
+									:error-messages="errorMessages"
+									label="Full Name"
+									placeholder="Shohanur"
+									required
+								></v-text-field>
+								<v-text-field
+									v-model="address"
+									:rules="[
+              () => !!address || 'This field is required',
+              () => !!address && address.length <= 100 || 'Address must be less than 100 characters',
+              addressCheck
+            ]"
+									label="Address Line"
+									placeholder="Bashundhara R/A"
+									counter="100"
+									required
+								></v-text-field>
+								<v-text-field
+									v-model="city"
+									:rules="[() => !!city || 'This field is required', addressCheck]"
+									label="City"
+									placeholder="Dhaka"
+									required
+								></v-text-field>
+								<v-text-field
+									v-model="state"
+									:rules="[() => !!state || 'This field is required']"
+									label="Division"
+									required
+									placeholder="Dhaka"
+								></v-text-field>
+								<v-text-field
+									v-model="contact"
+									:rules="[() => !!contact || 'This field is required']"
+									label="Contact"
+									required
+									placeholder="01751...557"
+								></v-text-field>
+								<v-text-field
+									v-model="zip"
+									:rules="[() => !!zip || 'This field is required']"
+									label="ZIP / Postal Code"
+									required
+									placeholder="1212"
+								></v-text-field>
+								<v-autocomplete
+									v-model="country"
+									:rules="[() => !!country || 'This field is required']"
+									:items="countries"
+									label="Country"
+									placeholder="Select..."
+									required
+								></v-autocomplete>
+							</v-card-text>
+							<v-divider class="mt-5"></v-divider>
+							<v-card-actions>
+								<v-btn flat round @click="cancel">Cancel</v-btn>
+								<v-spacer></v-spacer>
+								<v-btn :disabled="!isFormValid" color="red" flat type="submit" round @click="submit">Submit</v-btn>
+							</v-card-actions>
+						</v-form>
 					</v-card>
 				</v-flex>
 				<v-flex xs5>
@@ -47,7 +114,6 @@
 								<div class="subtotal">SHIPPING</div>
 							</v-flex>
 							<v-flex class="subtotal">
-								<!-- {{radioGroup}} -->
 								<div class="price">&#2547; {{ subtotal }}</div>
 								<v-radio-group v-model="radioGroup" class="price">
 									<v-radio label="FLAT RATE: 60" color="warning" value="flat"></v-radio>
@@ -55,7 +121,7 @@
 									<v-radio label="PICKUP POINT" color="warning" value="pick"></v-radio>
 								</v-radio-group>
 								<span class="estimate">Estimate for Dhaka, Bangladesh.</span>
-								<div class="address">CHANGE ADDRESS</div>
+								<div class="address" @click="productView = false">CHANGE ADDRESS</div>
 							</v-flex>
 						</v-layout>
 						<v-layout row mt-5>
@@ -81,7 +147,226 @@
 				cart: [],
 				radioGroup: "flat",
 				subtotal: 0,
-				total: 0
+				total: 0,
+				productView: true,
+				countries: [
+					"Afghanistan",
+					"Albania",
+					"Algeria",
+					"Andorra",
+					"Angola",
+					"Anguilla",
+					"Antigua &amp; Barbuda",
+					"Argentina",
+					"Armenia",
+					"Aruba",
+					"Australia",
+					"Austria",
+					"Azerbaijan",
+					"Bahamas",
+					"Bahrain",
+					"Bangladesh",
+					"Barbados",
+					"Belarus",
+					"Belgium",
+					"Belize",
+					"Benin",
+					"Bermuda",
+					"Bhutan",
+					"Bolivia",
+					"Bosnia &amp; Herzegovina",
+					"Botswana",
+					"Brazil",
+					"British Virgin Islands",
+					"Brunei",
+					"Bulgaria",
+					"Burkina Faso",
+					"Burundi",
+					"Cambodia",
+					"Cameroon",
+					"Cape Verde",
+					"Cayman Islands",
+					"Chad",
+					"Chile",
+					"China",
+					"Colombia",
+					"Congo",
+					"Cook Islands",
+					"Costa Rica",
+					"Cote D Ivoire",
+					"Croatia",
+					"Cruise Ship",
+					"Cuba",
+					"Cyprus",
+					"Czech Republic",
+					"Denmark",
+					"Djibouti",
+					"Dominica",
+					"Dominican Republic",
+					"Ecuador",
+					"Egypt",
+					"El Salvador",
+					"Equatorial Guinea",
+					"Estonia",
+					"Ethiopia",
+					"Falkland Islands",
+					"Faroe Islands",
+					"Fiji",
+					"Finland",
+					"France",
+					"French Polynesia",
+					"French West Indies",
+					"Gabon",
+					"Gambia",
+					"Georgia",
+					"Germany",
+					"Ghana",
+					"Gibraltar",
+					"Greece",
+					"Greenland",
+					"Grenada",
+					"Guam",
+					"Guatemala",
+					"Guernsey",
+					"Guinea",
+					"Guinea Bissau",
+					"Guyana",
+					"Haiti",
+					"Honduras",
+					"Hong Kong",
+					"Hungary",
+					"Iceland",
+					"India",
+					"Indonesia",
+					"Iran",
+					"Iraq",
+					"Ireland",
+					"Isle of Man",
+					"Israel",
+					"Italy",
+					"Jamaica",
+					"Japan",
+					"Jersey",
+					"Jordan",
+					"Kazakhstan",
+					"Kenya",
+					"Kuwait",
+					"Kyrgyz Republic",
+					"Laos",
+					"Latvia",
+					"Lebanon",
+					"Lesotho",
+					"Liberia",
+					"Libya",
+					"Liechtenstein",
+					"Lithuania",
+					"Luxembourg",
+					"Macau",
+					"Macedonia",
+					"Madagascar",
+					"Malawi",
+					"Malaysia",
+					"Maldives",
+					"Mali",
+					"Malta",
+					"Mauritania",
+					"Mauritius",
+					"Mexico",
+					"Moldova",
+					"Monaco",
+					"Mongolia",
+					"Montenegro",
+					"Montserrat",
+					"Morocco",
+					"Mozambique",
+					"Namibia",
+					"Nepal",
+					"Netherlands",
+					"Netherlands Antilles",
+					"New Caledonia",
+					"New Zealand",
+					"Nicaragua",
+					"Niger",
+					"Nigeria",
+					"Norway",
+					"Oman",
+					"Pakistan",
+					"Palestine",
+					"Panama",
+					"Papua New Guinea",
+					"Paraguay",
+					"Peru",
+					"Philippines",
+					"Poland",
+					"Portugal",
+					"Puerto Rico",
+					"Qatar",
+					"Reunion",
+					"Romania",
+					"Russia",
+					"Rwanda",
+					"Saint Pierre &amp; Miquelon",
+					"Samoa",
+					"San Marino",
+					"Satellite",
+					"Saudi Arabia",
+					"Senegal",
+					"Serbia",
+					"Seychelles",
+					"Sierra Leone",
+					"Singapore",
+					"Slovakia",
+					"Slovenia",
+					"South Africa",
+					"South Korea",
+					"Spain",
+					"Sri Lanka",
+					"St Kitts &amp; Nevis",
+					"St Lucia",
+					"St Vincent",
+					"St. Lucia",
+					"Sudan",
+					"Suriname",
+					"Swaziland",
+					"Sweden",
+					"Switzerland",
+					"Syria",
+					"Taiwan",
+					"Tajikistan",
+					"Tanzania",
+					"Thailand",
+					"Timor L'Este",
+					"Togo",
+					"Tonga",
+					"Trinidad &amp; Tobago",
+					"Tunisia",
+					"Turkey",
+					"Turkmenistan",
+					"Turks &amp; Caicos",
+					"Uganda",
+					"Ukraine",
+					"United Arab Emirates",
+					"United Kingdom",
+					"United States",
+					"Uruguay",
+					"Uzbekistan",
+					"Venezuela",
+					"Vietnam",
+					"Virgin Islands (US)",
+					"Yemen",
+					"Zambia",
+					"Zimbabwe"
+				],
+				errorMessages: "",
+				name: null,
+				address: null,
+				city: null,
+				state: null,
+				zip: null,
+				country: null,
+				contact: null,
+				formHasErrors: false,
+				isFormValid: true
 			};
 		},
 		created() {
@@ -101,6 +386,24 @@
 					this.cart = JSON.parse(cartFromLocalStorage);
 				}
 				this.update();
+			},
+			submit() {
+				let address = {
+					name: this.name,
+					address: this.address,
+					city: this.city,
+					state: this.state,
+					zip: this.zip,
+					country: this.country,
+					contatc: this.contact
+				};
+				const JSONready = JSON.stringify(address);
+				if (this.$refs.form.validate()) {
+					window.localStorage.setItem("address", address);
+				}
+			},
+			cancel() {
+				this.productView = true;
 			},
 			goBack() {
 				this.$router.go(-1);
@@ -151,8 +454,6 @@
 				const JSONready = JSON.stringify(this.cart);
 				window.localStorage.setItem("cart", "");
 				window.localStorage.setItem("cart", JSONready);
-				// let cartFormLocalstorage = window.localStorage.getItem("cart");
-				// console.log(cartFormLocalstorage);
 				this.$store.commit("setNumberOfProduct");
 			}
 		}

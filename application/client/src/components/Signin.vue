@@ -47,7 +47,7 @@
 
 										<v-layout row>
 											<v-flex xs-12>
-												<v-btn :loading="loading" :disabled="!isFormValid" color="primary" type="submit">
+												<v-btn :loading="loading" round :disabled="!isFormValid" color="primary" type="submit">
 													Signin
 													<template v-slot:loader>
 														<span class="custom-loader">
