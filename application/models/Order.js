@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
   }
 });
 
-productSchema.index({
+orderSchema.index({
   "$**": "text"
 });
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Order", orderSchema);
