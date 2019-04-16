@@ -28,6 +28,8 @@ import {
   pictureSetter
 } from "./actions/shop";
 
+import { addOrder } from "./actions/order";
+
 export const actions = {
   //* Product
   deleteProduct,
@@ -50,5 +52,8 @@ export const actions = {
   getShop,
   createShop,
   setCurrentShopName,
-  pictureSetter
+  pictureSetter,
+
+  //* order
+  addOrder
 };

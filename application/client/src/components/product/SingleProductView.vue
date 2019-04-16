@@ -491,12 +491,13 @@
 					var myCart = [],
 						JSONready;
 					const item = {
-						_id: this.productByProductId._id,
-						name: this.productByProductId.productName,
+						productItem: this.productByProductId._id,
+						productName: this.productByProductId.productName,
 						quantity: this.num,
 						size: this.size,
 						color: this.color,
 						price: this.productByProductId.price,
+						shopId: this.productByProductId._id,
 						shopName: this.productByProductId.createdBy.shopName,
 						picture: this.productByProductId.picture[0]
 					};
@@ -508,7 +509,15 @@
 						myCart = JSON.parse(cartFormLocalstorage);
 						var alreadyIn = false;
 						for (let i = 0; i < myCart.length; i++) {
-							if (myCart[i]._id == this.productByProductId._id) {
+							console.log(myCart[i].productItem, this.productByProductId._id);
+							console.log(myCart[i].color, this.color);
+							console.log(myCart[i].size, this.size);
+
+							if (
+								myCart[i].productItem == this.productByProductId._id &&
+								myCart[i].color == this.color &&
+								myCart[i].size == this.size
+							) {
 								alreadyIn = true;
 								myCart[i] = item;
 							}
@@ -520,8 +529,8 @@
 					JSONready = JSON.stringify(myCart);
 					window.localStorage.setItem("cart", "");
 					window.localStorage.setItem("cart", JSONready);
-					//cartFormLocalstorage = window.localStorage.getItem("cart");
-					//console.log(cartFormLocalstorage);
+					cartFormLocalstorage = window.localStorage.getItem("cart");
+					console.log(cartFormLocalstorage);
 				}
 				this.$store.commit("setNumberOfProduct");
 			}

@@ -7,6 +7,23 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
+      productName: {
+        type: String
+      },
+      //TODO zfas
+      shopName: {
+        type: String
+      },
+      pictiure: {
+        type: String
+      },
+      shopId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Shop"
+      },
+      price: {
+        type: Number
+      },
       quantity: {
         type: Number
       },
@@ -23,10 +40,10 @@ const orderSchema = new mongoose.Schema({
     required: true
   },
   address: {
-    addressLine: {
+    address: {
       type: String
     },
-    fullName: {
+    name: {
       type: String
     },
     contact: {
@@ -56,6 +73,10 @@ const orderSchema = new mongoose.Schema({
   total: {
     type: Number,
     required: true
+  },
+  orderedDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

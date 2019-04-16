@@ -15,9 +15,10 @@
 								</v-avatar>
 							</v-flex>
 							<v-flex xs4 class="ml-2 mt-4">
-								<div class="product_name">{{ item.name }}</div>
+								<div class="product_name">{{ item.productName }}</div>
 								<div class="product_info">
-									<span class="clr">{{ item.color }}</span>, XL
+									<span class="clr">{{ item.color }}</span>
+									, {{ item.size }}
 								</div>
 								<div class="product_info">
 									From
@@ -51,7 +52,7 @@
 									:rules="[
               () => !!address || 'This field is required',
               () => !!address && address.length <= 100 || 'Address must be less than 100 characters',
-              addressCheck
+              
             ]"
 									label="Address Line"
 									placeholder="Bashundhara R/A"
@@ -60,7 +61,7 @@
 								></v-text-field>
 								<v-text-field
 									v-model="city"
-									:rules="[() => !!city || 'This field is required', addressCheck]"
+									:rules="[() => !!city || 'This field is required']"
 									label="City"
 									placeholder="Dhaka"
 									required
@@ -120,15 +121,32 @@
 									<v-radio label="FREE SHIPPING" color="warning" value="free"></v-radio>
 									<v-radio label="PICKUP POINT" color="warning" value="pick"></v-radio>
 								</v-radio-group>
-								<span class="estimate">Estimate for Dhaka, Bangladesh.</span>
-								<div class="address" @click="productView = false">CHANGE ADDRESS</div>
+								<div v-if="city != null && country != null">
+									<span class="estimate">Estimate for {{city}}, {{country}}.</span>
+									<div class="address" @click="productView = false">CHANGE ADDRESS</div>
+								</div>
+								<div v-else>
+									<span
+										class="estimate"
+										v-if="checkoutChecker==false"
+										style="color: red"
+									>Please provide a valid address</span>
+									<span class="estimate" v-else color="warning">Please provide a valid address</span>
+									<div class="address" @click="productView = false">GIVE ADDRESS</div>
+								</div>
 							</v-flex>
 						</v-layout>
 						<v-layout row mt-5>
 							<v-flex xs5 class="total">TOTAL</v-flex>
 							<v-flex xs6 class="total_price">&#2547; {{ total }}</v-flex>
 						</v-layout>
-						<v-btn round flat class="btn_checkout">proceed to checkout</v-btn>
+						<v-btn
+							round
+							flat
+							class="btn_checkout"
+							@click="addOrder"
+							:disabled="!checkoutChecker"
+						>proceed to checkout</v-btn>
 					</v-card>
 				</v-flex>
 			</v-layout>
@@ -141,6 +159,7 @@
 	</div>
 </template>
 <script>
+	import { mapGetters } from "vuex";
 	export default {
 		data() {
 			return {
@@ -366,8 +385,12 @@
 				country: null,
 				contact: null,
 				formHasErrors: false,
-				isFormValid: true
+				isFormValid: true,
+				checkoutChecker: true
 			};
+		},
+		computed: {
+			...mapGetters(["user"])
 		},
 		created() {
 			this.getProductFromLocalStorage();
@@ -382,8 +405,22 @@
 		methods: {
 			getProductFromLocalStorage() {
 				let cartFromLocalStorage = window.localStorage.getItem("cart");
+
 				if (cartFromLocalStorage != null) {
 					this.cart = JSON.parse(cartFromLocalStorage);
+				}
+
+				let addressFromLocalStorage = window.localStorage.getItem("address"),
+					tempAddress;
+				if (addressFromLocalStorage != null) {
+					tempAddress = JSON.parse(addressFromLocalStorage);
+					this.name = tempAddress.name;
+					this.address = tempAddress.address;
+					this.city = tempAddress.city;
+					this.state = tempAddress.state;
+					this.zip = tempAddress.zip;
+					this.country = tempAddress.country;
+					this.contact = tempAddress.contact;
 				}
 				this.update();
 			},
@@ -395,11 +432,13 @@
 					state: this.state,
 					zip: this.zip,
 					country: this.country,
-					contatc: this.contact
+					contact: this.contact
 				};
 				const JSONready = JSON.stringify(address);
 				if (this.$refs.form.validate()) {
-					window.localStorage.setItem("address", address);
+					window.localStorage.setItem("address", JSONready);
+					this.productView = true;
+					this.checkoutChecker = true;
 				}
 			},
 			cancel() {
@@ -455,6 +494,28 @@
 				window.localStorage.setItem("cart", "");
 				window.localStorage.setItem("cart", JSONready);
 				this.$store.commit("setNumberOfProduct");
+			},
+			addOrder() {
+				let order = null;
+				let cartFromLocalStorage = window.localStorage.getItem("cart"),
+					tempCart;
+				let addressFromLocalStorage = window.localStorage.getItem("address"),
+					tempAddress;
+				if (cartFromLocalStorage != null && addressFromLocalStorage != null) {
+					tempCart = JSON.parse(cartFromLocalStorage);
+					tempAddress = JSON.parse(addressFromLocalStorage);
+					order = {
+						consumer: this.user._id,
+						total: this.total,
+						consumerEmail: this.user.email,
+						shippingType: this.radioGroup,
+						purchaseItems: tempCart,
+						address: tempAddress
+					};
+					this.$store.dispatch("addOrder", order);
+				} else {
+					this.checkoutChecker = false;
+				}
 			}
 		}
 	};
