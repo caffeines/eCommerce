@@ -496,8 +496,9 @@
 						quantity: this.num,
 						size: this.size,
 						color: this.color,
-						price: this.price,
-						shopName: this.productByProductId.createdBy.shopName
+						price: this.productByProductId.price,
+						shopName: this.productByProductId.createdBy.shopName,
+						picture: this.productByProductId.picture[0]
 					};
 					var cartFormLocalstorage = window.localStorage.getItem("cart");
 					if (cartFormLocalstorage == null) {

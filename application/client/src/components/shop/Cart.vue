@@ -5,29 +5,33 @@
 				<div class="head">Shopping Cart</div>
 			</v-layout>
 			<v-icon x-large color="black ml-2" @click="goBack">keyboard_backspace</v-icon>
-			<v-layout row>
+			<v-layout row v-if="cart.length > 0">
 				<v-flex xs7>
 					<v-card flat class="product_details mt-5">
-						<v-layout row justify-start>
+						<v-layout row justify-start v-for="(item, i) in cart" :key="'item'">
 							<v-flex xs2 class="ml-2 mt-4">
 								<v-avatar tile size="75" color="grey lighten-4">
-									<img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+									<img :src="item.picture" alt="avatar">
 								</v-avatar>
 							</v-flex>
 							<v-flex xs4 class="ml-2 mt-4">
-								<div class="product_name">iPhoneX</div>
+								<div class="product_name">{{ item.name }}</div>
 								<div class="product_info">
-									<span class="clr">green</span>, XL
+									<span class="clr">{{ item.color }}</span>, XL
 								</div>
-								<div class="product_info">From shop</div>
+								<div class="product_info">
+									From
+									<span class="shopName">{{item.shopName}}</span>
+								</div>
 							</v-flex>
-							<v-flex xs2 class="ml-2 mt-5 product_price">&#2547; 250000</v-flex>
+							<v-flex xs2 class="ml-2 mt-5 product_price">&#2547; {{ item.price }}</v-flex>
 							<v-layout row justify-space-around>
+								<!-- <div v-if="numberOfProduct == null ? numberOfProduct = item.quantity : numberOfProduct"></div> -->
 								<v-flex class="ml-2 mt-5 product_button">
-									<v-icon class="button_color">remove</v-icon>
-									<span class="button_text">1</span>
-									<v-icon class="button_color">add</v-icon>
-									<v-icon class="delete">delete</v-icon>
+									<v-icon class="button_color" @click="decrement(i)">remove</v-icon>
+									<span class="button_text">{{ item.quantity}}</span>
+									<v-icon class="button_color" @click="increment(i)">add</v-icon>
+									<v-icon class="delete" @click="deleteProduct(i)">delete</v-icon>
 								</v-flex>
 							</v-layout>
 						</v-layout>
@@ -44,11 +48,11 @@
 							</v-flex>
 							<v-flex class="subtotal">
 								<!-- {{radioGroup}} -->
-								<div class="price">&#2547; 1523</div>
+								<div class="price">&#2547; {{ subtotal }}</div>
 								<v-radio-group v-model="radioGroup" class="price">
-									<v-radio label="FLAT RATE: 60" color="red" value="flat"></v-radio>
-									<v-radio label="FREE SHIPPING" color="red" value="free"></v-radio>
-									<v-radio label="PICKUP POINT" color="red" value="pick"></v-radio>
+									<v-radio label="FLAT RATE: 60" color="warning" value="flat"></v-radio>
+									<v-radio label="FREE SHIPPING" color="warning" value="free"></v-radio>
+									<v-radio label="PICKUP POINT" color="warning" value="pick"></v-radio>
 								</v-radio-group>
 								<span class="estimate">Estimate for Dhaka, Bangladesh.</span>
 								<div class="address">CHANGE ADDRESS</div>
@@ -56,7 +60,7 @@
 						</v-layout>
 						<v-layout row mt-5>
 							<v-flex xs5 class="total">TOTAL</v-flex>
-							<v-flex xs6 class="total_price">&#2547; 12054</v-flex>
+							<v-flex xs6 class="total_price">&#2547; {{ total }}</v-flex>
 						</v-layout>
 						<v-btn round flat class="btn_checkout">proceed to checkout</v-btn>
 					</v-card>
@@ -69,12 +73,81 @@
 	export default {
 		data() {
 			return {
-				radioGroup: null
+				cart: [],
+				radioGroup: "flat",
+				subtotal: 0,
+				total: 0
 			};
 		},
+		created() {
+			this.getProductFromLocalStorage();
+		},
+		watch: {
+			radioGroup: function(newValue, oldValue) {
+				if (newValue) {
+					this.update();
+				}
+			}
+		},
 		methods: {
+			getProductFromLocalStorage() {
+				let cartFromLocalStorage = window.localStorage.getItem("cart");
+				if (cartFromLocalStorage != null) {
+					this.cart = JSON.parse(cartFromLocalStorage);
+				}
+				this.update();
+			},
 			goBack() {
 				this.$router.go(-1);
+			},
+			increment(i) {
+				if (this.cart[i].quantity < 100) {
+					this.cart[i].quantity++;
+					this.update();
+				}
+			},
+			decrement(i) {
+				if (this.cart[i].quantity > 0) {
+					this.cart[i].quantity--;
+					this.update();
+				}
+				if (this.cart[i].quantity <= 0) {
+					this.deleteProduct(i);
+				}
+			},
+			deleteProduct(i) {
+				this.cart.splice(i, 1);
+				this.storeAgain();
+			},
+			update() {
+				let sum = 0;
+				this.subtotal = 0;
+				this.total = 0;
+
+				for (let i = 0; i < this.cart.length; i++) {
+					sum += this.cart[i].quantity * this.cart[i].price;
+				}
+				this.subtotal = sum;
+				let flag = false;
+				console.log("this.radioGroup: ", this.radioGroup);
+				if (this.radioGroup == "flat") {
+					sum += 60;
+					flag = true;
+				} else {
+					if (flag == true) {
+						sum -= 60;
+						flag = false;
+					}
+				}
+				this.total += sum;
+				this.storeAgain();
+			},
+			storeAgain() {
+				const JSONready = JSON.stringify(this.cart);
+				window.localStorage.setItem("cart", "");
+				window.localStorage.setItem("cart", JSONready);
+				// let cartFormLocalstorage = window.localStorage.getItem("cart");
+				// console.log(cartFormLocalstorage);
 			}
 		}
 	};
@@ -148,6 +221,9 @@
 	}
 	.price {
 		margin-left: 00%;
+		color: #000;
+		font-size: 16px;
+		font-weight: 600;
 	}
 	.total {
 		margin-top: 6px;
@@ -171,6 +247,9 @@
 		margin: 50px auto;
 		text-transform: uppercase;
 		color: #fff;
+	}
+	.shopName {
+		color: rgba(255, 68, 0, 0.534);
 	}
 </style>
 
