@@ -6,7 +6,8 @@ import {
   setSearchResult,
   toggleView,
   clearSearchResult,
-  setOwnProductRating
+  setOwnProductRating,
+  setNumberOfProduct
 } from "./mutation/product";
 
 import {
@@ -52,5 +53,6 @@ export const mutations = {
 
   //* mix
   setSearchResult,
-  toggleView
+  toggleView,
+  setNumberOfProduct
 };

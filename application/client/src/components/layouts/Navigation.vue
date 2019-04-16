@@ -108,14 +108,17 @@
 				</v-btn>
 			</div>
 			<div class="mr-2">
-				<v-badge color="primary">
+				<v-badge color="error" v-if="numberOfProduct != null && numberOfProduct != 0">
 					<template v-slot:badge>
-						<span>1</span>
+						<span>{{ numberOfProduct }}</span>
 					</template>
 					<div @click="goToCart" style="cursor: pointer">
 						<v-icon>shopping_cart</v-icon>
 					</div>
 				</v-badge>
+				<div v-else @click="goToCart" style="cursor: pointer">
+					<v-icon>shopping_cart</v-icon>
+				</div>
 			</div>
 		</v-toolbar>
 	</div>
@@ -137,7 +140,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["user", "shop", "searchResult"]),
+			...mapGetters(["user", "shop", "searchResult", "numberOfProduct"]),
 			navItems() {
 				let items = [{ icon: "lock_open", title: "Sign in", link: "/signin" }];
 				if (this.user) {
@@ -169,9 +172,14 @@
 				return items;
 			}
 		},
-		created() {},
+		created() {
+			this.init();
+		},
 		methods: {
 			...mapMutations(["signupSet", "signinSet"]),
+			init() {
+				this.$store.commit("setNumberOfProduct");
+			},
 			signoutUser() {
 				this.$store.dispatch("signoutUser");
 			},
@@ -232,5 +240,9 @@
 		&:hover {
 			color: rgba(83, 83, 83, 0.76);
 		}
+	}
+	.badge {
+		height: 0.5px !important;
+		width: 0.5px !important;
 	}
 </style>

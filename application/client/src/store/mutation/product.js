@@ -28,3 +28,10 @@ export const clearSearchResult = state => {
 export const setOwnProductRating = (state, payload) => {
   state.ownProductRating = payload;
 };
+
+//* set number of product in cart for badge
+export const setNumberOfProduct = state => {
+  var cartFormLocalstorage = window.localStorage.getItem("cart");
+  let myCart = JSON.parse(cartFormLocalstorage);
+  state.numberOfProduct = myCart.length;
+};

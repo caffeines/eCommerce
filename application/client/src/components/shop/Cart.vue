@@ -2,9 +2,9 @@
 	<div>
 		<v-container>
 			<v-layout>
-				<div class="head">Shopping Cart</div>
+				<div class="head" v-if="cart.length > 0">Shopping Cart</div>
 			</v-layout>
-			<v-icon x-large color="black ml-2" @click="goBack">keyboard_backspace</v-icon>
+			<v-icon v-if="cart.length > 0" color="black ml-2" @click="goBack">keyboard_backspace</v-icon>
 			<v-layout row v-if="cart.length > 0">
 				<v-flex xs7>
 					<v-card flat class="product_details mt-5">
@@ -66,6 +66,11 @@
 					</v-card>
 				</v-flex>
 			</v-layout>
+			<div v-else class="empty">
+				<v-icon x-large class="empty_cart">shopping_cart</v-icon>
+				<div class="empty_text">Your cart is empty</div>
+				<v-btn flat round class="empty_btn" @click="goBack">Go back</v-btn>
+			</div>
 		</v-container>
 	</div>
 </template>
@@ -148,12 +153,40 @@
 				window.localStorage.setItem("cart", JSONready);
 				// let cartFormLocalstorage = window.localStorage.getItem("cart");
 				// console.log(cartFormLocalstorage);
+				this.$store.commit("setNumberOfProduct");
 			}
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
+	.empty {
+		display: block;
+		margin: 100px auto;
+		text-align: center;
+
+		&_cart {
+			color: rgba(#e7221f, 0.8);
+		}
+		&_btn {
+			box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);
+
+			margin-top: 50px;
+			background-color: rgba(#ef5350, 0.4);
+			color: rgba(#e7221f, 0.8);
+			&:hover {
+				color: rgba(#fff, 1);
+			}
+		}
+		&_text {
+			margin-top: 50px;
+			color: #000;
+			font-size: 50px;
+			font-weight: 700;
+			font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+				sans-serif;
+		}
+	}
 	.head {
 		font-size: 50px;
 		font-weight: 700;

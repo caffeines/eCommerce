@@ -31,7 +31,6 @@
 						</v-img>
 
 						<v-card-title>
-							<div v-if="product.rating.rate > 0? rating = product.rating.rate : rating = 0"/>
 							<div>
 								<h3 class="headline price">&#2547;&nbsp;{{product.price}}</h3>
 								<div class="text">

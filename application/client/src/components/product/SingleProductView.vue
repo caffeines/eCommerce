@@ -523,6 +523,7 @@
 					//cartFormLocalstorage = window.localStorage.getItem("cart");
 					//console.log(cartFormLocalstorage);
 				}
+				this.$store.commit("setNumberOfProduct");
 			}
 		}
 	};
