@@ -9,7 +9,7 @@ import {
   setOwnProductRating,
   setNumberOfProduct
 } from "./mutation/product";
-
+import { setOrder } from "./mutation/order";
 import {
   setLoading,
   signinSet,
@@ -54,5 +54,8 @@ export const mutations = {
   //* mix
   setSearchResult,
   toggleView,
-  setNumberOfProduct
+  setNumberOfProduct,
+
+  //* order
+  setOrder
 };

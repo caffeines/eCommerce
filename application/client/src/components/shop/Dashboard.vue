@@ -90,7 +90,9 @@
 			</v-layout>
 
 			<!-- Top card ends here -->
-
+			<div v-if="allOrder">
+				{{allOrder}}
+			</div>
 			<v-layout row justify-center>
 				<v-flex xs-8 sm-8>
 					<DataTable :dashboardRouteId="dashboardRouteId"/>
@@ -136,13 +138,14 @@
 			this.getShop();
 		},
 		computed: {
-			...mapGetters(["shop", "getPicture", "addProductDailog"])
+			...mapGetters(["shop", "getPicture", "addProductDailog", "allOrder"])
 		},
 		watch: {},
 		methods: {
 			...mapMutations(["toggleAddProductDailog"]),
 			async getShop() {
 				await this.$store.dispatch("getShop", { id: this.dashboardRouteId });
+				await this.$store.dispatch("getOrder");
 				await this.$store.dispatch("getProductsByShopId", {
 					shopId: this.dashboardRouteId
 				});

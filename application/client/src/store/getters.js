@@ -24,5 +24,8 @@ export const getters = {
   //* Search and mix
   searchResult: state => state.searchResult,
   productView: state => state.productView,
-  numberOfProduct: state => state.numberOfProduct
+  numberOfProduct: state => state.numberOfProduct,
+
+  //* Order
+  allOrder: state => state.allOrder
 };

@@ -171,6 +171,7 @@ type Order {
   total: Int!
   purchaseItems: [PurchaseItem]!
   address: Address!
+  status: String
 }
 
 type Query {
@@ -184,6 +185,7 @@ type Query {
   getProductByProductId(id: String!): Product!
   searchAny(any: String): Search
   getOwnProductRating(productId: ID!, userId: ID!): OwnRating
+  getOrder: [Order]
 }
 
 type Mutation {

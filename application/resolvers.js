@@ -42,6 +42,17 @@ module.exports = {
         };
       }
     },
+    getOrder: async (_, {}, { Order }) => {
+      const order = await Order.find({})
+        .sort({
+          dateOfAdd: "desc"
+        })
+        .populate({
+          path: "createdBy",
+          model: "Shop"
+        });
+      return order;
+    },
     /*
      ** Product fetching
      */

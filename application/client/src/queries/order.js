@@ -26,3 +26,32 @@ export const ADD_ORDER = gql`
     }
   }
 `;
+
+export const GET_ORDER = gql`
+  query {
+    getOrder {
+      purchaseItems {
+        productItem
+        productName
+        size
+        color
+        shopId
+        shopName
+        quantity
+      }
+      consumer
+      consumerEmail
+      address {
+        name
+        address
+        contact
+        city
+        state
+        zip
+        country
+      }
+      shippingType
+      total
+    }
+  }
+`;

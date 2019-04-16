@@ -15,5 +15,6 @@ export const state = {
   searchResult: null,
   productView: true,
   ownProductRating: null,
-  numberOfProduct: null
+  numberOfProduct: null,
+  allOrder: null
 };

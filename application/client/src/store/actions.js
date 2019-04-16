@@ -28,7 +28,7 @@ import {
   pictureSetter
 } from "./actions/shop";
 
-import { addOrder } from "./actions/order";
+import { addOrder, getOrder } from "./actions/order";
 
 export const actions = {
   //* Product
@@ -55,5 +55,6 @@ export const actions = {
   pictureSetter,
 
   //* order
-  addOrder
+  addOrder,
+  getOrder
 };
