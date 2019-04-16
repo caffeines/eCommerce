@@ -122,6 +122,13 @@ type OwnRating {
   rating: Float
 }
 
+type Order {
+  _id: ID
+  products: [Product]!
+  consumer: User!
+  consumerEmail: String!
+}
+
 type Query {
   getProducts: [Product]
   getUser(userName: String!): User
@@ -136,6 +143,12 @@ type Query {
 }
 
 type Mutation {
+  addOrder(
+    products: [Product]!
+    consumer: User!
+    consumerEmail: String!
+  ): Order!
+
   signup(
     firstName: String!
     lastName: String!
