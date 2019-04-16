@@ -108,7 +108,11 @@
 				</v-btn>
 			</div>
 			<div class="mr-2">
-				<v-badge color="error" v-if="numberOfProduct != null && numberOfProduct != 0">
+				<v-badge
+					color="error"
+					:class="{'bounce' : badgeAnimated}"
+					v-if="numberOfProduct != null && numberOfProduct != 0"
+				>
 					<template v-slot:badge>
 						<span>{{ numberOfProduct }}</span>
 					</template>
@@ -132,6 +136,7 @@
 	export default {
 		data() {
 			return {
+				badgeAnimated: false,
 				cardFlag: false,
 				searchInput: "",
 				drawer: false,
@@ -170,6 +175,14 @@
 				}
 
 				return items;
+			}
+		},
+		watch: {
+			numberOfProduct: function(newValue, oldValue) {
+				if (newValue) {
+					this.badgeAnimated = true;
+					setTimeout(() => (this.badgeAnimated = false), 1000);
+				}
 			}
 		},
 		created() {
@@ -224,6 +237,28 @@
 </script>
 
 <style lang="scss" scoped>
+	.bounce {
+		animation: bounce 1s both;
+	}
+	@keyframes bounce {
+		0%,
+		20%,
+		53%,
+		80%,
+		100% {
+			transform: translate3d(0, 0, 0);
+		}
+		40%,
+		43% {
+			transform: translate3d(0, -10px, 0);
+		}
+		70% {
+			transform: translate3d(0, -10px, 0);
+		}
+		90% {
+			transform: translate3d(0, -10px, 0);
+		}
+	}
 	.search__card {
 		position: absolute;
 		width: 100vw;
