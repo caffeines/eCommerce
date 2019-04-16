@@ -44,7 +44,7 @@
 						<div class="ml-3">
 							<v-layout row>
 								<v-rating
-									v-model="rating"
+									v-model="product.rating.rate"
 									color="yellow darken-3"
 									background-color="grey darken-1"
 									empty-icon="$vuetify.icons.ratingFull"
@@ -52,7 +52,7 @@
 									dense
 									readonly
 								></v-rating>
-								<span class="rating">{{rating}} ({{product.rating.totalNumberOfRating}})</span>
+								<span class="rating">{{product.rating.rate}} ({{product.rating.totalNumberOfRating}})</span>
 							</v-layout>
 						</div>
 					</v-card>
@@ -66,7 +66,8 @@
 		data() {
 			return {
 				rating: 0,
-				card_text: "Vue t-Shirt"
+				card_text: "Vue t-Shirt",
+				flag: false
 			};
 		},
 		created() {

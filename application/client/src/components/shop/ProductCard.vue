@@ -22,7 +22,6 @@
 						</v-img>
 
 						<v-card-title>
-							<div v-if="prod.rating.rate > 0? rating = prod.rating.rate : rating = 0"/>
 							<div>
 								<h3 class="headline price">&#2547;&nbsp;{{prod.price}}</h3>
 								<div class="text">
@@ -33,7 +32,7 @@
 						<div class="ml-4">
 							<v-layout align-end fill-height row>
 								<v-rating
-									v-model="rating"
+									v-model="prod.rating.rate"
 									color="yellow darken-3"
 									background-color="grey darken-1"
 									empty-icon="$vuetify.icons.ratingFull"
