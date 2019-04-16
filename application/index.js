@@ -16,6 +16,7 @@ const resolvers = require("./resolvers");
 const User = require("./models/User");
 const Product = require("./models/Product");
 const Shop = require("./models/Shop");
+const Order = require("./models/Order");
 
 //* verify JWT token passed from the client
 
@@ -43,6 +44,7 @@ const server = new ApolloServer({
       User,
       Product,
       Shop,
+      Order,
       currentUser: await getUser(token)
     };
   }

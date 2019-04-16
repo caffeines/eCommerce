@@ -1,23 +1,20 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  products: [
+  purchaseItems: [
     {
       productItem: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
       quantity: {
-        type: Number,
-        required: true
+        type: Number
       },
       color: {
-        type: String,
-        required: true
+        type: String
       },
       size: {
-        type: String,
-        required: true
+        type: String
       }
     }
   ],
@@ -27,32 +24,25 @@ const orderSchema = new mongoose.Schema({
   },
   address: {
     addressLine: {
-      type: String,
-      required: true
+      type: String
     },
     fullName: {
-      type: String,
-      required: true
+      type: String
     },
     contact: {
-      type: String,
-      required: true
+      type: String
     },
     state: {
-      type: String,
-      required: true
+      type: String
     },
     city: {
-      type: String,
-      required: true
+      type: String
     },
     zip: {
-      type: String,
-      required: true
+      type: String
     },
     country: {
-      type: String,
-      required: true
+      type: String
     }
   },
   consumer: {
@@ -69,7 +59,4 @@ const orderSchema = new mongoose.Schema({
   }
 });
 
-orderSchema.index({
-  "$**": "text"
-});
 module.exports = mongoose.model("Order", orderSchema);

@@ -122,11 +122,45 @@ type OwnRating {
   rating: Float
 }
 
+type Address {
+  fullName: String!
+  addressLine: String!
+  contact: String!
+  state: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+input AddressInput {
+  fullName: String!
+  addressLine: String!
+  contact: String!
+  state: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+
+input PurchaseItemInput {
+  productItem: ID!
+  quantity: Int!
+  color: String!
+  size: String!
+}
+type PurchaseItem {
+  productItem: ID!
+  quantity: Int!
+  color: String!
+  size: String!
+}
 type Order {
   _id: ID
-  products: [Product]!
-  consumer: User!
+  consumer: ID!
   consumerEmail: String!
+  shippingType: String!
+  total: Int!
+  purchaseItems: [PurchaseItem]!
+  address: Address!
 }
 
 type Query {
@@ -144,9 +178,12 @@ type Query {
 
 type Mutation {
   addOrder(
-    products: [Product]!
-    consumer: User!
+    consumer: ID!
     consumerEmail: String!
+    shippingType: String!
+    total: Int!
+    purchaseItems: [PurchaseItemInput]
+    address: AddressInput!
   ): Order!
 
   signup(

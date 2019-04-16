@@ -433,13 +433,13 @@ module.exports = {
       const tempRating = tempProduct.rating.rate; // old avg rating in product
       let noOfRat = tempProduct.rating.totalNumberOfRating; // no. of users who gave rating
 
-      console.log(
+      /* console.log(
         tempProduct.productName,
         tempRating,
         noOfRat,
         "Old rating: ",
         oldRating
-      );
+      ); */
 
       let finalRating;
       if (oldRating || givenRating == 0 || matched) {
@@ -490,6 +490,23 @@ module.exports = {
       //console.log("updatedProduct: ", product);
 
       return product;
+    },
+
+    //* add order => checkout
+    addOrder: async (
+      _,
+      { consumer, consumerEmail, shippingType, total, purchaseItems, address },
+      { Order }
+    ) => {
+      const newOrder = new Order({
+        consumer,
+        consumerEmail,
+        shippingType,
+        total,
+        purchaseItems,
+        address
+      }).save();
+      return newOrder;
     }
     /* new one starts here */
   }
