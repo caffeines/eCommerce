@@ -236,7 +236,7 @@ module.exports = {
         dateOfBirth
       }).save();
       //TODO need to hide secret token
-      return { token: createToken(newUser, "sadasas") };
+      return { token: createToken(newUser, process.env.SECRET) };
     },
     /*
      ** Sign in user
@@ -255,7 +255,7 @@ module.exports = {
       }
 
       //TODO need hide secret: "sadasas"
-      return { token: createToken(user, "sadasas") };
+      return { token: createToken(user, process.env.SECRET) };
     },
 
     /*

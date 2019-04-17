@@ -1,11 +1,10 @@
 <template>
 	<div v-if="user">
-		{{user}}
 		<h1>Profile</h1>
-		<h5 class="mt-4">Username: {{user.userName}}</h5>
-		<h5>Name: {{user.firstName}} {{user.lastName}}</h5>
-		<h5>Email: {{user.email}}</h5>
-		<h5>Contact No: {{user.contactNo}}</h5>
+		<h4 class="mt-4">Username: {{user.userName}}</h4>
+		<h4>Name: {{user.firstName}} {{user.lastName}}</h4>
+		<h4>Email: {{user.email}}</h4>
+		<h4>Contact No: {{user.contactNo}}</h4>
 	</div>
 </template>
 <script>

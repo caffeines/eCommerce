@@ -4,14 +4,10 @@
 			<appLoading/>
 		</div>
 		<div v-else col-sm-12>
-			<v-carousel flat aspect-ratio="1" hide-delimiters class="carousel">
+			<v-carousel aspect-ratio="1" hide-delimiters class="carousel _carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
-					<div class="head" v-if="item.title && item.button && item.subtitle">
-						<div class="sub_title" :style="{color: item.subtitleColor}">{{item.subtitle}}</div>
-						<div class="title mt-2" :style="{color: item.titleColor}">{{item.title}}</div>
-						<div class="button mt-2">
-							<v-btn round flat class="one">Shop now</v-btn>
-						</div>
+					<div class="head">
+						<div class="title mt-2" :style="{color: item.color}">{{item.title}}</div>
 					</div>
 				</v-carousel-item>
 			</v-carousel>
@@ -36,14 +32,35 @@
 	import { mapGetters } from "vuex";
 	import appLoading from "@/components/layouts/Loading";
 	export default {
-		props: ["items"],
 		components: {
 			appLoading
 		},
 		data: () => {
 			return {
 				color: "red",
-				snackbar: false
+				snackbar: false,
+				items: [
+					{
+						src:
+							"https://images.pexels.com/photos/1345082/pexels-photo-1345082.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+					},
+					{
+						src:
+							"https://images.pexels.com/photos/749353/pexels-photo-749353.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+					},
+					{
+						src:
+							"https://images.pexels.com/photos/298864/pexels-photo-298864.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+					},
+					{
+						src:
+							"https://images.pexels.com/photos/1078973/pexels-photo-1078973.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+					},
+					{
+						src:
+							"https://images.pexels.com/photos/944031/pexels-photo-944031.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+					}
+				]
 			};
 		},
 		computed: {
@@ -71,7 +88,7 @@
 	}
 	.title {
 		font-weight: 600;
-		font-size: 50px !important;
+		font-size: 30px !important;
 		font-family: "Berkshire Swash", cursive !important;
 	}
 	.one {
@@ -84,8 +101,8 @@
 	.head {
 		color: black;
 		position: absolute;
-		top: 45%;
-		left: 35%;
+		top: 35%;
+		left: 25%;
 		transform: translate(-50%, -50%);
 		text-transform: capitalize;
 	}

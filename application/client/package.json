@@ -2,12 +2,21 @@
   "name": "gogonjo",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.15.0"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "start": "node server.js"
   },
   "dependencies": {
     "apollo-boost": "^0.3.1",
+    "apollo-server": "^2.4.8",
+    "gql-tag": "^1.0.1",
+    "graphql": "^14.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "serve-static": "^1.13.2",
     "vue": "^2.6.6",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-router": "^3.0.1",

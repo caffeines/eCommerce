@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card flat>
+		<v-card flat class="_card">
 			<v-card-title>
 				<v-layout row>
 					<div class="text mt-1">All order list &nbsp;</div>
@@ -157,6 +157,8 @@
 	};
 </script>
 <style lang="scss">
+	._card {
+	}
 	.text {
 		font-size: 20px;
 	}

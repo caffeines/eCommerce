@@ -1,0 +1,20 @@
+{
+  "name": "gogonjo-graphql",
+  "env": {
+    "MONGO_URI": "mongodb://admin:_admin19@ds119572.mlab.com:19572/gogonjo",
+    "SECRET": "sadat@killerProject1845635.8jhsoajJBJSasdjjaaai.sdahsg.dahhjaghs.ahj"
+  },
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "index.js"
+    }
+  ]
+}

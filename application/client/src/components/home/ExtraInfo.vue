@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-container class="mt-5">
+		<!-- <v-container class="mt-5">
 			<v-layout row justify-center justify-space-around fill-height>
 				<v-flex xs4>
 					<v-card class="_card" flat>
@@ -54,7 +54,7 @@
 					</v-card>
 				</v-flex>
 			</v-layout>
-		</v-container>
+		</v-container>-->
 		<v-divider></v-divider>
 		<v-container>
 			<v-layout row justify-space-between>
@@ -166,7 +166,6 @@
 	}
 	.img1 {
 		cursor: pointer;
-
 		border-radius: 2%;
 		transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 		box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);

@@ -2,7 +2,6 @@ const express = require("express");
 const consola = require("consola");
 const { ApolloServer, AuthenticationError } = require("apollo-server");
 const mongoose = require("mongoose");
-const { conn } = require("./config/mongoDB");
 const jwt = require("jsonwebtoken");
 const app = express();
 
@@ -18,12 +17,28 @@ const Product = require("./models/Product");
 const Shop = require("./models/Shop");
 const Order = require("./models/Order");
 
-//* verify JWT token passed from the client
+require("dotenv").config({ path: "variables.env" });
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true
+});
+mongoose.connection
+  // @ts-ignore
+  .once("open", () =>
+    consola.info({
+      message: `mongoDB connected successfully...`,
+      badge: true
+    })
+  )
+  .on("error", err => {
+    throw err;
+  });
 
+//* verify JWT token passed from the client
 const getUser = async token => {
   if (token) {
     try {
-      return await jwt.verify(token, "sadasas");
+      return await jwt.verify(token, process.env.SECRET);
     } catch (error) {
       throw new AuthenticationError(
         "Your session has ended. Please sign in again"
@@ -47,13 +62,11 @@ const server = new ApolloServer({
       Order,
       currentUser: await getUser(token)
     };
-  }
+  },
+  introspection: true,
+  playground: true
 });
 
-server.listen().then(({ url }) => {
-  // @ts-ignore
-  consola.ready({
-    message: `Server listening on ${url}`,
-    badge: true
-  });
+server.listen({ port: 3000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
 });

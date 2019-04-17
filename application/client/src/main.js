@@ -13,7 +13,7 @@ Vue.use(VueTyperPlugin);
 
 // configuration of apollo-client
 export const defaultClient = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://gogonjo-graphql.caffeines.now.sh/graphql",
   fetchOptions: {
     credentials: "include"
   },
