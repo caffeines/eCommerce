@@ -1,8 +1,13 @@
 <template>
-	<div class="mt-2">
-		<Home :items="Products"/>
-		<ExtraInfo/>
-		<Product/>
+	<div>
+		<div v-if="loading">
+			<appLoading/>
+		</div>
+		<div v-else class="mt-2">
+			<Home :items="Products"/>
+			<ExtraInfo/>
+			<Product/>
+		</div>
 	</div>
 </template>
 
@@ -10,6 +15,7 @@
 	import Home from "../components/Carousel";
 	import Product from "../components/home/Product";
 	import ExtraInfo from "../components/home/ExtraInfo";
+	import appLoading from "@/components/layouts/Loading";
 
 	import { mapGetters } from "vuex";
 	export default {
@@ -17,7 +23,8 @@
 		components: {
 			Home,
 			Product,
-			ExtraInfo
+			ExtraInfo,
+			appLoading
 		},
 		computed: {
 			...mapGetters(["user"])

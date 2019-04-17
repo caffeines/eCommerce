@@ -20,7 +20,7 @@
 						slot-scope="{ hover }"
 						color="grey lighten-4"
 					>
-						<v-img :src="product.picture[0]" aspect-ratio="1">
+						<v-img :src="product.picture[0]" :lazy-src="product.picture[0]" aspect-ratio="1">
 							<v-expand-transition>
 								<div
 									v-if="hover"

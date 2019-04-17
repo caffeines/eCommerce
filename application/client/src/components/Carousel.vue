@@ -1,11 +1,8 @@
 <template>
 	<div v-if="items">
-		<div v-if="loading">
-			<appLoading/>
-		</div>
-		<div v-else col-sm-12>
+		<div col-sm-12>
 			<v-carousel aspect-ratio="1" hide-delimiters class="carousel _carousel">
-				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
+				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" :lazy-src="item.src">
 					<div class="head">
 						<div class="title mt-2" :style="{color: item.color}">{{item.title}}</div>
 					</div>
@@ -30,11 +27,8 @@
 
 <script>
 	import { mapGetters } from "vuex";
-	import appLoading from "@/components/layouts/Loading";
 	export default {
-		components: {
-			appLoading
-		},
+		components: {},
 		data: () => {
 			return {
 				color: "red",

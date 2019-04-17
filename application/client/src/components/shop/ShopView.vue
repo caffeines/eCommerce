@@ -1,7 +1,20 @@
 <template>
-	<div class="mt-2">
-		<Carousel :items="shop.coverPic"/>
-		<ProductCard :shopRouteId="shopRouteId"/>
+	<div class="all">
+		<div class="shop">
+			<div class="name">{{shop.shopName}}</div>
+			<div class="address">
+				<v-icon>location_on</v-icon>
+				{{shop.address}}
+				<div>
+					<v-icon>contact_phone</v-icon>
+					{{shop.contactNo}}
+				</div>
+			</div>
+		</div>
+		<div class="mt-2">
+			<Carousel :items="shop.coverPic"/>
+			<ProductCard :shopRouteId="shopRouteId"/>
+		</div>
 	</div>
 </template>
 <script>
@@ -36,3 +49,34 @@
 		}
 	};
 </script>
+
+<style <style lang="scss" scoped>
+	@import url("https://fonts.googleapis.com/css?family=Righteous|Share+Tech+Mono");
+
+	.shop {
+		display: block;
+		margin: 10px auto;
+		.name {
+			font-size: 40px;
+			font-weight: 400;
+			text-align: center;
+			background-image: linear-gradient(
+				to right,
+				#706fd3,
+				rgba(128, 0, 128, 0.822),
+				rgba(255, 68, 0, 0.623),
+				rgb(255, 0, 0)
+			);
+			-webkit-background-clip: text;
+			color: transparent;
+			font-family: "Share Tech Mono";
+		}
+		.address {
+			margin: 0 auto;
+			text-align: center;
+			font-size: 17px;
+			color: #000;
+		}
+	}
+</style>
+
