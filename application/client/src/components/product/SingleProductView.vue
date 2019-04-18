@@ -64,7 +64,7 @@
 						>{{productByProductId.createdBy.shopName}}</span>
 					</div>
 					<v-divider></v-divider>
-					<div class="description mt-1">{{productByProductId.description}}</div>
+					<div class="description mt-1">{{summary()}}</div>
 					<v-layout justify-space-around>
 						<v-flex xs4 mt-4>
 							<v-combobox v-model="size" :items="productByProductId.size" outline label="Size"></v-combobox>
@@ -303,6 +303,13 @@
 				setTimeout(() => {
 					this.checkRating();
 				}, 200);
+			},
+			summary() {
+				return (
+					this.productByProductId.description.substr(0, 210) +
+					(this.productByProductId.description.length > 210 ? " ..." : "")
+				);
+				return this.productByProductId.description;
 			},
 			checkRating() {
 				console.log("RATING: ", this.ownProductRating.rating);

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	import Home from "../components/Carousel";
+	import Home from "../components/home/Carousel";
 	import Product from "../components/home/Product";
 	import ExtraInfo from "../components/home/ExtraInfo";
 	import appLoading from "@/components/layouts/Loading";
