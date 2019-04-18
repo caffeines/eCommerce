@@ -54,6 +54,7 @@
 	@import url("https://fonts.googleapis.com/css?family=Righteous|Share+Tech+Mono");
 
 	.shop {
+		margin-top: 50px !important;
 		display: block;
 		margin: 10px auto;
 		.name {

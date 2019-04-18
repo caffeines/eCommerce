@@ -1,5 +1,5 @@
 <template>
-	<div v-if="items">
+	<div v-if="items" class="mt-5">
 		<div col-sm-12>
 			<v-carousel aspect-ratio="1" hide-delimiters class="carousel _carousel">
 				<v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" :lazy-src="item.src">

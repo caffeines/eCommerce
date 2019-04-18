@@ -66,6 +66,11 @@ export default new Router({
       props: true
     },
     {
+      path: "/category/:categoryId",
+      name: "categoryView",
+      component: () => import("./views/ProductByCategory.vue")
+    },
+    {
       path: "/cart",
       name: "cartView",
       component: () => import("./views/Cart.vue")

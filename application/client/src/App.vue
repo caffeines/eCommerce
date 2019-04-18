@@ -2,7 +2,7 @@
 	<v-app>
 		<Navigation/>
 		<main>
-			<v-container class="mt-4">
+			<v-container fluid class="pa-0 ma-0">
 				<router-view/>
 			</v-container>
 		</main>

@@ -12,7 +12,7 @@
 				:key="'product'"
 				@click="viewProduct(product._id)"
 			>
-				<v-hover v-if="product.category == books">
+				<v-hover>
 					<v-card
 						height="400"
 						width="260"

@@ -34,7 +34,7 @@
 							<div>
 								<h3 class="headline price">&#2547;&nbsp;{{product.price}}</h3>
 								<div class="text">
-									<strong>{{ product.productName }}</strong>
+									<strong>{{ summary(product.productName) }}</strong>
 								</div>
 								<h4>
 									<strong>{{product.createdBy.shopName}}</strong>
@@ -82,6 +82,10 @@
 			},
 			viewProduct(id) {
 				this.$router.push("/product/" + id);
+			},
+			summary(productName) {
+				return productName.substr(0, 25) + (productName.length > 25 ? "..." : "");
+				return productName;
 			}
 		}
 	};
