@@ -1,12 +1,12 @@
 <template>
-	<div class="mt-4">
+	<div class="all">
 		<v-layout row align-start justify-center wrap>
 			<v-flex xs4 sm1>
 				<div v-if="!flag ? image = productByProductId.picture[0] : image"></div>
 				<div v-if="counter == 4 ? counter = 0 : counter"></div>
 				<v-layout row v-for="img in productByProductId.picture" :key="'img'">
 					<v-flex xs12 sm10 lg8 xl6>
-						<v-card class="mt-2" height="10vh" flat>
+						<v-card class="mt-3 ml-2" height="58px" flat>
 							<v-layout align-center justify-center row fill-height>
 								<v-img
 									:src="img"
@@ -23,7 +23,7 @@
 					</v-flex>
 				</v-layout>
 			</v-flex>
-			<v-flex xs8 sm9 md9 lg7 xl7>
+			<v-flex xs8 sm9 md9 lg7 xl7 class="mt-2">
 				<v-tooltip right>
 					<span>Click to enlarge image</span>
 					<v-img slot="activator" :src="image" class="__image" @click="dialog = !dialog"></v-img>
@@ -66,14 +66,14 @@
 					<v-divider></v-divider>
 					<div class="description mt-1">{{summary()}}</div>
 					<v-layout justify-space-around>
-						<v-flex xs4 mt-4>
+						<v-flex xs12 mt-4 lg3>
 							<v-combobox v-model="size" :items="productByProductId.size" outline label="Size"></v-combobox>
 						</v-flex>
-						<v-flex xs4 mt-4>
+						<v-flex xs12 mt-4 lg3>
 							<v-combobox v-model="color" :items="productByProductId.color" label="Color" outline></v-combobox>
 						</v-flex>
 
-						<v-flex xs3 md3 sm3 mt-4 class="num">
+						<v-flex xs12 md3 lg3 sm3 mt-4 class="num">
 							<v-layout>
 								<v-icon medium class="plus" @click="decrement">remove</v-icon>
 								<span class="number">{{num}}</span>
@@ -665,7 +665,9 @@
 		color: rgb(114, 113, 113);
 		font-size: 13px;
 	}
-
+	.all {
+		margin-top: 55px !important;
+	}
 	.v-card--reveal {
 		align-items: center;
 		bottom: 0;

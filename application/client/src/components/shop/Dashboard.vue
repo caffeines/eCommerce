@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="mt-5">
 		<v-container fluid grid-list-xl>
 			<v-layout row>
 				<h1 class="heading point mt-3" @click="visitShop">{{shop.shopName}}</h1>

@@ -254,7 +254,8 @@
 		overflow-x: hidden !important;
 	}
 	.wrapper {
-		margin-top: 100px;
+		margin-top: 150px !important;
+		margin-bottom: 200px !important;
 	}
 	* {
 		box-sizing: border-box;
@@ -283,7 +284,7 @@
 		width: 100%;
 		min-height: 460px;
 		margin: auto;
-		box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
+		box-shadow: 0 1rem 1.8rem rgba(#ef5350, 0.6);
 		background: #fff;
 		border-radius: 12px;
 		max-width: 700px;

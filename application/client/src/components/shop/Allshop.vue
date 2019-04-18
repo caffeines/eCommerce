@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="mt-5">
 		<div v-if="allShopByaUser">
 			<v-container fluid grid-list-xl>
 				<v-layout mt-2 align-center justify-center wrap row fill-height>
