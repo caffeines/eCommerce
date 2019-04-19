@@ -122,13 +122,13 @@
 	export default {
 		methods: {
 			gotoBooks() {
-				this.$router.push("/category/books");
+				this.$router.push("/category/book");
 			},
 			gotoClothes() {
-				this.$router.push("/category/clothes");
+				this.$router.push("/category/dress");
 			},
 			gotoFoods() {
-				this.$router.push("/category/foods");
+				this.$router.push("/category/food");
 			}
 		}
 	};

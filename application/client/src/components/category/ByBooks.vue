@@ -1,5 +1,6 @@
 <template>
 	<v-container grid-list-xl>
+		{{}}
 		<v-layout wrap>
 			<v-flex
 				mt-4
@@ -8,7 +9,7 @@
 				lg3
 				md4
 				sm6
-				v-for="product in products"
+				v-for="product in productsByCategory"
 				:key="'product'"
 				@click="viewProduct(product._id)"
 			>
@@ -67,7 +68,8 @@
 			return {
 				rating: 0,
 				card_text: "Vue t-Shirt",
-				flag: false
+				flag: false,
+				productsByCategory: []
 			};
 		},
 		created() {
@@ -79,9 +81,22 @@
 		methods: {
 			async getProducts() {
 				await this.$store.dispatch("getAllProducts");
+				await setTimeout(() => {
+					this.filterCategory();
+				}, 1000);
 			},
 			viewProduct(id) {
 				this.$router.push("/product/" + id);
+			},
+			filterCategory() {
+				for (let i = 0; i < this.products.length; i++) {
+					if (
+						this.products[i].category[0].toUpperCase() ==
+						this.$route.params.categoryId.toUpperCase()
+					) {
+						this.productsByCategory.push(this.products[i]);
+					}
+				}
 			}
 		}
 	};

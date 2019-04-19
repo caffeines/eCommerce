@@ -12,6 +12,7 @@ export const GET_PRODUCTS = gql`
         _id
         shopName
       }
+      category
       rating {
         rate
         totalNumberOfRating
