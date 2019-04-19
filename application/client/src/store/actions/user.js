@@ -26,12 +26,13 @@ export const getCurrentUser = ({ commit }) => {
       commit("setUser", data.getCurrentUser);
     })
     .catch(err => {
-      console.error(err);
+      //console.error(err);
       commit("setLoading", false);
     });
 };
 
 export const signinUser = ({ commit }, payload) => {
+  commit("setError", null);
   commit("setLoading", true);
   //* clear token to prevent errors
   localStorage.setItem("token", "");
@@ -50,11 +51,12 @@ export const signinUser = ({ commit }, payload) => {
     })
     .catch(err => {
       commit("setLoading", false);
-      console.error(err);
+      //console.error(err);
     });
 };
 
 export const signupUser = ({ commit }, payload) => {
+  commit("setError", null);
   commit("setLoading", true);
   //* clear token to prevent errors
   localStorage.setItem("token", "");
@@ -73,6 +75,6 @@ export const signupUser = ({ commit }, payload) => {
     })
     .catch(err => {
       commit("setLoading", false);
-      console.error(err);
+      //console.error(err);
     });
 };

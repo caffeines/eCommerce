@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm run serve",
     "dev": "concurrently --names \"server,client\" \"npm run server --silent\" \"npm run client --silent\"",
-    "server": "nodemon server.js"
+    "server": "nodemon index.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
@@ -30,5 +30,5 @@
     "vue-cli-plugin-vuetify": "^0.5.0"
   },
   "license": "ISC",
-  "main": "server.js"
+  "main": "index.js"
 }

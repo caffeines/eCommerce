@@ -1,16 +1,16 @@
 <template>
 	<div>
-		<v-container>
+		<v-container class="all">
 			<v-layout>
 				<div class="head" v-if="cart.length > 0">Shopping Cart</div>
 			</v-layout>
 			<v-icon v-if="cart.length > 0" color="black ml-2" @click="goBack">keyboard_backspace</v-icon>
-			<v-layout row v-if="cart.length > 0">
-				<v-flex xs7>
+			<v-layout row wrap v-if="cart.length > 0">
+				<v-flex xs12 lg7>
 					<v-card flat class="product_details mt-5" v-if="productView">
 						<v-layout row justify-start v-for="(item, i) in cart" :key="'item'">
 							<v-flex xs2 class="ml-2 mt-4">
-								<v-avatar tile size="75" color="grey lighten-4">
+								<v-avatar tile size="5rem" color="grey lighten-4">
 									<img :src="item.picture" alt="avatar">
 								</v-avatar>
 							</v-flex>
@@ -105,7 +105,7 @@
 						</v-form>
 					</v-card>
 				</v-flex>
-				<v-flex xs5>
+				<v-flex xs12 lg4>
 					<v-card flat class="product_details mt-5 ml-4">
 						<div class="totals">CART TOTALS</div>
 						<v-divider></v-divider>
@@ -532,7 +532,7 @@
 <style lang="scss" scoped>
 	.empty {
 		display: block;
-		margin: 100px auto;
+		margin: 6rem auto;
 		text-align: center;
 
 		&_cart {
@@ -541,7 +541,7 @@
 		&_btn {
 			box-shadow: 0 1rem 2rem rgba(#ef5350, 0.4);
 
-			margin-top: 50px;
+			margin-top: 3rem;
 			background-color: rgba(#ef5350, 0.4);
 			color: rgba(#e7221f, 0.8);
 			&:hover {
@@ -549,16 +549,16 @@
 			}
 		}
 		&_text {
-			margin-top: 50px;
+			margin-top: 3rem;
 			color: #000;
-			font-size: 50px;
+			font-size: 3rem;
 			font-weight: 700;
 			font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 				sans-serif;
 		}
 	}
 	.head {
-		font-size: 50px;
+		font-size: 3rem;
 		font-weight: 700;
 		margin: 0 auto;
 		font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -575,19 +575,19 @@
 	.product {
 		&_name {
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 1rem;
 		}
 		&_info {
 			color: #999;
 		}
 		&_price {
 			font-weight: 600;
-			font-size: 20px;
+			font-size: 1.3rem;
 			color: rgb(107, 105, 105);
 		}
 	}
 	.button_text {
-		font-size: 22px;
+		font-size: 1.7rem;
 		margin-left: 7%;
 		margin-right: 7%;
 		margin-top: -3px;
@@ -605,7 +605,7 @@
 	}
 	.estimate {
 		color: rgba(153, 153, 153, 0.842);
-		font-size: 12px;
+		font-size: 0.8rem;
 	}
 	.totals {
 		font-weight: 600;
@@ -653,6 +653,9 @@
 	}
 	.shopName {
 		color: rgba(255, 68, 0, 0.534);
+	}
+	.cart {
+		margin: 6rem auto !important;
 	}
 </style>
 

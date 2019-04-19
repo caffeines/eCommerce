@@ -111,7 +111,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["user", "loading"])
+			...mapGetters(["user", "loading", "error"])
 		},
 		watch: {
 			user: function(value) {

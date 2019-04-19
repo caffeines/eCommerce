@@ -27,6 +27,8 @@ import {
   setAllShopNameByaUser
 } from "./mutation/shop";
 
+import { setError } from "./mutation/mix";
+
 export const mutations = {
   //* User
   setLoading,
@@ -55,6 +57,7 @@ export const mutations = {
   setSearchResult,
   toggleView,
   setNumberOfProduct,
+  setError,
 
   //* order
   setOrder

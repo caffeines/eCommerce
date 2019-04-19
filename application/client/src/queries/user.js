@@ -56,6 +56,14 @@ export const GET_CURRENT_USER = gql`
         price
         picture
       }
+      ratedProduct {
+        ratedProduct {
+          product {
+            _id
+            productName
+          }
+        }
+      }
     }
   }
 `;

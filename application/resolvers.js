@@ -434,30 +434,33 @@ module.exports = {
         if (user.ratedProduct[i].productId == productId) {
           oldRating = user.ratedProduct[i].rating;
           matched = true;
-          console.log("Matched: ", user.ratedProduct[i].productId);
+          //console.log("Matched: ", user.ratedProduct[i].productId);
         }
       }
 
       const tempProduct = await Product.findOne({ _id: productId });
+      //console.log(tempProduct.rating.rate);
 
       let newRating = givenRating - oldRating;
       const tempRating = tempProduct.rating.rate; // old avg rating in product
       let noOfRat = tempProduct.rating.totalNumberOfRating; // no. of users who gave rating
 
-      /* console.log(
+      /*console.log(
+        "givenRating",
+        givenRating,
         tempProduct.productName,
         tempRating,
         noOfRat,
         "Old rating: ",
         oldRating
-      ); */
+      );*/
 
       let finalRating;
       if (oldRating || givenRating == 0 || matched) {
-        finalRating = (newRating + tempRating) / noOfRat;
+        finalRating = (newRating + tempRating * noOfRat) / noOfRat;
       } else {
         noOfRat += 1;
-        finalRating = (newRating + tempRating) / noOfRat;
+        finalRating = (newRating + tempRating * (noOfRat - 1)) / noOfRat;
       }
       const rat = {
         rate: finalRating,

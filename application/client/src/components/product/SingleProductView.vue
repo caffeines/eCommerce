@@ -3,7 +3,7 @@
 		<v-layout row align-start justify-center wrap>
 			<v-flex xs4 sm1>
 				<div v-if="!flag ? image = productByProductId.picture[0] : image"></div>
-				<div v-if="counter == 4 ? counter = 0 : counter"></div>
+
 				<v-layout row v-for="img in productByProductId.picture" :key="'img'">
 					<v-flex xs12 sm10 lg8 xl6>
 						<v-card class="mt-3 ml-2" height="58px" flat>
@@ -233,6 +233,7 @@
 				</div>
 			</v-flex>
 		</v-layout>
+		{{ownProductRating}}
 		<div class="false"></div>
 	</div>
 </template>
@@ -261,7 +262,6 @@
 				flag: false,
 				dialog: false,
 				commentBody: "",
-				counter: 0,
 				descFlag: true,
 				commentFlag: false,
 				aditionalInfoFlag: false,
@@ -287,22 +287,23 @@
 			}
 		},
 		created() {
-			this.counter = 0;
 			this.getProduct();
 		},
 		methods: {
 			async getProduct() {
+				await this.$store.dispatch("getCurrentUser");
+
 				await this.$store.dispatch("getProductByProductId", {
 					id: this.productRouteId
 				});
-				await this.$store.dispatch("getOwnProductRating", {
+				this.$store.dispatch("getOwnProductRating", {
 					productId: this.productRouteId,
 					userId: this.user._id
 				});
 				this.flag = false;
 				setTimeout(() => {
 					this.checkRating();
-				}, 200);
+				}, 1000);
 			},
 			summary() {
 				return (
@@ -325,6 +326,7 @@
 				}
 			},
 			rateNow() {
+				console.log(this.rating2);
 				this.$store.dispatch("updateProductRating", {
 					productId: this.productRouteId,
 					userId: this.user._id,

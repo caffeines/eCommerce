@@ -27,7 +27,7 @@
 			appLoading
 		},
 		computed: {
-			...mapGetters(["user"])
+			...mapGetters(["user", "loading"])
 		},
 		created() {
 			this.getProducts();

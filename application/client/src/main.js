@@ -35,7 +35,7 @@ export const defaultClient = new ApolloClient({
     }
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
-        console.dir(err);
+        store.commit("setError", err.message);
         if (err.name === "AuthenticationError") {
           // set auth error in state
           store.commit("setAuthError", err);

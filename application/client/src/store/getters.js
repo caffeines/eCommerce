@@ -25,6 +25,7 @@ export const getters = {
   searchResult: state => state.searchResult,
   productView: state => state.productView,
   numberOfProduct: state => state.numberOfProduct,
+  error: state => state.error,
 
   //* Order
   allOrder: state => state.allOrder
