@@ -82,6 +82,11 @@ export default new Router({
       component: () => import("./views/Cart.vue")
     },
     {
+      path: "/about",
+      name: "about",
+      component: () => import("./views/About.vue")
+    },
+    {
       path: "/*",
       name: "error",
       component: () => import("./views/Error.vue")

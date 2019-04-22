@@ -169,9 +169,9 @@
 					items = [
 						{ icon: "account_circle", title: "Profile", link: "/profile" },
 						{ icon: "business", title: "Category", link: "/category" },
-						{ icon: "store", title: "Shop", link: "/shop" },
-						{ icon: "create", title: "Create", link: "/create" },
-						{ icon: "chat", title: "Post", link: "/posts" }
+						{ icon: "store", title: "Shops", link: "/shop" },
+						{ icon: "create", title: "Create shop", link: "/create" },
+						{ icon: "info", title: "About us", link: "/about" }
 					];
 				}
 
