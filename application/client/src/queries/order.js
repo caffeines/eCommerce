@@ -30,6 +30,7 @@ export const ADD_ORDER = gql`
 export const GET_ORDER = gql`
   query {
     getOrder {
+      _id
       purchaseItems {
         productItem
         productName

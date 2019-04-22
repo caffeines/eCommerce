@@ -38,10 +38,10 @@
 			<v-data-table :headers="headers" :items="products" v-model="value1" :search="search">
 				<template v-slot:items="props">
 					<td>{{ props.item.name }}</td>
-					<td class="text-xs-left">{{ props.item.price }}</td>
-					<td class="text-xs-left">{{ props.item.color }}</td>
-					<td class="text-xs-left">{{ props.item.size }}</td>
-					<td class="text-xs-left">{{ props.item.quantity }}</td>
+					<td class="text-xs-left">{{ props.item.contact }}</td>
+					<td class="text-xs-left">{{ props.item.addressLine }}</td>
+					<td class="text-xs-left">{{ props.item.city }}</td>
+					<td class="text-xs-left">{{ props.item.shipmentType }}</td>
 					<td class="text-xs-left">{{ props.item.status }}</td>
 
 					<td class="layout">
@@ -74,15 +74,15 @@
 				value1: [],
 				headers: [
 					{
-						text: "Product name",
+						text: "Consumer name",
 						align: "left",
 						sortable: true,
 						value: "name"
 					},
-					{ text: "price", value: "price" },
-					{ text: "Color", value: "color" },
-					{ text: "Size", value: "size" },
-					{ text: "Quantity", value: "quantity" },
+					{ text: "Contact", value: "contact" },
+					{ text: "Address Line", value: "addressLine" },
+					{ text: "City", value: "city" },
+					{ text: "Shipment type", value: "shipmentType" },
 					{ text: "Status", value: "status" },
 					{ text: "Action" }
 				],
@@ -120,37 +120,25 @@
 			initialize() {
 				this.products = [];
 				for (let j = 0; j < this.order.length; j++) {
-					let prod = this.order[j].item;
+					let prod = this.order[j];
+
 					let temp = {
-						name: prod.productName,
-						price: prod.price,
-						color: prod.color,
-						size: prod.size,
-						id: prod._id,
-						quantity: prod.quantity,
-						status: prod.status
+						name: prod.address.name,
+						addressLine: prod.address.address,
+						city: prod.address.city,
+						contact: prod.address.contact,
+						id: prod.ID,
+						shipmentType: prod.shipmentType,
+						status: prod.status,
+						full: prod
 					};
 					this.products.push(temp);
 				}
 			},
 			showItem(item) {
-				this.editedIndex = this.products.indexOf(item);
-				this.editedItem = Object.assign({}, item);
-				this.dialog = true;
-			},
-			updateItem(item) {
-				const index = this.products.indexOf(item);
-				const deleteAction = window.confirm(
-					"Are you sure you want to delete this item?"
-				);
-				if (deleteAction) {
-					this.products.splice(index, 1);
-					//console.log(item.id);
-					this.$store.dispatch("deleteProduct", { id: item.id });
-				}
-			},
-			show(pic) {
-				this.$store.dispatch("pictureSetter", { pic });
+				let it = this.products.indexOf(item);
+
+				console.log(item);
 			},
 			save() {}
 		}

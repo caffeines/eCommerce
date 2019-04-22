@@ -153,15 +153,15 @@
 		watch: {},
 		methods: {
 			...mapMutations(["toggleAddProductDailog"]),
-			async getShop() {
-				await this.$store.dispatch("getShop", { id: this.dashboardRouteId });
-				await this.$store.dispatch("getOrder");
-				await this.$store.dispatch("getProductsByShopId", {
+			getShop() {
+				this.$store.dispatch("getShop", { id: this.dashboardRouteId });
+				this.$store.dispatch("getOrder");
+				this.$store.dispatch("getProductsByShopId", {
 					shopId: this.dashboardRouteId
 				});
 				setTimeout(() => {
 					this.orderFilter();
-				}, 500);
+				}, 1000);
 			},
 			visitShop() {
 				this.$router.push("/shop/" + this.dashboardRouteId);
@@ -169,20 +169,21 @@
 			orderFilter() {
 				this.inQueue = 0;
 				this.order = [];
-				console.log("orderFilter");
 				for (let i = 0; i < this.allOrder.length; i++) {
 					for (let j = 0; j < this.allOrder[i].purchaseItems.length; j++) {
 						if (
 							this.dashboardRouteId == this.allOrder[i].purchaseItems[j].shopId
 						) {
-							console.log(this.allOrder[i].purchaseItems[j].status);
+							//console.log(this.allOrder[i].purchaseItems[j].status);
 							if (this.allOrder[i].purchaseItems[j].status == "InQueue") {
 								this.inQueue++;
 								this.order.push({
 									item: this.allOrder[i].purchaseItems[j],
 									address: this.allOrder[i].address,
 									shipmentType: this.allOrder[i].shippingType,
-									consumer: this.allOrder[i].consumer
+									consumer: this.allOrder[i].consumer,
+									status: this.allOrder[i].purchaseItems[j].status,
+									ID: this.allOrder[i]._id
 								});
 							}
 						}

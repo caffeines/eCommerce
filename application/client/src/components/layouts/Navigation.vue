@@ -162,12 +162,13 @@
 						title: "Sign in",
 						link: "/signin",
 						click: "signinSet"
-					}
+					},
+					{ icon: "business", title: "Category", link: "/category" }
 				];
 				if (this.user) {
 					items = [
 						{ icon: "account_circle", title: "Profile", link: "/profile" },
-						{ icon: "business", title: "Department", link: "/department" },
+						{ icon: "business", title: "Category", link: "/category" },
 						{ icon: "store", title: "Shop", link: "/shop" },
 						{ icon: "create", title: "Create", link: "/create" },
 						{ icon: "chat", title: "Post", link: "/posts" }

@@ -37,7 +37,7 @@
 			</v-flex>
 			<v-flex xs8 sm8 md2 lg4 xl4>
 				<div
-					v-if="productByProductId.rating.rate > 0? rating = productByProductId.rating.rate : rating = 0"
+					v-if="productByProductId.rating.rate > 0? rating = parseFloat( productByProductId.rating.rate.toFixed(2) ) : rating = 0"
 				/>
 				<div class="ml-4">
 					<div class="__price mt-3">&#2547;&nbsp;{{productByProductId.price}}</div>
@@ -83,14 +83,14 @@
 					</v-layout>
 					<v-layout row justify-center>
 						<v-btn color="error" round @click="addToCart">Add to Cart</v-btn>
-						<div v-if="user">
+						<!-- <div v-if="user">
 							<v-btn @click="toggleLoved" flat large icon v-if="user">
 								<v-icon large :color="checkIfProductLoved(productByProductId._id) ? 'red' : 'grey'">favorite</v-icon>
 							</v-btn>
-							<!-- <v-icon large class="fav mt-1" v-if="!loved" @click="toggleLoved">favorite_border</v-icon>
-							<v-icon large class="fav mt-1" v-else @click="toggleLoved">favorite</v-icon>-->
+							 <v-icon large class="fav mt-1" v-if="!loved" @click="toggleLoved">favorite_border</v-icon>
+							<v-icon large class="fav mt-1" v-else @click="toggleLoved">favorite</v-icon>
 						</div>
-						<span class="love_text" v-if="user">{{productByProductId.love}}</span>
+						<span class="love_text" v-if="user">{{productByProductId.love}}</span>-->
 					</v-layout>
 				</div>
 			</v-flex>
@@ -233,7 +233,6 @@
 				</div>
 			</v-flex>
 		</v-layout>
-		{{ownProductRating}}
 		<div class="false"></div>
 	</div>
 </template>
@@ -279,7 +278,7 @@
 		},
 		watch: {
 			productRouteId: function(newValue, oldValue) {
-				console.log(newValue, oldValue);
+				//console.log(newValue, oldValue);
 				if (newValue) {
 					this.getProduct();
 					flag = true;
@@ -303,6 +302,7 @@
 				this.flag = false;
 				setTimeout(() => {
 					this.checkRating();
+					this.checkIfProductLoved(this.productRouteId);
 				}, 1000);
 			},
 			summary() {
@@ -313,11 +313,11 @@
 				return this.productByProductId.description;
 			},
 			checkRating() {
-				console.log("RATING: ", this.ownProductRating.rating);
+				//console.log("RATING: ", this.ownProductRating.rating);
 				this.rating2 = this.ownProductRating.rating;
 			},
 			checkIfProductLoved(id) {
-				if (this.userLoved && this.userLoved.some(lv => lv._id === id)) {
+				if (this.userLoved && this.userLoved.some(lv => lv._id == id)) {
 					this.loved = true;
 					return true;
 				} else {
@@ -326,7 +326,7 @@
 				}
 			},
 			rateNow() {
-				console.log(this.rating2);
+				//console.log(this.rating2);
 				this.$store.dispatch("updateProductRating", {
 					productId: this.productRouteId,
 					userId: this.user._id,
@@ -370,7 +370,7 @@
 							this.getProduct();
 						})
 						.catch(err => {
-							console.log(err);
+							//console.log(err);
 						});
 				}
 			},
@@ -433,7 +433,7 @@
 						this.$store.commit("setUser", updateUser);
 					})
 					.catch(err => {
-						console.log(err);
+						//console.log(err);
 					});
 			},
 
@@ -469,7 +469,7 @@
 						this.$store.commit("setUser", updateUser);
 					})
 					.catch(err => {
-						console.log(err);
+						//console.log(err);
 					});
 			},
 
@@ -535,7 +535,7 @@
 					window.localStorage.setItem("cart", "");
 					window.localStorage.setItem("cart", JSONready);
 					cartFormLocalstorage = window.localStorage.getItem("cart");
-					console.log(cartFormLocalstorage);
+					//console.log(cartFormLocalstorage);
 				}
 				this.$store.commit("setNumberOfProduct");
 			}

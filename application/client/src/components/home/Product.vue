@@ -56,7 +56,9 @@
 										dense
 										readonly
 									></v-rating>
-									<span class="rating">{{product.rating.rate}} ({{product.rating.totalNumberOfRating}})</span>
+									<span
+										class="rating"
+									>{{parseFloat( product.rating.rate.toFixed(2) )}} ({{product.rating.totalNumberOfRating}})</span>
 								</v-layout>
 							</div>
 						</v-card>

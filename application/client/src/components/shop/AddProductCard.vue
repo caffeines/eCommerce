@@ -213,7 +213,7 @@
 					"Dress",
 					"Animals",
 					"Baby",
-					"Food, Beverages & Tobacco",
+					"Food",
 					"Book",
 					"Arts",
 					"Electronics",
