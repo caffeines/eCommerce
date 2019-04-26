@@ -3,7 +3,7 @@
 		<div v-if="allShopByaUser">
 			<v-container fluid grid-list-xl>
 				<v-layout mt-2 align-center justify-center wrap row fill-height>
-					<v-flex xs6 sm6 v-for="shop in allShopByaUser" :key="shop">
+					<v-flex xs12 sm12 lg4 md6 v-for="shop in allShopByaUser" :key="shop">
 						<v-card class="custom_card one">
 							<v-card-title primary-title>
 								<v-flex xs-4 sm-4>
