@@ -55,8 +55,8 @@
 				</v-flex>
 			</v-layout>
 		</v-container>-->
-		<v-divider></v-divider>
-		<v-container>
+		<v-divider class="hidden-xs-only"></v-divider>
+		<v-container class="hidden-xs-only">
 			<v-layout row justify-space-between>
 				<v-flex xs4>
 					<v-img

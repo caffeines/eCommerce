@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-5 ml-2">
 		<v-layout row wrap justify-space-around fill-height>
-			<v-flex class="mt-3" xs4 sm3 lg2 md3 xl2 v-for="it in item" :key="'it'">
+			<v-flex class="mt-3" xs6 sm4 lg2 md4 xl2 v-for="it in item" :key="'it'">
 				<v-hover>
 					<v-avatar size="200px" slot-scope="{ hover }" class="mx-auto">
 						<v-img :src="it.src" @click="go(it.link)">
