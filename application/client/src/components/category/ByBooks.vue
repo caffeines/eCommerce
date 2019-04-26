@@ -1,6 +1,5 @@
 <template>
 	<v-container grid-list-xl>
-		{{}}
 		<v-layout wrap>
 			<v-flex
 				mt-4

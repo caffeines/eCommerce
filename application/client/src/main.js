@@ -7,6 +7,7 @@ import ApolloClient from "apollo-boost";
 import VueApollo, { ApolloProvider } from "vue-apollo";
 import VueTyperPlugin from "vue-typer";
 import { configure } from "protobufjs";
+import './registerServiceWorker'
 
 Vue.use(VueApollo);
 Vue.use(VueTyperPlugin);

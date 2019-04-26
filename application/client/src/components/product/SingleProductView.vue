@@ -1,245 +1,257 @@
 <template>
-	<div class="all">
-		<v-layout row align-start justify-center wrap>
-			<v-flex xs4 sm1>
-				<div v-if="!flag ? image = productByProductId.picture[0] : image"></div>
+	<div>
+		<div v-if="loading">
+			<appLoading/>
+		</div>
+		<div v-else class="all">
+			<v-layout row align-start justify-center wrap>
+				<v-flex xs4 sm1>
+					<div v-if="!flag ? image = productByProductId.picture[0] : image"></div>
 
-				<v-layout row v-for="img in productByProductId.picture" :key="'img'">
-					<v-flex xs12 sm10 lg8 xl6>
-						<v-card class="mt-3 ml-2" height="58px" flat>
-							<v-layout align-center justify-center row fill-height>
-								<v-img
-									:src="img"
-									:lazy-src="img"
-									aspect-ratio="1"
-									class="grey lighten-2"
-									@click="setPic(img)"
-									@mouseover="setPic(img)"
-								>
-									<div class="fill-height bottom-gradient"></div>
-								</v-img>
-							</v-layout>
-						</v-card>
-					</v-flex>
-				</v-layout>
-			</v-flex>
-			<v-flex xs8 sm9 md9 lg7 xl7 class="mt-2">
-				<v-tooltip right>
-					<span>Click to enlarge image</span>
-					<v-img slot="activator" :src="image" class="__image" @click="dialog = !dialog"></v-img>
-				</v-tooltip>
-				<v-dialog v-model="dialog">
-					<v-card>
-						<v-img :src="image"></v-img>
-					</v-card>
-				</v-dialog>
-				<!-- <v-img :src="image" height="80vh"></v-img> -->
-			</v-flex>
-			<v-flex xs8 sm8 md2 lg4 xl4>
-				<div
-					v-if="productByProductId.rating.rate > 0? rating = parseFloat( productByProductId.rating.rate.toFixed(2) ) : rating = 0"
-				/>
-				<div class="ml-4">
-					<div class="__price mt-3">&#2547;&nbsp;{{productByProductId.price}}</div>
-					<div class="prodText">{{productByProductId.productName}}</div>
-					<div class="ml-0 mt-1">
-						<v-layout row>
-							<v-rating
-								v-model="rating"
-								color="yellow darken-3"
-								background-color="grey darken-1"
-								empty-icon="$vuetify.icons.ratingFull"
-								half-increments
-								dense
-								readonly
-							></v-rating>
-							<span class="rating">&nbsp;{{rating}}</span>
-						</v-layout>
-					</div>
-					<div class="by mt-1">
-						by
-						<span
-							class="visit"
-							@click="visitShop(productByProductId.createdBy._id)"
-						>{{productByProductId.createdBy.shopName}}</span>
-					</div>
-					<v-divider></v-divider>
-					<div class="description mt-1">{{summary()}}</div>
-					<v-layout justify-space-around>
-						<v-flex xs12 mt-4 lg3>
-							<v-combobox v-model="size" :items="productByProductId.size" outline label="Size"></v-combobox>
-						</v-flex>
-						<v-flex xs12 mt-4 lg3>
-							<v-combobox v-model="color" :items="productByProductId.color" label="Color" outline></v-combobox>
-						</v-flex>
-
-						<v-flex xs12 md3 lg3 sm3 mt-4 class="num">
-							<v-layout>
-								<v-icon medium class="plus" @click="decrement">remove</v-icon>
-								<span class="number">{{num}}</span>
-								<v-icon medium class="plus" @click="increment">add</v-icon>
-							</v-layout>
+					<v-layout row v-for="img in productByProductId.picture" :key="'img'">
+						<v-flex xs12 sm10 lg8 xl6>
+							<v-card class="mt-3 ml-2" height="58px" flat>
+								<v-layout align-center justify-center row fill-height>
+									<v-img
+										:src="img"
+										:lazy-src="img"
+										aspect-ratio="1"
+										class="grey lighten-2"
+										@click="setPic(img)"
+										@mouseover="setPic(img)"
+									>
+										<div class="fill-height bottom-gradient"></div>
+									</v-img>
+								</v-layout>
+							</v-card>
 						</v-flex>
 					</v-layout>
-					<v-layout row justify-center>
-						<v-btn color="error" round @click="addToCart">Add to Cart</v-btn>
-						<!-- <div v-if="user">
+				</v-flex>
+				<v-flex xs8 sm9 md9 lg7 xl7 class="mt-2">
+					<v-tooltip right>
+						<span>Click to enlarge image</span>
+						<v-img slot="activator" :src="image" class="__image" @click="dialog = !dialog"></v-img>
+					</v-tooltip>
+					<v-dialog v-model="dialog">
+						<v-card>
+							<v-img :src="image"></v-img>
+						</v-card>
+					</v-dialog>
+					<!-- <v-img :src="image" height="80vh"></v-img> -->
+				</v-flex>
+				<v-flex xs8 sm8 md2 lg4 xl4>
+					<div
+						v-if="productByProductId.rating.rate > 0? rating = parseFloat( productByProductId.rating.rate.toFixed(2) ) : rating = 0"
+					/>
+					<div class="ml-4">
+						<div class="__price mt-3">&#2547;&nbsp;{{productByProductId.price}}</div>
+						<div class="prodText">{{productByProductId.productName}}</div>
+						<div class="ml-0 mt-1">
+							<v-layout row>
+								<v-rating
+									v-model="rating"
+									color="yellow darken-3"
+									background-color="grey darken-1"
+									empty-icon="$vuetify.icons.ratingFull"
+									half-increments
+									dense
+									readonly
+								></v-rating>
+								<span class="rating">&nbsp;{{rating}}</span>
+							</v-layout>
+						</div>
+						<div class="by mt-1">
+							by
+							<span
+								class="visit"
+								@click="visitShop(productByProductId.createdBy._id)"
+							>{{productByProductId.createdBy.shopName}}</span>
+						</div>
+						<v-divider></v-divider>
+						<div class="description mt-1">{{summary()}}</div>
+						<v-layout justify-space-around>
+							<v-flex xs12 mt-4 lg3>
+								<v-combobox v-model="size" :items="productByProductId.size" outline label="Size"></v-combobox>
+							</v-flex>
+							<v-flex xs12 mt-4 lg3>
+								<v-combobox v-model="color" :items="productByProductId.color" label="Color" outline></v-combobox>
+							</v-flex>
+
+							<v-flex xs12 md3 lg3 sm3 mt-4 class="num">
+								<v-layout>
+									<v-icon medium class="plus" @click="decrement">remove</v-icon>
+									<span class="number">{{num}}</span>
+									<v-icon medium class="plus" @click="increment">add</v-icon>
+								</v-layout>
+							</v-flex>
+						</v-layout>
+						<v-layout row justify-center>
+							<v-btn color="error" round @click="addToCart">Add to Cart</v-btn>
+							<!-- <div v-if="user">
 							<v-btn @click="toggleLoved" flat large icon v-if="user">
 								<v-icon large :color="checkIfProductLoved(productByProductId._id) ? 'red' : 'grey'">favorite</v-icon>
 							</v-btn>
 							 <v-icon large class="fav mt-1" v-if="!loved" @click="toggleLoved">favorite_border</v-icon>
 							<v-icon large class="fav mt-1" v-else @click="toggleLoved">favorite</v-icon>
 						</div>
-						<span class="love_text" v-if="user">{{productByProductId.love}}</span>-->
-					</v-layout>
-				</div>
-			</v-flex>
-		</v-layout>
-		<!-- product view ends here -->
-		<!-- description, rating, comment  -->
+							<span class="love_text" v-if="user">{{productByProductId.love}}</span>-->
+						</v-layout>
+					</div>
+				</v-flex>
+			</v-layout>
+			<!-- product view ends here -->
+			<!-- description, rating, comment  -->
 
-		<v-layout row justify-center>
-			<v-flex x12 sm10 md10 lg10 xl10 mt-4>
-				<div class="_info">
-					<v-layout row justify-center>
-						<div v-if="descFlag" style="border-bottom: 2px solid #999">
-							<div class="_info__header" @click="description">Descriptiion</div>
-						</div>
-						<div class="_info__header" v-else @click="description">Descriptiion</div>
-
-						<div v-if="aditionalInfoFlag">
-							<div
-								class="_info__header ml-2"
-								style="border-bottom: 2px solid #999"
-								@click="information"
-							>Additional information</div>
-						</div>
-						<div v-else class="_info__header ml-2" @click="information">Additional information</div>
-
-						<div v-if="commentFlag">
-							<div
-								class="_info__header ml-2"
-								style="border-bottom: 2px solid #999"
-								@click="comment"
-							>Comment</div>
-						</div>
-						<div v-else class="_info__header ml-2" @click="comment">Comment</div>
-					</v-layout>
-					<v-layout row justify-center>
-						<v-flex
-							xs9
-							v-if="descFlag"
-							id="desc"
-							class=".description mt-4"
-						>{{productByProductId.description}}</v-flex>
-					</v-layout>
-
-					<!-- aditional Info section start here -->
-					<v-layout row justify-center>
-						<v-flex xs8 v-if="aditionalInfoFlag" class=".description mt-4">
-							<v-layout align-center justify-center row>
-								<v-flex xs4></v-flex>
-								<v-flex xs4>Weight</v-flex>
-								<v-flex xs6>2.39 kg</v-flex>
-							</v-layout>
-							<v-layout align-center justify-center row>
-								<v-flex xs4></v-flex>
-								<v-flex xs4>Dimensions</v-flex>
-								<v-flex xs6>110 x 33 x 100 cm</v-flex>
-							</v-layout>
-							<v-layout align-center justify-center row>
-								<v-flex xs4></v-flex>
-								<v-flex xs4>Materials</v-flex>
-								<v-flex xs6>Plastic body</v-flex>
-							</v-layout>
-							<v-layout align-center justify-center row>
-								<v-flex xs4></v-flex>
-								<v-flex xs4>Color</v-flex>
-								<v-flex xs6>Black, Blue, Grey, Green, Red, White</v-flex>
-							</v-layout>
-							<v-layout align-center justify-center row>
-								<v-flex xs4></v-flex>
-								<v-flex xs4>Size</v-flex>
-								<v-flex xs6>XS, S, M, L, XL, XXL, XXL</v-flex>
-							</v-layout>
-						</v-flex>
-					</v-layout>
-
-					<!-- commment section start here -->
-					<v-layout row justify-center v-if="commentFlag">
-						<v-flex xs8>
-							<div v-if="user">
-								<div class="mt-4 _comment__head">Add comment or rate now</div>
-								<v-divider></v-divider>
-								<v-layout row class="mt-1">
-									<span class="rating__text mt-2 mr-2">Rating</span>
-									<v-rating
-										class="mt-2"
-										v-model="rating2"
-										color="yellow darken-3"
-										background-color="grey darken-1"
-										empty-icon="$vuetify.icons.ratingFull"
-										half-increments
-										hover
-										dense
-									></v-rating>
-									<v-btn color="primary" round flat @click="rateNow">Rate Now</v-btn>
-								</v-layout>
-								<v-form v-model="isFormValid" lazy-validation ref="form" @submit.prevent="handleAddComment">
-									<v-layout>
-										<v-flex xs12>
-											<v-textarea
-												outline
-												v-model="commentBody"
-												:rules="commentRules"
-												auto-grow
-												label="Comment"
-											></v-textarea>
-										</v-flex>
-									</v-layout>
-									<v-btn round flat color="primary" class="mb-2" type="submit">Comment now</v-btn>
-								</v-form>
+			<v-layout row justify-center>
+				<v-flex x12 sm10 md10 lg10 xl10 mt-4>
+					<div class="_info">
+						<v-layout row justify-center>
+							<div v-if="descFlag" style="border-bottom: 2px solid #999">
+								<div class="_info__header" @click="description">Descriptiion</div>
 							</div>
-							<div class="mt-5">
-								<v-layout class="mt-1" v-for="cmnt in productByProductId.comments" :key="'cmnt'">
-									<v-layout align-center row mb-1>
-										<v-flex xs4 sm2 md1>
-											<v-avatar size="42px">
-												<img :src="imgSource(cmnt)" alt="Avatar">
-											</v-avatar>
-										</v-flex>
+							<div class="_info__header" v-else @click="description">Descriptiion</div>
+
+							<div v-if="aditionalInfoFlag">
+								<div
+									class="_info__header ml-2"
+									style="border-bottom: 2px solid #999"
+									@click="information"
+								>Additional information</div>
+							</div>
+							<div v-else class="_info__header ml-2" @click="information">Additional information</div>
+
+							<div v-if="commentFlag">
+								<div
+									class="_info__header ml-2"
+									style="border-bottom: 2px solid #999"
+									@click="comment"
+								>Comment</div>
+							</div>
+							<div v-else class="_info__header ml-2" @click="comment">Comment</div>
+						</v-layout>
+						<v-layout row justify-center>
+							<v-flex
+								xs9
+								v-if="descFlag"
+								id="desc"
+								class=".description mt-4"
+							>{{productByProductId.description}}</v-flex>
+						</v-layout>
+
+						<!-- aditional Info section start here -->
+						<v-layout row justify-center>
+							<v-flex xs8 v-if="aditionalInfoFlag" class=".description mt-4">
+								<v-layout align-center justify-center row>
+									<v-flex xs4></v-flex>
+									<v-flex xs4>Weight</v-flex>
+									<v-flex xs6>2.39 kg</v-flex>
+								</v-layout>
+								<v-layout align-center justify-center row>
+									<v-flex xs4></v-flex>
+									<v-flex xs4>Dimensions</v-flex>
+									<v-flex xs6>110 x 33 x 100 cm</v-flex>
+								</v-layout>
+								<v-layout align-center justify-center row>
+									<v-flex xs4></v-flex>
+									<v-flex xs4>Materials</v-flex>
+									<v-flex xs6>Plastic body</v-flex>
+								</v-layout>
+								<v-layout align-center justify-center row>
+									<v-flex xs4></v-flex>
+									<v-flex xs4>Color</v-flex>
+									<v-flex xs6>Black, Blue, Grey, Green, Red, White</v-flex>
+								</v-layout>
+								<v-layout align-center justify-center row>
+									<v-flex xs4></v-flex>
+									<v-flex xs4>Size</v-flex>
+									<v-flex xs6>XS, S, M, L, XL, XXL, XXL</v-flex>
+								</v-layout>
+							</v-flex>
+						</v-layout>
+
+						<!-- commment section start here -->
+						<v-layout row justify-center v-if="commentFlag">
+							<v-flex xs8>
+								<div v-if="user">
+									<div class="mt-4 _comment__head">Add comment or rate now</div>
+									<v-divider></v-divider>
+									<v-layout row class="mt-1">
+										<span class="rating__text mt-2 mr-2">Rating</span>
+										<v-rating
+											class="mt-2"
+											v-model="rating2"
+											color="yellow darken-3"
+											background-color="grey darken-1"
+											empty-icon="$vuetify.icons.ratingFull"
+											half-increments
+											hover
+											dense
+										></v-rating>
+										<v-btn color="primary" round flat @click="rateNow">Rate Now</v-btn>
+									</v-layout>
+									<v-form
+										v-model="isFormValid"
+										lazy-validation
+										ref="form"
+										@submit.prevent="handleAddComment"
+									>
 										<v-layout>
-											<v-flex xs12 class="ml-3">
-												<v-layout row align-start>
-													<v-flex xs11>
-														<h3
-															class="_comment__text__name"
-														>{{cmnt.commentUser.firstName }} {{cmnt.commentUser.lastName }}</h3>
-													</v-flex>
-													<v-flex v-if="checkIfOwnCommment(cmnt)">
-														<v-icon small style="cursor: pointer">edit</v-icon>
-														<v-icon class="ml-1" small style="cursor: pointer">delete</v-icon>
-													</v-flex>
-												</v-layout>
-												<v-flex xs12 class="_comment__text mt-1">{{ cmnt.body }}</v-flex>
+											<v-flex xs12>
+												<v-textarea
+													outline
+													v-model="commentBody"
+													:rules="commentRules"
+													auto-grow
+													label="Comment"
+												></v-textarea>
 											</v-flex>
 										</v-layout>
+										<v-btn round flat color="primary" class="mb-2" type="submit">Comment now</v-btn>
+									</v-form>
+								</div>
+								<div class="mt-5">
+									<v-layout class="mt-1" v-for="cmnt in productByProductId.comments" :key="'cmnt'">
+										<v-layout align-center row mb-1>
+											<v-flex xs4 sm2 md1>
+												<v-avatar size="42px">
+													<img :src="imgSource(cmnt)" alt="Avatar">
+												</v-avatar>
+											</v-flex>
+											<v-layout>
+												<v-flex xs12 class="ml-3">
+													<v-layout row align-start>
+														<v-flex xs11>
+															<h3
+																class="_comment__text__name"
+															>{{cmnt.commentUser.firstName }} {{cmnt.commentUser.lastName }}</h3>
+														</v-flex>
+														<v-flex v-if="checkIfOwnCommment(cmnt)">
+															<v-icon small style="cursor: pointer">edit</v-icon>
+															<v-icon class="ml-1" small style="cursor: pointer">delete</v-icon>
+														</v-flex>
+													</v-layout>
+													<v-flex xs12 class="_comment__text mt-1">{{ cmnt.body }}</v-flex>
+												</v-flex>
+											</v-layout>
+										</v-layout>
 									</v-layout>
-								</v-layout>
-							</div>
-						</v-flex>
-					</v-layout>
-					<div class="mt-5"></div>
-				</div>
-			</v-flex>
-		</v-layout>
-		<div class="false"></div>
+								</div>
+							</v-flex>
+						</v-layout>
+						<div class="mt-5"></div>
+					</div>
+				</v-flex>
+			</v-layout>
+			<div class="false"></div>
+		</div>
 	</div>
 </template>
 		
 <script>
 	import { mapGetters } from "vuex";
 	import { defaultClient as apolloClient } from "../../main";
+	import appLoading from "@/components/layouts/Loading";
+
 	import {
 		LOVE_PRODUCT,
 		UNLOVE_PRODUCT,
@@ -248,6 +260,9 @@
 	} from "@/queries/product";
 	export default {
 		props: ["productRouteId"],
+		components: {
+			appLoading
+		},
 		data() {
 			return {
 				rating: 0,
