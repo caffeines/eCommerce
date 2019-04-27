@@ -2,6 +2,7 @@ type prevProductRating {
   product: Product
   rating: Float
 }
+
 type prevShopRating {
   shop: Shop
   rating: Float
