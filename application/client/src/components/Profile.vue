@@ -5,7 +5,7 @@
 				<div class="profile-card__img">
 					<img
 						class="mt-2"
-						src="https://cdn.diversityavatars.com/wp-content/uploads/2018/02/Reusable-elements.gif"
+						src="https://img.freepik.com/free-vector/mascot-logo-man-beard-hairstyle_50290-78.jpg?size=338&ext=jpg"
 						alt="profile card"
 					>
 				</div>
@@ -50,7 +50,7 @@
 
 					<div class="profile-card-social">
 						<a
-							href="https://www.facebook.com/caffeine.sadat"
+							href="https://www.facebook.com/imsadatsayem"
 							class="profile-card-social__item facebook"
 							target="_blank"
 						>
